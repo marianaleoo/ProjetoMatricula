@@ -63,5 +63,58 @@ namespace ProjetoMatricula.DAO
             }
         }
 
+        public void Consultar(EntidadeDominio entidadeDominio)
+        {
+            Endereco endereco = (Endereco)entidadeDominio;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT * FROM tb_endereco");
+                strSQL.Append("WHERE");
+                strSQL.Append("aluno_id = @aluno_id");
+                strSQL.Append("tpend_id =  @tpend_id");
+                strSQL.Append("cidade   =  @cidade");
+                strSQL.Append("estado   =  @estado");
+                strSQL.Append("logradouro =  @logradouro");
+                strSQL.Append("numero =  @numero");
+                strSQL.Append("cep = @cep");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetPessoa().GetId());
+                objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
+                objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
+                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().getDescricao());
+                objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
+                objComando.Parameters.AddWithValue("@numero", endereco.GetNumero());
+                objComando.Parameters.AddWithValue("@cep", endereco.GetCep());
+
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
     }
 }

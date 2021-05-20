@@ -59,5 +59,53 @@ namespace ProjetoMatricula.DAO
             }
         }
 
+        public void Consultar(EntidadeDominio entidade)
+        {
+            Tipo tipo = (Tipo)entidade;
+
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                var nmClass = entidade.GetType().Name.ToLower();
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT * FROM ");
+                strSQL.Append("tb_");
+                strSQL.Append(nmClass);
+                strSQL.Append("WHERE");
+                strSQL.Append("nome = @nome");
+                strSQL.Append("descricao = @descricao ) ");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@nome", tipo.GetNome());
+                objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao consultar registro " + tipo.GetNome());
+                }
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
     }
 }

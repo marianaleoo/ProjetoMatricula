@@ -60,6 +60,56 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
         }
-    
+
+        public void Consultar(EntidadeDominio entidadeDominio)
+        {
+            Curso curso = (Curso)entidadeDominio;
+
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT * FROM");
+                strSQL.Append("tb_curso");
+                strSQL.Append("WHERE");
+                strSQL.Append("dt_cadastro = @dt_cadastro");
+                strSQL.Append("tipoCurso_id = @tipoCurso_id");
+                strSQL.Append("descricao = @descricao ");
+                strSQL.Append("modeloCurso = @modeloCurso ");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@dt_cadastro", curso.GetDataCadastro());
+                objComando.Parameters.AddWithValue("@tipoCurso_id", curso.GetTipoCurso());
+                objComando.Parameters.AddWithValue("@descricao", curso.GetDescricao());
+                objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
+
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
+
     }
 }

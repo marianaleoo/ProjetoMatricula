@@ -34,14 +34,13 @@ namespace ProjetoMatricula.DAO
             {
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_curso(dt_cadastro, curso_id, aluno_id, descricao)");
+                strSQL.Append("INSERT INTO tb_curso(dt_cadastro, curso_id, descricao)");
                 strSQL.Append("VALUES (@dt_cadastro, @curso_id, @aluno_id, @descricao)");
 
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("dt_cadastro", disciplina.GetDataCadastro());
                 objComando.Parameters.AddWithValue("curso_id", disciplina.GetCursos());
-                objComando.Parameters.AddWithValue("aluno_id", disciplina.GetAlunos());
                 objComando.Parameters.AddWithValue("descricao", disciplina.GetDescricao());
 
                 objConn.Close();
@@ -55,6 +54,52 @@ namespace ProjetoMatricula.DAO
                 }
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
+            }
+        }
+
+        public void Consultar(EntidadeDominio entidadeDominio)
+        {
+             Disciplina disciplina = (Disciplina)entidadeDominio;
+
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT * FROM");
+                strSQL.Append("tb_curso");
+                strSQL.Append("WHERE");
+                strSQL.Append("dt_cadastro = @dt_cadastro");
+                strSQL.Append("curso_id = @curso_id");
+                strSQL.Append("descricao = @descricao");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@dt_cadastro", disciplina.GetDataCadastro());
+                objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCursos());
+                objComando.Parameters.AddWithValue("@descricao", disciplina.GetDescricao());
+
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
     }
