@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template Bootstrap</title>	  	  <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Projeto Engenharia 3</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Opções</a></li>
+                    <li><a href="#">Perfil</a></li>
+                    <li><a href="#">Ajuda</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div id="main" class="container-fluid">
+        <h3 class="page-header">Adicionar Cliente</h3>
+        <form action="create.html">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="txtNome" placeholder="Digite o nome">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="cpf">CPF</label>
+                    <input type="text" class="form-control" id="txtCpf" placeholder="Digite o cpf">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="credito">Crédito</label>
+                    <input type="text" class="form-control" id="txtCredito" placeholder="Digite o valor">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" id="txtCodigo" placeholder="Digite o código">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="validade">Validade</label>
+                    <input type="text" class="form-control" id="txtValidade" placeholder="Digite a validade">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="tpDocumento">Tipo Documento</label>
+                    <br />
+                    <select name="tpDocumento" id="txtTpDocumento" type="text" class="form-control">
+                        <option value="cpf">CPF</option>
+                        <option value="rg">RG</option>
+                        <option value="cnh">CNH</option>
+                        <option value="passaporte">Passaporte</option>
+                    </select>
+                    @*<input type="text" class="form-control" id="txtTpDocumento" placeholder="Digite o tipo do documento">*@
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtTpDocDescricao" placeholder="Digite a descrição do documento">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="dependente">Dependente</label>
+                    <input type="text" class="form-control" id="txtDependente" placeholder="Digite o nome">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="parentesco">Parentesco</label>
+                    <br />
+                    <select name="tpParentesco" id="txtParentesco" type="text" class="form-control">
+                        <option value="conjuge">Conjuge</option>
+                        <option value="filho">Filho(a)</option>
+                    </select>
+                    @*<input type="text" class="form-control" id="txtParentesco" placeholder="Digite o parentesco">*@
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescParentesco" placeholder="Digite a descrição do parentesco">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" class="form-control" id="txtLogradouro" placeholder="Digite o logradouro">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="numero">Número</label>
+                    <input type="text" class="form-control" id="txtNumero" placeholder="Digite o número">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="cep">CEP</label>
+                    <input type="text" class="form-control" id="txtCep" placeholder="Digite o cep">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" class="form-control" id="txtComplemento" placeholder="Digite o complemento">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tpEndereco">Tipo Endereço</label>
+                    <br />
+                    <select name="tpEndereco" id="txtTpEndereco" type="text" class="form-control">
+                        <option value="cobranca">Cobrança</option>
+                        <option value="entrega">Entrega</option>
+                    </select>
+                    @*<input type="text" class="form-control" id="txtTpEndereco" placeholder="Digite o tipo do endereço">*@
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescEndereco" placeholder="Digite a descrição do endereço">
+                </div>
+            </div>
+            <hr />
+            <div id="actions" class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+                    <a href="Index" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- jQuery (necessario para os plugins Javascript do Bootstrap) -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/toastr")
+    @Scripts.Render("~/Scripts/app/create.js")
+}
+

@@ -18,12 +18,11 @@ namespace ProjetoMatricula.Model
         public Endereco() { }
 
         public Endereco(string logradouro, string numero, string cep,
-                string complemento, Cidade cidade, TipoEndereco tpEndereco)
+                 Cidade cidade, TipoEndereco tpEndereco)
         {
             this.logradouro = logradouro;
             this.numero = numero;
-            this.cep = cep;
-            this.complemento = complemento;
+            this.cep = cep;            
             this.cidade = cidade;
             this.tpEndereco = tpEndereco;
         }
@@ -76,16 +75,6 @@ namespace ProjetoMatricula.Model
         public void SetCep(string cep)
         {
             this.cep = cep;
-        }
-
-        public string GetComplemento()
-        {
-            return complemento;
-        }
-
-        public void SetComplemento(string complemento)
-        {
-            this.complemento = complemento;
         }
 
         public Cidade GetCidade()

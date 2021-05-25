@@ -10,14 +10,14 @@ namespace ProjetoMatricula.Model
     {
         private string nome;
         private string ra;
-        private string dataNascimento;
+        private DateTime dataNascimento;
         private List<Endereco> enderecos;
         private List<Disciplina> disciplinas;
         private List<Curso> cursos;
 
         public Aluno() { }
 
-        public Aluno(List<Endereco> enderecos, List<Disciplina> disciplinas, List<Curso> cursos, string nome, string ra, string dataNascimento)
+        public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, List<Curso> cursos, string nome, string ra, DateTime dataNascimento) : base(documentos)
         {
             this.enderecos = enderecos;
             this.disciplinas = disciplinas;
@@ -88,13 +88,13 @@ namespace ProjetoMatricula.Model
             this.ra = ra;
         }
 
-        public string GetDataNascimento()
+        public DateTime GetDataNascimento()
         {
 
             return dataNascimento;
         }
 
-        public void SetDataNascimento(string dataNascimento)
+        public void SetDataNascimento(DateTime dataNascimento)
         {
             this.dataNascimento = dataNascimento;
         }

@@ -6,16 +6,14 @@ using System.Web;
 namespace ProjetoMatricula.Model
 {
     public class Tipo : EntidadeDominio
-    {
-        protected string nome;
+    {        
         protected string descricao;
 
         public Tipo() { }
 
-        protected Tipo(string descricao, string nome)
+        protected Tipo(string descricao)
         {
-            this.descricao = descricao;
-            this.nome = nome;
+            this.descricao = descricao;           
         }
 
         public string GetDescricao()
@@ -25,15 +23,6 @@ namespace ProjetoMatricula.Model
         public void SetDescricao(string descricao)
         {
             this.descricao = descricao;
-        }
-        public string GetNome()
-        {
-            return nome;
-        }
-        public void SetNome(string nome)
-        {
-            this.nome = nome;
-        }
-
+        } 
     }
 }

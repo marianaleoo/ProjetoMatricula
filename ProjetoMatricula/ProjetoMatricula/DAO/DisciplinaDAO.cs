@@ -14,7 +14,7 @@ namespace ProjetoMatricula.DAO
     {
         public DisciplinaDAO() { }
 
-        public void Salvar(EntidadeDominio entidadeDominio)
+        public bool Salvar(EntidadeDominio entidadeDominio)
         {
             Disciplina disciplina = (Disciplina)entidadeDominio;
 
@@ -32,16 +32,18 @@ namespace ProjetoMatricula.DAO
 
             try
             {
+                AlunoDAO aluno = new AlunoDAO();
+                CursoDAO curso = new CursoDAO();
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_curso(dt_cadastro, curso_id, descricao)");
-                strSQL.Append("VALUES (@dt_cadastro, @curso_id, @aluno_id, @descricao)");
+                strSQL.Append("INSERT INTO tb_curso(aluno_id, curso_id, nome)");
+                strSQL.Append("VALUES (@aluno_id, @curso_id, @nome)");
 
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("dt_cadastro", disciplina.GetDataCadastro());
-                objComando.Parameters.AddWithValue("curso_id", disciplina.GetCursos());
-                objComando.Parameters.AddWithValue("descricao", disciplina.GetDescricao());
+                objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
+                objComando.Parameters.AddWithValue("@curso_id", curso.ConsultarId());
+                objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());
 
                 objConn.Close();
 
@@ -54,6 +56,94 @@ namespace ProjetoMatricula.DAO
                 }
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
+            }
+            return true;
+        }
+
+        public void Alterar(EntidadeDominio entidade)
+        {
+            Disciplina disciplina = (Disciplina)entidade;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                AlunoDAO alunoDao = new AlunoDAO();
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("UPDATE tb_disciplina SET ");
+                strSQL.Append("nome = @nome ");
+                strSQL.Append("WHERE id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());                
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro");
+                }
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao inserir registro " + ex.Message);
+            }
+        }
+
+        public void Excluir(EntidadeDominio entidade)
+        {
+            Disciplina disciplina = (Disciplina)entidade;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+            StringBuilder strSQL = new StringBuilder();
+            try
+            {
+                if (!disciplina.GetId().Equals(0))
+                {
+                    strSQL.Append("DELETE FROM tb_disciplina WHERE id =@id");
+                    objComando.CommandText = strSQL.ToString();
+                    objComando.Parameters.AddWithValue("@id", disciplina.GetId());
+                }
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao excluir registro " + disciplina.GetId());
+                }
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao excluir registro " + ex.Message);
             }
         }
 
@@ -86,8 +176,8 @@ namespace ProjetoMatricula.DAO
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@dt_cadastro", disciplina.GetDataCadastro());
-                objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCursos());
-                objComando.Parameters.AddWithValue("@descricao", disciplina.GetDescricao());
+                //objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCursos());
+                objComando.Parameters.AddWithValue("@descricao", disciplina.GetNome());
 
                 objConn.Close();
 

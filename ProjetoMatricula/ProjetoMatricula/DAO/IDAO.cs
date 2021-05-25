@@ -8,9 +8,9 @@ namespace ProjetoMatricula.DAO
 {
     public interface IDAO
     {
-        void Salvar(EntidadeDominio entidade);
-        //void Alterar(EntidadeDominio entidade);
-        //void Excluir(EntidadeDominio entidade);
+        bool Salvar(EntidadeDominio entidade);
+        void Alterar(EntidadeDominio entidade);
+        void Excluir(EntidadeDominio entidade);
         void Consultar(EntidadeDominio entidade);
         //List<EntidadeDominio> Consultar(EntidadeDominio entidade);
     }

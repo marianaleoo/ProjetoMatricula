@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ProjetoMatricula.Model
 {
-    public class Pessoa : EntidadeDominio
+    public abstract class Pessoa : EntidadeDominio
     {
         public List<Documento> documentos;
 

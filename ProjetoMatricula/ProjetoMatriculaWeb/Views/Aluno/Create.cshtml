@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template Bootstrap</title>	  	  <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Projeto Engenharia 3</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Opções</a></li>
+                    <li><a href="#">Perfil</a></li>
+                    <li><a href="#">Ajuda</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div id="main" class="container-fluid">
+        <h3 class="page-header">Adicionar Aluno</h3>
+        <form action="create.html">
+            <div class="row">
+                <h3>Aluno</h3>
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="txtAluno" placeholder="Digite o nome do aluno">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="ra">RA</label>
+                    <input type="text" class="form-control" id="txtRa" placeholder="Digite o RA">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="dtNascimento">Data Nascimento</label>
+                    <input type="text" class="form-control" id="txtDtNascimento" placeholder="Digite a data de nascimento">
+                </div>
+
+                <h3>Documento</h3>
+                <div class="form-group col-md-4">
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" id="txtCodigo" placeholder="Digite o código">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="validade">Validade</label>
+                    <input type="text" class="form-control" id="txtValidade" placeholder="Digite a validade">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tpDocumento">Tipo Documento</label>
+                    <br />
+                    <select name="tpDocumento" id="txtTpDocumento" type="text" class="form-control">
+                        <option value="cpf">CPF</option>
+                        <option value="rg">RG</option>
+                        <option value="cnh">CNH</option>
+                        <option value="passaporte">Passaporte</option>
+                    </select>
+                </div>
+
+                <h3>Curso</h3>
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="txtCurso" placeholder="Digite o nome do curso">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" class="form-control" id="txtModelo" placeholder="Digite o modelo do curso">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tpCurso">Tipo Curso</label>
+                    <br />
+                    <select name="tpCurso" id="txtTpCurso" type="text" class="form-control">
+                        <option value="Graduacao">Graduação</option>
+                        <option value="Pos-Graduacao">Pós-Graduação</option>
+                    </select>
+                </div>
+
+                <h3>Disciplina</h3>
+                <div class="form-group col-md-12">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="txtDisciplina" placeholder="Digite o nome da disciplina">
+                </div>
+
+                <h3>Endereço</h3>
+                <div class="form-group col-md-4">
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" class="form-control" id="txtLogradouro" placeholder="Digite o logradouro">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="numero">Número</label>
+                    <input type="text" class="form-control" id="txtNumero" placeholder="Digite o número">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="cep">CEP</label>
+                    <input type="text" class="form-control" id="txtCep" placeholder="Digite o cep">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" class="form-control" id="txtCidade" placeholder="Digite a cidade">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="estado">Estado</label>
+                    <br />
+                    <select name="estado" id="txtEstado" type="text" class="form-control">
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tpEndereco">Tipo Endereço</label>
+                    <br />
+                    <select name="tpEndereco" id="txtTpEndereco" type="text" class="form-control">
+                        <option value="Residencial">Residencial</option>
+                        <option value="Comercial">Comercial</option>
+                    </select>                    
+                </div>
+            </div>
+            <hr />
+            <div id="actions" class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+                    <a href="Index" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- jQuery (necessario para os plugins Javascript do Bootstrap) -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/toastr")
+    @Scripts.Render("~/Scripts/app/create.js")
+}
+

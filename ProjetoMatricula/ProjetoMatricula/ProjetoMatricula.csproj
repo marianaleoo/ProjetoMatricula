@@ -88,6 +88,8 @@
     <Compile Include="Model\TipoDocumento.cs" />
     <Compile Include="Model\TipoEndereco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DTO\DadosAlunoDTO.cs" />
+    <Compile Include="Servico\AlunoServico.cs" />
     <Compile Include="Util\Conexao.cs" />
   </ItemGroup>
   <ItemGroup>

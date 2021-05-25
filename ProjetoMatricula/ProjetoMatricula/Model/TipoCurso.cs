@@ -11,10 +11,8 @@ namespace ProjetoMatricula.Model
         {
         }
 
-        public TipoCurso(string descricao, string nome)
-        {
-            this.descricao = descricao;
-            this.nome = nome;
+        public TipoCurso(string descricao) : base (descricao)
+        {                       
         }
     }
 }

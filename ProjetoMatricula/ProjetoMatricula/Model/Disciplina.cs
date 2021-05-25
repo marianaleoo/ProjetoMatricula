@@ -6,48 +6,25 @@ using System.Web;
 namespace ProjetoMatricula.Model
 {
     public class Disciplina : EntidadeDominio
-    {
-        private List<Curso> cursos;
-        private List<Aluno> alunos;
-        private string descricao;
+    {        
+        private string nome;
         private Pessoa pessoa;
 
         public Disciplina() { }
 
-        public Disciplina(List<Curso> cursos, List<Aluno> alunos, string descricao)
+        public Disciplina(string nome)
         {
-            this.cursos = cursos;
-            this.alunos = alunos;
-            this.descricao = descricao;
+            this.nome = nome;
+        }
+        
+        public string GetNome()
+        {
+            return nome;
         }
 
-        public List<Curso> GetCursos()
+        public void SetNome(string nome)
         {
-            return cursos;
-        }
-
-        public void SetDescricao(List<Curso> cursos)
-        {
-            this.cursos = cursos;
-        }
-
-        public List<Aluno> GetAlunos()
-        {
-            return alunos;
-        }
-
-        public void SetAlunos(List<Aluno> alunos)
-        {
-            this.alunos = alunos;
-        }
-        public string GetDescricao()
-        {
-            return descricao;
-        }
-
-        public void SetDescricao(string descricao)
-        {
-            this.descricao = descricao;
+            this.nome = nome;
         }
 
         public Pessoa GetPessoa()

@@ -8,16 +8,16 @@ namespace ProjetoMatricula.Model
     public class Curso : EntidadeDominio
     {
         private TipoCurso tpCurso;
-        private string descricao;
+        private string nome;
         private string modeloCurso;
         private Pessoa pessoa;
 
         public Curso() { }
 
-        public Curso(TipoCurso tpCurso, string descricao, string modeloCurso)
+        public Curso(TipoCurso tpCurso, string nome, string modeloCurso)
         {
             this.tpCurso = tpCurso;
-            this.descricao = descricao;
+            this.nome = nome;
             this.modeloCurso = modeloCurso;
         }
 
@@ -31,14 +31,14 @@ namespace ProjetoMatricula.Model
             this.tpCurso = tpCurso;
         }
 
-        public string GetDescricao()
+        public string GetNome()
         {
-            return descricao;
+            return nome;
         }
 
-        public void SetDescricao(string descricao)
+        public void SetNome(string nome)
         {
-            this.descricao = descricao;
+            this.nome = nome;
         }
 
         public string GetModeloCurso()
