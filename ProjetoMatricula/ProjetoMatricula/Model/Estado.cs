@@ -14,11 +14,11 @@ namespace ProjetoMatricula.Model
         {
             this.descricao = descricao;
         }
-        public string GetDescricao()
+        public string getDescricao()
         {
             return descricao;
         }
-        public void SetDescricao(string descricao)
+        public void setDescricao(string descricao)
         {
             this.descricao = descricao;
         }

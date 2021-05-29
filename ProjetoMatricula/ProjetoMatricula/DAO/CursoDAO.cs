@@ -223,13 +223,13 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("WHERE");
                 strSQL.Append("dt_cadastro = @dt_cadastro");
                 strSQL.Append("tipoCurso_id = @tipoCurso_id");
-                strSQL.Append("nome = @nome ");
+                strSQL.Append("descricao = @descricao ");
                 strSQL.Append("modeloCurso = @modeloCurso ");
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@dt_cadastro", curso.GetDataCadastro());
                 objComando.Parameters.AddWithValue("@tipoCurso_id", curso.GetTipoCurso());
-                objComando.Parameters.AddWithValue("@nome", curso.GetNome());
+                objComando.Parameters.AddWithValue("@descricao", curso.GetNome());
                 objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
 
                 objConn.Close();
@@ -247,8 +247,6 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
-
-            return null;
         }
 
 

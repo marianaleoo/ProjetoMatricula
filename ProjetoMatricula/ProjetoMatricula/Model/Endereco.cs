@@ -12,18 +12,18 @@ namespace ProjetoMatricula.Model
         private string numero;
         private string cep;        
         private Cidade cidade;
-        private TipoEndereco tipoEndereco;
+        private TipoEndereco tpEndereco;
 
         public Endereco() { }
 
         public Endereco(string logradouro, string numero, string cep,
-                string complemento, Cidade cidade, TipoEndereco tipoEndereco)
+                 Cidade cidade, TipoEndereco tpEndereco)
         {
             this.logradouro = logradouro;
             this.numero = numero;
             this.cep = cep;            
             this.cidade = cidade;
-            this.tipoEndereco = tipoEndereco;
+            this.tpEndereco = tpEndereco;
         }
 
         public Pessoa GetPessoa()
@@ -36,14 +36,14 @@ namespace ProjetoMatricula.Model
             this.pessoa = pessoa;
         }
 
-        public TipoEndereco GetTipoEndereco()
+        public TipoEndereco GetTpEndereco()
         {
-            return tipoEndereco;
+            return tpEndereco;
         }
 
-        public void SetTipoEndereco(TipoEndereco tipoEndereco)
+        public void SetTpEndereco(TipoEndereco tpEndereco)
         {
-            this.tipoEndereco = tipoEndereco;
+            this.tpEndereco = tpEndereco;
         }
 
         public string GetLogradouro()
