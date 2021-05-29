@@ -106,6 +106,56 @@ namespace ProjetoMatricula.DAO
             }
         }
 
+        public void Alterar(EntidadeDominio entidadeDominio)
+        {
+            Disciplina disciplina = (Disciplina)entidadeDominio;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("UPDATE tb_disciplina SET ");
+                strSQL.Append("dt_cadastro = @dt_cadastro, curso_id = @curso_id, aluno_id = @aluno_id, nome = @nome ");
+                strSQL.Append("WHERE id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@dt_cadastro", disciplina.GetDataCadastro());
+                objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCursos());
+                objComando.Parameters.AddWithValue("@aluno_id", disciplina.GetAlunos());
+                objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao alterar registro");
+                }
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao alterar registro " + ex.Message);
+            }
+        }
+
         public void Excluir(EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
@@ -172,7 +222,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("WHERE");
                 strSQL.Append("dt_cadastro = @dt_cadastro");
                 strSQL.Append("curso_id = @curso_id");
-                strSQL.Append("descricao = @descricao");
+                strSQL.Append("nome = @nome");
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@dt_cadastro", disciplina.GetDataCadastro());
@@ -191,6 +241,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
+
+            return null;
         }
     }
 }

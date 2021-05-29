@@ -14,7 +14,7 @@ namespace ProjetoMatricula.DAO
     {
         public bool Salvar(EntidadeDominio entidade)
         {
-            Tipo tipo = (Tipo)entidade;
+            Tipo tipo = (Tipo)entidadeDominio;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -30,7 +30,7 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                var nmClass = entidade.GetType().Name.ToLower();
+                var nmClass = entidadeDominio.GetType().Name.ToLower();
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("INSERT INTO ");
                 strSQL.Append("tb_");
@@ -127,7 +127,55 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("descricao = @descricao ");
                 strSQL.Append("WHERE id = @id");
 
-                objComando.CommandText = strSQL.ToString();                
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@nome", tipo.GetNome());
+                objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro " + tipo.GetNome());
+                }
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao inserir registro " + ex.Message);
+            }
+        }
+
+        public void Alterar(EntidadeDominio entidadeDominio)
+        {
+            Tipo tipo = (Tipo)entidadeDominio;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                var nmClass = entidadeDominio.GetType().Name.ToLower();
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("UPDATE ");
+                strSQL.Append("tb_");
+                strSQL.Append(nmClass);
+                strSQL.Append(" SET ");
+                strSQL.Append("nome = @nome, descricao = @descricao ");
+                strSQL.Append("WHERE id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@nome", tipo.GetNome());
                 objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
 
                 if (objComando.ExecuteNonQuery() < 1)
@@ -147,9 +195,9 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Excluir(EntidadeDominio entidade)
+        public void Excluir(EntidadeDominio entidadeDominio)
         {
-            Tipo tipo = (Tipo)entidade;
+            Tipo tipo = (Tipo)entidadeDominio;
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -166,7 +214,7 @@ namespace ProjetoMatricula.DAO
             {
                 if (!tipo.GetId().Equals(0))
                 {
-                    var nmClass = entidade.GetType().Name.ToLower();
+                    var nmClass = entidadeDominio.GetType().Name.ToLower();
                     strSQL.Append("DELETE FROM ");
                     strSQL.Append("tb_");
                     strSQL.Append(nmClass);
@@ -192,9 +240,10 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidade)
+
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
         {
-            Tipo tipo = (Tipo)entidade;
+            Tipo tipo = (Tipo)entidadeDominio;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -210,7 +259,7 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                var nmClass = entidade.GetType().Name.ToLower();
+                var nmClass = entidadeDominio.GetType().Name.ToLower();
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("SELECT * FROM ");
                 strSQL.Append("tb_");
@@ -236,6 +285,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
+
+            return null;
         }
 
     }

@@ -67,6 +67,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\IStrategy.cs" />
+    <Compile Include="Business\ValidadorCpf.cs" />
+    <Compile Include="Business\ValidadorCurso.cs" />
+    <Compile Include="Business\ValidadorDisciplina.cs" />
+    <Compile Include="Business\ValidadorEndereco.cs" />
+    <Compile Include="Business\ValidadorRA.cs" />
     <Compile Include="DAO\AlunoDAO.cs" />
     <Compile Include="DAO\CursoDAO.cs" />
     <Compile Include="DAO\DisciplinaDAO.cs" />

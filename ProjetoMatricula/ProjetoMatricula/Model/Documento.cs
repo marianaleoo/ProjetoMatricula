@@ -9,25 +9,25 @@ namespace ProjetoMatricula.Model
     {
         private string codigo;
         private DateTime validade;
-        private TipoDocumento tpDocumento;
+        private TipoDocumento tipoDocumento;
         private Pessoa pessoa;
 
         public Documento() { }
 
-        public Documento(string codigo, DateTime validade, TipoDocumento tpDocumento)
+        public Documento(string codigo, DateTime validade, TipoDocumento tipoDocumento)
         {
             this.codigo = codigo;
             this.validade = validade;
-            this.tpDocumento = tpDocumento;
+            this.tipoDocumento = tipoDocumento;
         }
 
-        public TipoDocumento GetTpDocumento()
+        public TipoDocumento GetTipoDocumento()
         {
-            return tpDocumento;
+            return tipoDocumento;
         }
-        public void SetTpDocumento(TipoDocumento tpDocumento)
+        public void SetTipoDocumento(TipoDocumento tipoDocumento)
         {
-            this.tpDocumento = tpDocumento;
+            this.tipoDocumento = tipoDocumento;
         }
         public string GetCodigo()
         {

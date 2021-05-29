@@ -12,15 +12,15 @@ namespace ProjetoMatricula.Model
         private string ra;
         private DateTime dataNascimento;
         private List<Endereco> enderecos;
-        private List<Disciplina> disciplinas;
+        //private List<Disciplina> disciplinas;
         private List<Curso> cursos;
 
         public Aluno() { }
 
-        public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, List<Curso> cursos, string nome, string ra, DateTime dataNascimento) : base(documentos)
+        public Aluno(List<Endereco> enderecos, /*List<Disciplina> disciplinas,*/ List<Curso> cursos, string nome, string ra, string dataNascimento)
         {
             this.enderecos = enderecos;
-            this.disciplinas = disciplinas;
+            //this.disciplinas = disciplinas;
             this.cursos = cursos;
             this.nome = nome;
             this.ra = ra;
@@ -37,15 +37,15 @@ namespace ProjetoMatricula.Model
             this.enderecos = enderecos;
         }
 
-        public List<Disciplina> GetDisciplinas()
-        {
-            return disciplinas;
-        }
+        //public List<Disciplina> GetDisciplinas()
+        //{
+        //    return disciplinas;
+        //}
 
-        public void SetDisciplinas(List<Disciplina> disciplinas)
-        {
-            this.disciplinas = disciplinas;
-        }
+        //public void SetDisciplinas(List<Disciplina> disciplinas)
+        //{
+        //    this.disciplinas = disciplinas;
+        //}
 
         public List<Curso> GetCursos()
         {

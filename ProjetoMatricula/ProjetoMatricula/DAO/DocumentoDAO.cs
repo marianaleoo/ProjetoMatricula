@@ -33,7 +33,7 @@ namespace ProjetoMatricula.DAO
             try
             {
                 TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Salvar(documento.GetTpDocumento());
+                tipoDao.Salvar(documento.GetTipoDocumento());
 
                 AlunoDAO aluno = new AlunoDAO();
 
@@ -114,9 +114,62 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Excluir(EntidadeDominio entidade)
+        public void Alterar(EntidadeDominio entidadeDominio)
         {
-            Documento documento = (Documento)entidade;
+            Documento documento = (Documento)entidadeDominio;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                TipoDAO tipoDao = new TipoDAO();
+                tipoDao.Alterar(documento.GetTipoDocumento());
+
+                DocumentoDAO documentoeDao = new DocumentoDAO();
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("UPDATE tb_documento SET ");
+                strSQL.Append("dt_cadastro = @dt_cadastro, aluno_id = @aluno_id, tpdoc_id = @tpdoc_id, codigo = @codigo, validade = @validade ");
+                strSQL.Append("WHERE id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@dt_cadastro", documento.GetDataCadastro());
+                objComando.Parameters.AddWithValue("@aluno_id", documento.GetPessoa().GetId());
+                objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTipoDocumento().GetId());
+                objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
+                objComando.Parameters.AddWithValue("@validade", documento.GetValidade());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao alterar registro");
+                }
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao alterar registro " + ex.Message);
+            }
+        }
+
+        public void Excluir(EntidadeDominio entidadeDominio)
+        {
+            Documento documento = (Documento)entidadeDominio;
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -155,7 +208,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
         {
             Documento documento = (Documento)entidadeDominio;
 
@@ -179,14 +232,14 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("SELECT * FROM");
                 strSQL.Append("tb_documento");
                 strSQL.Append("WHERE");
-                strSQL.Append("aluno_id = @aluno_id");
+                strSQL.Append("idaluno = @idaluno");
                 strSQL.Append("tpdoc_id = @tpdoc_id");
                 strSQL.Append("codigo = @codigo");
                 strSQL.Append("validade = @validade");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", documento.GetPessoa().GetId());
-                objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTpDocumento().GetId());
+                objComando.Parameters.AddWithValue("@idaluno", documento.GetPessoa().GetId());
+                objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTipoDocumento().GetId());
                 objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
                 objComando.Parameters.AddWithValue("@validade", documento.GetValidade());
 
@@ -206,6 +259,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
+
+            return null;
         }
     }
 }

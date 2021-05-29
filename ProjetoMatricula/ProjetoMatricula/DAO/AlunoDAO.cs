@@ -58,12 +58,12 @@ namespace ProjetoMatricula.DAO
                     documentoDao.Salvar(item);
                 }
 
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetPessoa(aluno);
-                    disciplinaDao.Salvar(item);
-                }
+                //DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+                //foreach (var item in aluno.GetDisciplinas())
+                //{
+                //    item.SetPessoa(aluno);
+                //    disciplinaDao.Salvar(item);
+                //}
 
                 CursoDAO cursoDao = new CursoDAO();
                 foreach (var item in aluno.GetCursos())
@@ -221,7 +221,98 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public void Alterar(EntidadeDominio entidade)
+        {
+            Aluno aluno = (Aluno)entidade;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+                 AlunoDAO alunoDao = new AlunoDAO();
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("UPDATE tb_aluno SET ");
+                strSQL.Append("dt_cadastro = @dt_cadastro, ra = @ra, nome = @nome, dt_nascimento = @dt_nascimento ");
+                strSQL.Append("WHERE id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@dt_cadastro", aluno.GetDataCadastro());
+                objComando.Parameters.AddWithValue("@ra", aluno.GetRa());
+                objComando.Parameters.AddWithValue("@nome", aluno.GetNome());
+                objComando.Parameters.AddWithValue("@dt_nascimento", aluno.GetDataNascimento());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao alterar o registro");
+                }
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao alterar o registro " + ex.Message);
+            }
+        }
+
+        public void Excluir(EntidadeDominio entidade)
+        {
+            Aluno aluno = (Aluno)entidade;
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+            StringBuilder strSQL = new StringBuilder();
+            try
+            {
+                if (!aluno.GetId().Equals(0))
+                {
+                    strSQL.Append("DELETE FROM tb_aluno WHERE id = @id");
+                    objComando.CommandText = strSQL.ToString();
+                    objComando.Parameters.AddWithValue("@id", aluno.GetId());
+                }
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao excluir registro " + aluno.GetId());
+                }
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao excluir registro " + ex.Message);
+            }
+        }
+
+    
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
         {
             Aluno aluno = (Aluno)entidadeDominio;
 
@@ -269,13 +360,6 @@ namespace ProjetoMatricula.DAO
                 //    documentoDao.Consultar(item);
                 //}
 
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetPessoa(aluno);
-                    disciplinaDao.Consultar(item);
-                }
-
                 CursoDAO cursoDao = new CursoDAO();
                 foreach (var item in aluno.GetCursos())
                 {
@@ -287,7 +371,8 @@ namespace ProjetoMatricula.DAO
                 {
                     throw new Exception("Erro ao consultar registro");
                 }
-                objConn.Close();
+
+               objConn.Close();
 
             }
 
@@ -301,6 +386,7 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
 
+            return null;
         }
     }
 }
