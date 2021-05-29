@@ -8,6 +8,7 @@ namespace ProjetoMatricula.Model
 {
     public class Aluno : Pessoa
     {
+        //teste
         private string nome;
         private string ra;
         private DateTime dataNascimento;
