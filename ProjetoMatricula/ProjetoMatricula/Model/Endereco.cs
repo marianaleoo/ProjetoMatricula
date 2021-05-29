@@ -10,8 +10,7 @@ namespace ProjetoMatricula.Model
         private Pessoa pessoa;
         private string logradouro;
         private string numero;
-        private string cep;
-        private string complemento;
+        private string cep;        
         private Cidade cidade;
         private TipoEndereco tpEndereco;
 

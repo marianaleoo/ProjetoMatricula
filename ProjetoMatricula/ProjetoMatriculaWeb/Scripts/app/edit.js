@@ -1,8 +1,8 @@
-﻿//var mensagem;
+﻿var idAluno;
 var aluno = {
     DadosDTO: undefined,
 
-    salvarDados: function () {
+    atualizarDados: function () {
         aluno.DadosDTO = {
             Aluno: $("#txtAluno").val(),
             RA: $("#txtRa").val(),
@@ -19,16 +19,16 @@ var aluno = {
             Cep: $("#txtCep").val(),
             Cidade: $("#txtCidade").val(),
             Estado: $("#txtEstado").val(),
-            TipoEndereco: $("#txtTpEndereco").val()            
+            TipoEndereco: $("#txtTpEndereco").val()
         }
-        aluno.salvarBD();
+        aluno.atualizarBD();
     },
 
-    salvarBD: function () {
+    atualizarBD: function () {        
         $.ajax({
             method: "POST",
-            url: rootPath + "Controle/Salvar",
-            data: JSON.stringify(aluno.DadosDTO),
+            url: rootPath + "Controle/Atualizar",
+            data: JSON.stringify(idAluno, aluno.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -45,6 +45,6 @@ var aluno = {
 
 $(document).ready(function () {
     $("#btnSalvar").click(function () {
-        aluno.salvarDados();
+        aluno.atualizarDados();
     });
 });

@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ProjetoMatricula.Servico
 {
-    public class DadosAlunoDTO
+    public class DadosDTO
     {
+        public int Id { get; set; }
         public string Aluno { get; set; }
         public string RA { get; set; }
         public string DataNascimento { get; set; }

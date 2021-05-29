@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace ProjetoMatricula.DAO
                 CursoDAO curso = new CursoDAO();
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_curso(aluno_id, curso_id, nome)");
+                strSQL.Append("INSERT INTO tb_disciplina (aluno_id, curso_id, nome) ");
                 strSQL.Append("VALUES (@aluno_id, @curso_id, @nome)");
 
 
@@ -45,6 +46,10 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@curso_id", curso.ConsultarId());
                 objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());
 
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro " + disciplina.GetNome());
+                }
                 objConn.Close();
 
             }
@@ -60,7 +65,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
             #region Conexão BD
@@ -104,6 +109,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
         public void Excluir(EntidadeDominio entidade)
@@ -147,7 +153,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)
         {
              Disciplina disciplina = (Disciplina)entidadeDominio;
 
@@ -180,6 +186,10 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@descricao", disciplina.GetNome());
 
                 objConn.Close();
+
+                List<DadosDTO> lst = new List<DadosDTO>();
+
+                return lst;
 
             }
             catch (Exception ex)

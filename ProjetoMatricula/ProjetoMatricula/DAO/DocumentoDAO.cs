@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace ProjetoMatricula.DAO
 
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_documento(aluno_id, tpdoc_id, codigo, ");
+                strSQL.Append("INSERT INTO tb_documento (aluno_id, tpdoc_id, codigo, ");
                 strSQL.Append("validade) VALUES (@aluno_id, @tpdoc_id, @codigo, @validade)");
 
                 objComando.CommandText = strSQL.ToString();
@@ -66,7 +67,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Documento documento = (Documento)entidade;
             #region Conexão BD
@@ -112,6 +113,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
         public void Excluir(EntidadeDominio entidade)
@@ -155,7 +157,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)
         {
             Documento documento = (Documento)entidadeDominio;
 
@@ -195,6 +197,10 @@ namespace ProjetoMatricula.DAO
                     throw new Exception("Erro ao consultar registro " + documento.GetCodigo());
                 }
                 objConn.Close();
+
+                List<DadosDTO> lst = new List<DadosDTO>();
+
+                return lst;
 
             }
             catch (Exception ex)

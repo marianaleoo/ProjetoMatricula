@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,8 @@ namespace ProjetoMatricula.DAO
     public interface IDAO
     {
         bool Salvar(EntidadeDominio entidade);
-        void Alterar(EntidadeDominio entidade);
-        void Excluir(EntidadeDominio entidade);
-        void Consultar(EntidadeDominio entidade);
-        //List<EntidadeDominio> Consultar(EntidadeDominio entidade);
+        bool Alterar(EntidadeDominio entidade);
+        void Excluir(EntidadeDominio entidade);        
+        List<DadosDTO> Consultar(EntidadeDominio entidade);
     }
 }

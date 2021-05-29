@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("INSERT INTO ");
                 strSQL.Append("tb_");
                 strSQL.Append(nmClass);
-                strSQL.Append("(descricao) ");
+                strSQL.Append(" (descricao) ");
                 strSQL.Append("VALUES (@descricao)");
 
                 objComando.CommandText = strSQL.ToString();                
@@ -101,7 +102,7 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
             #region Conexão BD
@@ -145,6 +146,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
         public void Excluir(EntidadeDominio entidade)
@@ -192,7 +194,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidade)
+        public List<DadosDTO> Consultar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
 
@@ -226,6 +228,10 @@ namespace ProjetoMatricula.DAO
                     throw new Exception("Erro ao consultar registro " + tipo.GetDescricao());
                 }
                 objConn.Close();
+
+                List<DadosDTO> lst = new List<DadosDTO>();
+
+                return lst;
             }
             catch (Exception ex)
             {

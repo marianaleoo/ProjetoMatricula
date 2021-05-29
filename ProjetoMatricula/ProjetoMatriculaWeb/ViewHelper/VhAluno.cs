@@ -1,18 +1,17 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjetoMatricula.Servico
+namespace ProjetoMatriculaWeb.ViewHelper
 {
-    public class AlunoServico
+    public class VhAluno : IViewHelper
     {
-        public Aluno Teste(DadosAlunoDTO dados)
+        public EntidadeDominio GetEntidade(DadosDTO dados)
         {
-            TipoDocumento tipoDocumento = new TipoDocumento();
-
-            tipoDocumento.SetDescricao(dados.TipoDocumento);            
+            TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento);            
 
             Documento documento = new Documento(dados.Codigo, Convert.ToDateTime(dados.Validade), tipoDocumento);
 
@@ -20,7 +19,7 @@ namespace ProjetoMatricula.Servico
             documentos.Add(documento);
 
             TipoEndereco tipoEndereco = new TipoEndereco(dados.TipoEndereco);
-            
+
             Estado estado = new Estado(dados.Estado);
 
             Cidade cidade = new Cidade(dados.Cidade, estado);
@@ -30,7 +29,7 @@ namespace ProjetoMatricula.Servico
             List<Endereco> enderecos = new List<Endereco>();
             enderecos.Add(endereco);
 
-            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso);            
+            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso);
 
             Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo);
 

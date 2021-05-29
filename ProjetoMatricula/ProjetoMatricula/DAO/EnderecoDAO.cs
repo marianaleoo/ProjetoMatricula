@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -35,20 +36,25 @@ namespace ProjetoMatricula.DAO
                 TipoDAO tipoDao = new TipoDAO();
                 tipoDao.Salvar(endereco.GetTpEndereco());
 
+                AlunoDAO aluno = new AlunoDAO();
+
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_endereco(aluno_id, tpend_id, cidade, estado");
+                strSQL.Append("INSERT INTO tb_endereco (aluno_id, tpend_id, cidade, estado, ");
                 strSQL.Append("logradouro, numero, cep) VALUES (@aluno_id, @tpend_id, @cidade, @estado, @logradouro, @numero, @cep)");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetPessoa().GetId());
-                objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
+                objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
+                objComando.Parameters.AddWithValue("@tpend_id", tipoDao.ConsultarId(endereco.GetTpEndereco()));
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
                 objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().getDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
                 objComando.Parameters.AddWithValue("@numero", endereco.GetNumero());
                 objComando.Parameters.AddWithValue("@cep", endereco.GetCep());
-
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro " + endereco.GetLogradouro());
+                }
                 objConn.Close();
 
             }
@@ -64,7 +70,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Endereco endereco = (Endereco)entidade;
             #region Conexão BD
@@ -113,6 +119,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
 
@@ -157,7 +164,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)
         {
             Endereco endereco = (Endereco)entidadeDominio;
             #region Conexão BD
@@ -197,6 +204,10 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@cep", endereco.GetCep());
 
                 objConn.Close();
+
+                List<DadosDTO> lst = new List<DadosDTO>();
+
+                return lst;
 
             }
             catch (Exception ex)

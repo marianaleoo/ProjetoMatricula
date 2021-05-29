@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace ProjetoMatricula.DAO
                 StringBuilder strSQL = new StringBuilder();
 
 
-                strSQL.Append("INSERT INTO tb_aluno(dt_cadastro, ra, nome, dt_nascimento)");
+                strSQL.Append("INSERT INTO tb_aluno (dt_cadastro, ra, nome, dt_nascimento) ");
                 strSQL.Append("VALUES (@dt_cadastro, @ra, @nome, @dt_nascimento)");
 
                 objComando.CommandText = strSQL.ToString();
@@ -43,6 +44,12 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@ra", aluno.GetRa());
                 objComando.Parameters.AddWithValue("@nome", aluno.GetNome());
                 objComando.Parameters.AddWithValue("@dt_nascimento", aluno.GetDataNascimento());
+
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro");
+                }
+                objConn.Close();
 
                 EnderecoDAO enderecoDao = new EnderecoDAO();
                 foreach (var item in aluno.GetEnderecos())
@@ -58,13 +65,6 @@ namespace ProjetoMatricula.DAO
                     documentoDao.Salvar(item);
                 }
 
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetPessoa(aluno);
-                    disciplinaDao.Salvar(item);
-                }
-
                 CursoDAO cursoDao = new CursoDAO();
                 foreach (var item in aluno.GetCursos())
                 {
@@ -72,12 +72,12 @@ namespace ProjetoMatricula.DAO
                     cursoDao.Salvar(item);
                 }
 
-                if (objComando.ExecuteNonQuery() < 1)
+                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+                foreach (var item in aluno.GetDisciplinas())
                 {
-                    throw new Exception("Erro ao inserir registro");
-                }
-                objConn.Close();
-
+                    item.SetPessoa(aluno);
+                    disciplinaDao.Salvar(item);
+                }                
             }
 
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Aluno aluno = (Aluno)entidade;
             #region Conexão BD
@@ -178,6 +178,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
         public void Excluir(EntidadeDominio entidade)
@@ -221,9 +222,9 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<DadosDTO> Consultar(EntidadeDominio entidade)
         {
-            Aluno aluno = (Aluno)entidadeDominio;
+            //Aluno aluno = (Aluno)entidade;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -239,58 +240,31 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                StringBuilder strSQL = new StringBuilder();
+                objComando.CommandType = CommandType.Text;
+                objComando.CommandTimeout = 0;
+                objComando.CommandText = @"select aluno.nome, aluno.ra, curso.nome, disciplina.nome 
+                                            from tb_aluno aluno
+                                            inner join tb_curso curso on aluno.id = curso.aluno_id
+                                            inner join tb_disciplina disc on aluno.id = disc.aluno_id";
 
-                strSQL.Append("SELECT * FROM");
-                strSQL.Append("tb_aluno");
-                strSQL.Append("WHERE");
-                strSQL.Append("dt_cadastro = @dt_cadastro");
-                strSQL.Append("ra = @ra");
-                strSQL.Append("nome = @nome");
-                strSQL.Append("dt_nascimento = @dt_nascimento");
+                List<DadosDTO> lst = new List<DadosDTO>();
+                SqlDataReader reader = objComando.ExecuteReader();
 
-                objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@dt_cadastro", aluno.GetDataCadastro());
-                objComando.Parameters.AddWithValue("@ra", aluno.GetRa());
-                objComando.Parameters.AddWithValue("@nome", aluno.GetNome());
-                objComando.Parameters.AddWithValue("@dt_nascimento", aluno.GetDataNascimento());
-
-                EnderecoDAO enderecoDao = new EnderecoDAO();
-                foreach (var item in aluno.GetEnderecos())
+                while (reader.Read())
                 {
-                    item.SetPessoa(aluno);
-                    enderecoDao.Consultar(item);
+                    lst.Add(new DadosDTO
+                    {
+                       Aluno = reader["nome"].ToString(),
+                       RA = reader["ra"].ToString(),
+                       Curso = reader["curso"].ToString(),
+                       Disciplina = reader["disciplina"].ToString()
+                    });
                 }
-
-                //DocumentoDAO documentoDao = new DocumentoDAO();
-                //foreach (var item in aluno.getDocumentos())
-                //{
-                //    item.SetPessoa(aluno);
-                //    documentoDao.Consultar(item);
-                //}
-
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetPessoa(aluno);
-                    disciplinaDao.Consultar(item);
-                }
-
-                CursoDAO cursoDao = new CursoDAO();
-                foreach (var item in aluno.GetCursos())
-                {
-                    item.SetPessoa(aluno);
-                    cursoDao.Consultar(item);
-                }
-
-                if (objComando.ExecuteNonQuery() < 1)
-                {
-                    throw new Exception("Erro ao consultar registro");
-                }
+                                
                 objConn.Close();
 
+                return lst;
             }
-
             catch (Exception ex)
             {
                 if (objConn.State == ConnectionState.Open)
@@ -299,8 +273,7 @@ namespace ProjetoMatricula.DAO
                 }
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
-            }
-
+            }            
         }
     }
 }

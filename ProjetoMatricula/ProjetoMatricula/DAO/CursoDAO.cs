@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace ProjetoMatricula.DAO
 
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_curso(aluno_id, tipoCurso_id, nome, modeloCurso)");
+                strSQL.Append("INSERT INTO tb_curso (aluno_id, tipoCurso_id, nome, modeloCurso) ");
                 strSQL.Append("VALUES (@aluno_id, @tipoCurso_id, @nome, @modeloCurso)");
 
 
@@ -49,6 +50,10 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@nome", curso.GetNome());
                 objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
 
+                if (objComando.ExecuteNonQuery() < 1)
+                {
+                    throw new Exception("Erro ao inserir registro " + curso.GetNome());
+                }
                 objConn.Close();
 
             }
@@ -103,7 +108,7 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public void Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Curso curso = (Curso)entidade;
             #region Conexão BD
@@ -148,6 +153,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            return true;
         }
 
         public void Excluir(EntidadeDominio entidade)
@@ -191,7 +197,7 @@ namespace ProjetoMatricula.DAO
             }
         }
 
-        public void Consultar(EntidadeDominio entidadeDominio)
+        public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)
         {
             Curso curso = (Curso)entidadeDominio;
 
@@ -228,6 +234,9 @@ namespace ProjetoMatricula.DAO
 
                 objConn.Close();
 
+                List<DadosDTO> lst = new List<DadosDTO>();
+
+                return lst;
             }
             catch (Exception ex)
             {
