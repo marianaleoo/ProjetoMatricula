@@ -10,9 +10,9 @@ namespace ProjetoMatricula.Servico
         public int Id { get; set; }
         public string Aluno { get; set; }
         public string RA { get; set; }
-        public string DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
         public string Codigo { get; set; }
-        public string Validade { get; set; }
+        public DateTime Validade { get; set; }
         public string TipoDocumento { get; set; }        
         public string Curso{ get; set; }
         public string Modelo { get; set; }

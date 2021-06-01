@@ -1,13 +1,21 @@
-﻿var id = $("#idAluno").val();
+﻿var aluno = {
+    DadosDTO: undefined,
 
-var aluno = {
+    carregarId: function () {
+        aluno.DadosDTO = {
+            Id: parseInt($("#idAluno").val())
+        }
+        aluno.buscarDados();
+    },
 
-    buscarDados: function () {
+    buscarDados: function () {   
+        console.log(aluno.DadosDTO);
         $.ajax({
             cache: false,
-            type: "POST",
-            url: rootPath + "Controle/Detalhes",
-            data: { id: id },
+            method: "POST",
+            url: rootPath + "Controle/Detalhar",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 aluno.carregarDados(data);
@@ -27,6 +35,8 @@ var aluno = {
 
 
     carregarDados: function (data) {
+        var data = $(data).get(0);
+            $("#idAluno").html(data.Id),
             $("#txtAluno").html(data.Aluno),
             $("#txtRa").html(data.RA),
             $("#txtDtNascimento").html(data.DataNascimento),
@@ -43,13 +53,38 @@ var aluno = {
             $("#txtCidade").html(data.Cidade),
             $("#txtEstado").html(data.Estado),
             $("#txtTpEndereco").html(data.TipoEndereco)     
-    }
+    },
+
+    excluirDados: function () {
+        console.log(aluno.DadosDTO);
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/Excluir",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                location.href(rootPath + "Controle/Index");
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do aluno",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
 };
 
 $(document).ready(function () {
-    aluno.buscarDados();
+    aluno.carregarId();
 
-    //$("#btnSalvar").click(function () {
-    //    aluno.salvarDados();
-    //});
+    $("#btnExcluir").click(function () {
+        aluno.excluirDados();
+    });
 });

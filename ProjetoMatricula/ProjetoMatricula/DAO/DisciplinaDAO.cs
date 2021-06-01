@@ -65,7 +65,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public bool Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
             #region Conexão BD
@@ -81,14 +81,13 @@ namespace ProjetoMatricula.DAO
             #endregion
 
             try
-            {
-                AlunoDAO alunoDao = new AlunoDAO();
+            {              
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_disciplina SET ");
                 strSQL.Append("nome = @nome ");
-                strSQL.Append("WHERE id = @id");
+                strSQL.Append("WHERE id = " + id.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());                
@@ -112,7 +111,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Excluir(EntidadeDominio entidade)
+        public bool Excluir(EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
             #region Conexão BD
@@ -151,6 +150,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            return true;
         }
 
         public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)

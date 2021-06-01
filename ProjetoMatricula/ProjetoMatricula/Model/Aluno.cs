@@ -7,7 +7,7 @@ using System.Web;
 namespace ProjetoMatricula.Model
 {
     public class Aluno : Pessoa
-    {
+    {        
         private string nome;
         private string ra;
         private DateTime dataNascimento;
@@ -24,7 +24,7 @@ namespace ProjetoMatricula.Model
             this.cursos = cursos;
             this.nome = nome;
             this.ra = ra;
-            this.dataNascimento = dataNascimento;
+            this.dataNascimento = dataNascimento;            
         }
 
         public List<Endereco> GetEnderecos()
@@ -97,6 +97,6 @@ namespace ProjetoMatricula.Model
         public void SetDataNascimento(DateTime dataNascimento)
         {
             this.dataNascimento = dataNascimento;
-        }
+        }        
     }
 }

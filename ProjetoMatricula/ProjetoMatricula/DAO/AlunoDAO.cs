@@ -15,9 +15,9 @@ namespace ProjetoMatricula.DAO
     {
         public AlunoDAO() { }
 
-        public bool Salvar(EntidadeDominio entidadeDominio)
+        public bool Salvar(EntidadeDominio entidade)
         {
-            Aluno aluno = (Aluno)entidadeDominio;
+            Aluno aluno = (Aluno)entidade;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -131,7 +131,7 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public bool Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
         {
             Aluno aluno = (Aluno)entidade;
             #region Conexão BD
@@ -154,7 +154,7 @@ namespace ProjetoMatricula.DAO
 
                 strSQL.Append("UPDATE tb_aluno SET ");
                 strSQL.Append("dt_cadastro = @dt_cadastro, ra = @ra, nome = @nome, dt_nascimento = @dt_nascimento ");
-                strSQL.Append("WHERE id = @id");
+                strSQL.Append("WHERE id = " +id.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@dt_cadastro", aluno.GetDataCadastro());
@@ -167,6 +167,34 @@ namespace ProjetoMatricula.DAO
                     throw new Exception("Erro ao inserir registro");
                 }
                 objConn.Close();
+
+                EnderecoDAO enderecoDao = new EnderecoDAO();
+                foreach (var item in aluno.GetEnderecos())
+                {
+                    item.SetPessoa(aluno);
+                    enderecoDao.Alterar(id, item);
+                }
+
+                DocumentoDAO documentoDao = new DocumentoDAO();
+                foreach (var item in aluno.getDocumentos())
+                {
+                    item.SetPessoa(aluno);
+                    documentoDao.Alterar(id, item);
+                }
+
+                CursoDAO cursoDao = new CursoDAO();
+                foreach (var item in aluno.GetCursos())
+                {
+                    item.SetPessoa(aluno);
+                    cursoDao.Alterar(id, item);
+                }
+
+                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+                foreach (var item in aluno.GetDisciplinas())
+                {
+                    item.SetPessoa(aluno);
+                    disciplinaDao.Alterar(id, item);
+                }
 
             }
             catch (Exception ex)
@@ -181,9 +209,8 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Excluir(EntidadeDominio entidade)
+        public bool Excluir(EntidadeDominio entidade)
         {
-            Aluno aluno = (Aluno)entidade;
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -198,16 +225,15 @@ namespace ProjetoMatricula.DAO
             StringBuilder strSQL = new StringBuilder();
             try
             {
-                if (!aluno.GetId().Equals(0))
+                if (!entidade.GetId().Equals(0))
                 {
-                    strSQL.Append("DELETE FROM tb_aluno WHERE id =@id");
-                    objComando.CommandText = strSQL.ToString();
-                    objComando.Parameters.AddWithValue("@id", aluno.GetId());
+                    strSQL.Append("DELETE FROM tb_aluno WHERE id = " + entidade.GetId());
+                    objComando.CommandText = strSQL.ToString();                    
                 }
 
                 if (objComando.ExecuteNonQuery() < 1)
                 {
-                    throw new Exception("Erro ao excluir registro " + aluno.GetId());
+                    throw new Exception("Erro ao excluir registro " + entidade.GetId());
                 }
                 objConn.Close();
             }
@@ -220,11 +246,13 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            return true;
         }
 
         public List<DadosDTO> Consultar(EntidadeDominio entidade)
         {
-            //Aluno aluno = (Aluno)entidade;
+                   
+            List<DadosDTO> lst = new List<DadosDTO>();
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -240,27 +268,74 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                objComando.CommandType = CommandType.Text;
-                objComando.CommandTimeout = 0;
-                objComando.CommandText = @"select aluno.nome, aluno.ra, curso.nome, disciplina.nome 
-                                            from tb_aluno aluno
-                                            inner join tb_curso curso on aluno.id = curso.aluno_id
-                                            inner join tb_disciplina disc on aluno.id = disc.aluno_id";
-
-                List<DadosDTO> lst = new List<DadosDTO>();
-                SqlDataReader reader = objComando.ExecuteReader();
-
-                while (reader.Read())
+                if (!entidade.GetId().Equals(0))
                 {
-                    lst.Add(new DadosDTO
+                    objComando.CommandType = CommandType.Text;
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = $@"select aluno.id, aluno.nome nomealuno, aluno.ra, aluno.dt_nascimento, curso.nome nomecurso, curso.modeloCurso, disciplina.nome nomedisciplina,
+                                                documento.codigo, documento.validade, endereco.cidade, endereco.estado, endereco.logradouro, endereco.numero, endereco.cep, 
+		                                        tpcurso.descricao tpcursodescricao, tpdocumento.descricao tpdocumentodescricao, tpendereco.descricao tpenderecodescricao
+                                                from tb_aluno as aluno
+                                                inner join tb_curso as curso on aluno.id = curso.aluno_id
+                                                inner join tb_disciplina as disciplina on aluno.id = disciplina.aluno_id
+                                                inner join tb_documento as documento on aluno.id = documento.aluno_id
+                                                inner join tb_endereco as endereco on aluno.id = endereco.aluno_id
+                                                inner join tb_tipocurso as tpcurso on curso.tipoCurso_id = tpcurso.id
+                                                inner join tb_tipodocumento as tpdocumento on documento.tpdoc_id = tpdocumento.id
+                                                inner join tb_tipoendereco as tpendereco on endereco.tpend_id = tpendereco.id
+                                                where aluno.id =" + entidade.GetId();
+
+
+                    SqlDataReader reader = objComando.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                       Aluno = reader["nome"].ToString(),
-                       RA = reader["ra"].ToString(),
-                       Curso = reader["curso"].ToString(),
-                       Disciplina = reader["disciplina"].ToString()
-                    });
+                        lst.Add(new DadosDTO
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Aluno = reader["nomealuno"].ToString(),
+                            RA = reader["ra"].ToString(),
+                            DataNascimento = Convert.ToDateTime(reader["dt_nascimento"]),
+                            Codigo = reader["codigo"].ToString(),
+                            Validade = Convert.ToDateTime(reader["validade"]),
+                            TipoDocumento = reader["tpdocumentodescricao"].ToString(),
+                            Curso = reader["nomecurso"].ToString(),
+                            Modelo = reader["modeloCurso"].ToString(),
+                            Disciplina = reader["nomedisciplina"].ToString(),
+                            TipoCurso = reader["tpcursodescricao"].ToString(),
+                            Logradouro = reader["logradouro"].ToString(),
+                            Numero = reader["numero"].ToString(),
+                            Cep = reader["cep"].ToString(),
+                            Cidade = reader["cidade"].ToString(),
+                            Estado = reader["estado"].ToString(),
+                            TipoEndereco = reader["tpenderecodescricao"].ToString()
+                        });
+                    }
                 }
-                                
+                else
+                {
+                    objComando.CommandType = CommandType.Text;
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = @"select aluno.id, aluno.nome, aluno.ra, curso.nome nomecurso, curso.modeloCurso, tpcurso.descricao
+                                                from tb_aluno aluno
+                                                inner join tb_curso curso on aluno.id = curso.aluno_id
+                                                inner join tb_tipocurso tpcurso on curso.tipoCurso_id = tpcurso.id";
+                    
+                    SqlDataReader reader = objComando.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lst.Add(new DadosDTO
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Aluno = reader["nome"].ToString(),
+                            RA = reader["ra"].ToString(),
+                            Curso = reader["nomecurso"].ToString(),
+                            Modelo = reader["modeloCurso"].ToString(),
+                            TipoCurso = reader["descricao"].ToString()
+                        });
+                    }
+                }          
                 objConn.Close();
 
                 return lst;

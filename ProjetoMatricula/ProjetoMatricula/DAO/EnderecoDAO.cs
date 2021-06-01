@@ -15,9 +15,9 @@ namespace ProjetoMatricula.DAO
     {
         public EnderecoDAO() { }
 
-        public bool Salvar(EntidadeDominio entidadeDominio)
+        public bool Salvar(EntidadeDominio entidade)
         {
-            Endereco endereco = (Endereco)entidadeDominio;
+            Endereco endereco = (Endereco)entidade;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -70,7 +70,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public bool Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
         {
             Endereco endereco = (Endereco)entidade;
             #region Conexão BD
@@ -88,13 +88,13 @@ namespace ProjetoMatricula.DAO
             try
             {
                 TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(endereco.GetTpEndereco());                
+                tipoDao.Alterar(id, endereco.GetTpEndereco());                
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_endereco SET ");
                 strSQL.Append("cidade = @cidade, estado = @estado, logradouro = @logradouro, numero = @numero, cep = @cep ");
-                strSQL.Append("WHERE id = @id");
+                strSQL.Append("WHERE id = " + id.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
@@ -123,7 +123,7 @@ namespace ProjetoMatricula.DAO
         }
 
 
-        public void Excluir(EntidadeDominio entidade)
+        public bool Excluir(EntidadeDominio entidade)
         {
             Endereco endereco = (Endereco)entidade;
             #region Conexão BD
@@ -162,6 +162,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            return true;
         }
 
         public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)

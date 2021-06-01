@@ -11,6 +11,13 @@ namespace ProjetoMatricula.Model
 
         public DateTime dataCadastro;
 
+        public EntidadeDominio() { }
+
+        public EntidadeDominio(int id) 
+        {
+            this.id = id;                       
+        }
+
         public int GetId()
         {
             return id;

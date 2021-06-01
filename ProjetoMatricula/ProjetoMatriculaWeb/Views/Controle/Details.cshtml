@@ -17,13 +17,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+                    <h4 class="modal-title" id="modalLabel">Excluir Aluno</h4>
                 </div>
                 <div class="modal-body">
-                    Deseja realmente excluir este item?
+                    Deseja realmente excluir os dados deste aluno?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Sim</button>
+                    <button type="button" class="btn btn-primary" id="btnExcluir">Sim</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                 </div>
             </div>
@@ -34,20 +34,20 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 @*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>*@
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>*@
                 <a class="navbar-brand" href="#">Projeto Engenharia 3</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 @*<ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">In&iacute;cio</a></li>
-                    <li><a href="#">Op&ccedil;&otilde;es</a></li>
-                    <li><a href="#">Perfil</a></li>
-                    <li><a href="#">Ajuda</a></li>
-                </ul>*@
+                        <li><a href="#">In&iacute;cio</a></li>
+                        <li><a href="#">Op&ccedil;&otilde;es</a></li>
+                        <li><a href="#">Perfil</a></li>
+                        <li><a href="#">Ajuda</a></li>
+                    </ul>*@
             </div>
         </div>
     </nav>
@@ -141,8 +141,8 @@
         <hr />
         <div id="actions" class="row">
             <div class="col-md-12">
-                <a href="index.html" class="btn btn-default">Fechar</a>
-                <a href="edit.html" class="btn btn-primary">Editar</a>
+                <a href="/Controle/Index" class="btn btn-default">Fechar</a>
+                <a href="Edit" class="btn btn-primary">Editar</a>
                 <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">Excluir</a>
             </div>
         </div>
@@ -155,5 +155,10 @@
 </body>
 </html>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/toastr")
+    @Scripts.Render("~/Scripts/app/details.js")
+}
 
 

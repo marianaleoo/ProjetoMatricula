@@ -102,7 +102,7 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public bool Alterar(EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
             #region Conexão BD
@@ -126,7 +126,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append(nmClass);
                 strSQL.Append(" SET ");
                 strSQL.Append("descricao = @descricao ");
-                strSQL.Append("WHERE id = @id");
+                strSQL.Append("WHERE id = " + id.GetId());
 
                 objComando.CommandText = strSQL.ToString();                
                 objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
@@ -149,7 +149,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public void Excluir(EntidadeDominio entidade)
+        public bool Excluir(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
             #region Conexão BD
@@ -192,6 +192,7 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            return true;
         }
 
         public List<DadosDTO> Consultar(EntidadeDominio entidade)

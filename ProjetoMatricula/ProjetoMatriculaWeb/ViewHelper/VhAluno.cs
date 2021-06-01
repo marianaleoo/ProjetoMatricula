@@ -10,7 +10,8 @@ namespace ProjetoMatriculaWeb.ViewHelper
     public class VhAluno : IViewHelper
     {
         public EntidadeDominio GetEntidade(DadosDTO dados)
-        {
+        {  
+
             TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento);            
 
             Documento documento = new Documento(dados.Codigo, Convert.ToDateTime(dados.Validade), tipoDocumento);
@@ -44,6 +45,13 @@ namespace ProjetoMatriculaWeb.ViewHelper
             Aluno aluno = new Aluno(documentos, enderecos, disciplinas, cursos, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento));
 
             return aluno;
+        }
+
+        public EntidadeDominio GetId(DadosDTO dados)
+        {
+            EntidadeDominio id = new EntidadeDominio(dados.Id);            
+
+            return id;
         }
     }
 }

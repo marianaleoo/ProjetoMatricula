@@ -19,6 +19,7 @@
     <br>
     <br>
     <div id="main" class="container-fluid">
+        <input type="hidden" id="idAluno" value="@ViewBag.Id">
         <h3 class="page-header">Editar Aluno</h3>
         <div class="row">
             <h3>Aluno</h3>
@@ -156,8 +157,8 @@
         <hr />
         <div id="actions" class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
-                <a href="Index" class="btn btn-default">Cancelar</a>
+                <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
+                <a href="/Controle/Index" class="btn btn-default">Cancelar</a>
             </div>
         </div>
     </div>

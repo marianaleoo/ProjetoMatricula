@@ -13,13 +13,18 @@ namespace ProjetoMatriculaWeb.Controllers
     public class ControleController : Controller
     {
         // GET: Controle        
-        public ActionResult Index()
+        public ActionResult Index(DadosDTO dados)
         {
-            return View();
-        }
+            IViewHelper vh = new VhAluno();
+            AlunoDAO dao = new AlunoDAO();
+
+            var teste = vh.GetId(dados);
+            var data = dao.Consultar(teste);
+            return View(data);
+        }        
 
         // GET: Controle/Details/5
-        public ActionResult Details(int id = 1)
+        public ActionResult Details(int id)
         {
             ViewBag.Id = id;
 
@@ -33,8 +38,10 @@ namespace ProjetoMatriculaWeb.Controllers
         }
 
         // GET: Controle/Edit/5
-        public ActionResult Edit(int id = 1)
+        public ActionResult Edit(int id)
         {
+            ViewBag.Id = id;
+
             return View();
         }
 
@@ -65,7 +72,7 @@ namespace ProjetoMatriculaWeb.Controllers
 
         // POST: Controle/Edit/5
         [HttpPost]
-        public JsonResult Atualizar(int idAluno, DadosDTO dados)
+        public JsonResult Atualizar(DadosDTO dados)
         {
             try
             {
@@ -73,8 +80,9 @@ namespace ProjetoMatriculaWeb.Controllers
                 AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
+                var teste2 = vh.GetId(dados);
 
-                return Json(new { success = dao.Alterar(teste) });
+                return Json(new { success = dao.Alterar(teste2, teste) });
             }
             catch
             {
@@ -102,19 +110,42 @@ namespace ProjetoMatriculaWeb.Controllers
             }
         }
 
-        // POST: Controle/Delete/5
+        // POST: Controle/Excluir/5
         [HttpPost]
-        public ActionResult Deletar(int id, FormCollection collection)
+        public JsonResult Excluir(DadosDTO dados)
         {
             try
             {
-                // TODO: Add delete logic here
+                IViewHelper vh = new VhAluno();
+                AlunoDAO dao = new AlunoDAO();
 
-                return RedirectToAction("Index");
+                var teste = vh.GetId(dados);                
+
+                return Json(new { success = dao.Excluir(teste) });
             }
             catch
             {
-                return View();
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public string Detalhar(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhAluno();
+                AlunoDAO dao = new AlunoDAO();
+
+                var teste = vh.GetId(dados);
+
+                var data = dao.Consultar(teste);
+
+                return JsonConvert.SerializeObject(data);
+            }
+            catch
+            {
+                return JsonConvert.SerializeObject(new { success = false });
             }
         }
     }

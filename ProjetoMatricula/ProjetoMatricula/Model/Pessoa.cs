@@ -6,16 +6,16 @@ using System.Web;
 namespace ProjetoMatricula.Model
 {
     public abstract class Pessoa : EntidadeDominio
-    {
+    {        
         public List<Documento> documentos;
 
         public Pessoa()
         {
         }
 
-        public Pessoa(List<Documento> documentos)
+        public Pessoa(List<Documento> documentos) 
         {
-            this.documentos = documentos;
+            this.documentos = documentos;            
         }
 
         public List<Documento> getDocumentos()
