@@ -30,8 +30,8 @@ namespace ProjetoMatricula.Facade
 
             List<IStrategy> rNegocioAluno = new List<IStrategy>();
             rNegocioAluno.Add(validCpf);
-            rNegocio[aluno.GetType().Name.ToLower()] = rNegocioAluno;
-            rNegocioAluno = rNegocio[aluno.GetType().Name.ToLower()];
+            rNegocio[aluno.GetType().Name] = rNegocioAluno;
+            rNegocioAluno = rNegocio[aluno.GetType().Name];
         }
 
         private void DefinirDAOS()
@@ -39,8 +39,8 @@ namespace ProjetoMatricula.Facade
             Aluno aluno = new Aluno();
             AlunoDAO alunoDao = new AlunoDAO();
             daos = new Dictionary<string, IDAO>();
-            daos[aluno.GetType().Name.ToLower()] =  alunoDao;
-            //alunoDao = daos[aluno.GetType().Name.ToLower()];
+            daos[aluno.GetType().Name] =  alunoDao;
+            //alunoDao = daos[aluno.GetType().Name;
         }
 
 
