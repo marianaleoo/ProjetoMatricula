@@ -12,46 +12,46 @@ namespace ProjetoMatriculaWeb.ViewHelper
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {  
 
-            TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento);            
+            TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento, dados.Id);            
 
-            Documento documento = new Documento(dados.Codigo, Convert.ToDateTime(dados.Validade), tipoDocumento);
+            Documento documento = new Documento(dados.Codigo, Convert.ToDateTime(dados.Validade), tipoDocumento, dados.Id);
 
             List<Documento> documentos = new List<Documento>();
             documentos.Add(documento);
 
-            TipoEndereco tipoEndereco = new TipoEndereco(dados.TipoEndereco);
+            TipoEndereco tipoEndereco = new TipoEndereco(dados.TipoEndereco, dados.Id);
 
             Estado estado = new Estado(dados.Estado);
 
             Cidade cidade = new Cidade(dados.Cidade, estado);
 
-            Endereco endereco = new Endereco(dados.Logradouro, dados.Numero, dados.Cep, cidade, tipoEndereco);
+            Endereco endereco = new Endereco(dados.Logradouro, dados.Numero, dados.Cep, cidade, tipoEndereco, dados.Id);
 
             List<Endereco> enderecos = new List<Endereco>();
             enderecos.Add(endereco);
 
-            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso);
+            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso, dados.Id);
 
-            Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo);
+            Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.Id);
 
             List<Curso> cursos = new List<Curso>();
             cursos.Add(curso);
 
-            Disciplina disciplina = new Disciplina(dados.Disciplina);
+            Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id);
 
             List<Disciplina> disciplinas = new List<Disciplina>();
             disciplinas.Add(disciplina);
 
-            Aluno aluno = new Aluno(documentos, enderecos, disciplinas, cursos, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento));
+            Aluno aluno = new Aluno(documentos, enderecos, disciplinas, cursos, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento), dados.Id);
 
             return aluno;
         }
 
-        public EntidadeDominio GetId(DadosDTO dados)
-        {
-            EntidadeDominio id = new EntidadeDominio(dados.Id);            
+        //public EntidadeDominio GetId(DadosDTO dados)
+        //{
+        //    EntidadeDominio id = new EntidadeDominio(dados.Id);            
 
-            return id;
-        }
+        //    return id;
+        //}
     }
 }

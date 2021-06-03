@@ -10,11 +10,11 @@ namespace ProjetoMatricula.Model
         private string codigo;
         private DateTime validade;
         private TipoDocumento tpDocumento;
-        private Pessoa pessoa;
+        private Aluno aluno;
 
         public Documento() { }
 
-        public Documento(string codigo, DateTime validade, TipoDocumento tpDocumento)
+        public Documento(string codigo, DateTime validade, TipoDocumento tpDocumento, int id) : base(id)
         {
             this.codigo = codigo;
             this.validade = validade;
@@ -45,14 +45,14 @@ namespace ProjetoMatricula.Model
         {
             this.validade = validade;
         }
-        public Pessoa GetPessoa()
+        public Aluno GetAluno()
         {
-            return pessoa;
+            return aluno;
         }
 
-        public void SetPessoa(Pessoa pessoa)
+        public void SetAluno(Aluno aluno)
         {
-            this.pessoa = pessoa;
+            this.aluno = aluno;
         }
     }
 }

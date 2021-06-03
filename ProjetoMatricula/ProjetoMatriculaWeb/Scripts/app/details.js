@@ -65,7 +65,8 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                location.href(rootPath + "Controle/Index");
+                $('#modalDelete').modal('hide');
+                aluno.retornoIndex();
             },
             error: function (error) {
                 swal({
@@ -79,6 +80,14 @@
             }
         });
     },
+
+    editarDados: function () {
+        window.open(rootPath + 'Controle/Edit?id=' + parseInt($("#idAluno").val()))
+    },
+
+    retornoIndex: function () {
+        window.open(rootPath + 'Controle/Index')
+    }
 };
 
 $(document).ready(function () {
@@ -86,5 +95,9 @@ $(document).ready(function () {
 
     $("#btnExcluir").click(function () {
         aluno.excluirDados();
+    });
+
+    $("#btnEditar").click(function () {
+        aluno.editarDados();
     });
 });

@@ -7,7 +7,7 @@ namespace ProjetoMatricula.Model
 {
     public class Endereco : EntidadeDominio
     {
-        private Pessoa pessoa;
+        private Aluno aluno;
         private string logradouro;
         private string numero;
         private string cep;        
@@ -17,7 +17,7 @@ namespace ProjetoMatricula.Model
         public Endereco() { }
 
         public Endereco(string logradouro, string numero, string cep,
-                 Cidade cidade, TipoEndereco tpEndereco)
+                 Cidade cidade, TipoEndereco tpEndereco, int id) : base(id)
         {
             this.logradouro = logradouro;
             this.numero = numero;
@@ -26,14 +26,14 @@ namespace ProjetoMatricula.Model
             this.tpEndereco = tpEndereco;
         }
 
-        public Pessoa GetPessoa()
+        public Aluno GetPessoa()
         {
-            return pessoa;
+            return aluno;
         }
 
-        public void SetPessoa(Pessoa pessoa)
+        public void SetAluno(Aluno aluno)
         {
-            this.pessoa = pessoa;
+            this.aluno = aluno;
         }
 
         public TipoEndereco GetTpEndereco()

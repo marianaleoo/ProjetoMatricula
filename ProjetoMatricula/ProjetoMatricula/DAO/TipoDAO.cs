@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -16,6 +17,7 @@ namespace ProjetoMatricula.DAO
         public bool Salvar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
+            string nmClass = null;
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -31,7 +33,7 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                var nmClass = entidade.GetType().Name.ToLower();
+                nmClass = entidade.GetType().Name.ToLower();
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("INSERT INTO ");
                 strSQL.Append("tb_");
@@ -57,6 +59,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_"+ nmClass, "Salvar", entidade);
             return true;
         }
 
@@ -64,6 +68,7 @@ namespace ProjetoMatricula.DAO
         {
             Tipo tipo = (Tipo)entidade;
             int id = 0;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -102,9 +107,11 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
+            string nmClass = null;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -119,14 +126,14 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                var nmClass = entidade.GetType().Name.ToLower();
+                nmClass = entidade.GetType().Name.ToLower();
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("UPDATE ");
                 strSQL.Append("tb_");
                 strSQL.Append(nmClass);
                 strSQL.Append(" SET ");
                 strSQL.Append("descricao = @descricao ");
-                strSQL.Append("WHERE id = " + id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();                
                 objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
@@ -146,12 +153,16 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_" + nmClass, "Alterar", entidade);
             return true;
         }
 
         public bool Excluir(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
+            string nmClass = null;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -163,12 +174,13 @@ namespace ProjetoMatricula.DAO
             var objComando = new SqlCommand();
             objComando.Connection = objConn;
             #endregion
+
             StringBuilder strSQL = new StringBuilder();
             try
             {
                 if (!tipo.GetId().Equals(0))
                 {
-                    var nmClass = entidade.GetType().Name.ToLower();
+                    nmClass = entidade.GetType().Name.ToLower();
                     strSQL.Append("DELETE FROM ");
                     strSQL.Append("tb_");
                     strSQL.Append(nmClass);
@@ -192,6 +204,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_" + nmClass, "Excluir", entidade);
             return true;
         }
 
@@ -244,6 +258,5 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
-
     }
 }

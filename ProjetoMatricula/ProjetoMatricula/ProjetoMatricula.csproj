@@ -73,6 +73,11 @@
     <Compile Include="Business\ValidadorDisciplina.cs" />
     <Compile Include="Business\ValidadorEndereco.cs" />
     <Compile Include="Business\ValidadorRA.cs" />
+    <Compile Include="Command\CommandAlterar.cs" />
+    <Compile Include="Command\CommandCadastrar.cs" />
+    <Compile Include="Command\CommandConsultar.cs" />
+    <Compile Include="Command\CommandExcluir.cs" />
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="DAO\AlunoDAO.cs" />
     <Compile Include="DAO\CursoDAO.cs" />
     <Compile Include="DAO\DisciplinaDAO.cs" />
@@ -82,6 +87,7 @@
     <Compile Include="DAO\TipoDAO.cs" />
     <Compile Include="Facade\Fachada.cs" />
     <Compile Include="Facade\IFachada.cs" />
+    <Compile Include="Log\RegistrarLog.cs" />
     <Compile Include="Model\Aluno.cs" />
     <Compile Include="Model\Cidade.cs" />
     <Compile Include="Model\Curso.cs" />
@@ -90,6 +96,7 @@
     <Compile Include="Model\Endereco.cs" />
     <Compile Include="Model\EntidadeDominio.cs" />
     <Compile Include="Model\Estado.cs" />
+    <Compile Include="Log\Log.cs" />
     <Compile Include="Model\Pessoa.cs" />
     <Compile Include="Model\Tipo.cs" />
     <Compile Include="Model\TipoCurso.cs" />

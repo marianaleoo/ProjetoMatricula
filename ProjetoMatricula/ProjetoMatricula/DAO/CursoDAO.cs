@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -66,12 +67,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_curso", "Salvar", entidadeDominio);
             return true;
         }
 
         public int ConsultarId()
         {
             int id = 0;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -108,9 +112,10 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Curso curso = (Curso)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -126,13 +131,13 @@ namespace ProjetoMatricula.DAO
             try
             {
                 TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(id, curso.GetTipoCurso());
+                tipoDao.Alterar(curso.GetTipoCurso());
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_curso SET ");
                 strSQL.Append("nome = @nome, modeloCurso = @modeloCurso ");
-                strSQL.Append("WHERE id = " + id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();                
                 objComando.Parameters.AddWithValue("@nome", curso.GetNome());
@@ -154,12 +159,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_curso", "Alterar", entidade);
             return true;
         }
 
         public bool Excluir(EntidadeDominio entidade)
         {
             Curso curso = (Curso)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -171,6 +179,7 @@ namespace ProjetoMatricula.DAO
             var objComando = new SqlCommand();
             objComando.Connection = objConn;
             #endregion
+
             StringBuilder strSQL = new StringBuilder();
             try
             {
@@ -196,6 +205,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_curso", "Excluir", entidade);
             return true;
         }
 
@@ -250,7 +261,5 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
-
-
     }
 }

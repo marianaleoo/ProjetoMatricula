@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -62,12 +63,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_disciplina", "Salvar", entidadeDominio);
             return true;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -87,7 +91,7 @@ namespace ProjetoMatricula.DAO
 
                 strSQL.Append("UPDATE tb_disciplina SET ");
                 strSQL.Append("nome = @nome ");
-                strSQL.Append("WHERE id = " + id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());                
@@ -108,12 +112,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_disciplina", "Alterar", entidade);
             return true;
         }
 
         public bool Excluir(EntidadeDominio entidade)
         {
             Disciplina disciplina = (Disciplina)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -125,6 +132,7 @@ namespace ProjetoMatricula.DAO
             var objComando = new SqlCommand();
             objComando.Connection = objConn;
             #endregion
+
             StringBuilder strSQL = new StringBuilder();
             try
             {
@@ -150,6 +158,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_disciplina", "Excluir", entidade);
             return true;
         }
 

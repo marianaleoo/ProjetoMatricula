@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -64,12 +65,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_documento", "Salvar", entidadeDominio);
             return true;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Documento documento = (Documento)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -85,13 +89,13 @@ namespace ProjetoMatricula.DAO
             try
             {
                 TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(id, documento.GetTpDocumento());                
+                tipoDao.Alterar(documento.GetTpDocumento());                
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_documento SET ");
                 strSQL.Append("codigo = @codigo, validade = @validade ");
-                strSQL.Append("WHERE id = " + id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
@@ -113,12 +117,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_documento", "Alterar", entidade);
             return true;
         }
 
         public bool Excluir(EntidadeDominio entidade)
         {
             Documento documento = (Documento)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -130,6 +137,7 @@ namespace ProjetoMatricula.DAO
             var objComando = new SqlCommand();
             objComando.Connection = objConn;
             #endregion
+
             StringBuilder strSQL = new StringBuilder();
             try
             {
@@ -155,6 +163,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_documento", "Excluir", entidade);
             return true;
         }
 
@@ -188,7 +198,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("validade = @validade");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", documento.GetPessoa().GetId());
+                objComando.Parameters.AddWithValue("@aluno_id", documento.GetAluno().GetId());
                 objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTpDocumento().GetId());
                 objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
                 objComando.Parameters.AddWithValue("@validade", documento.GetValidade());

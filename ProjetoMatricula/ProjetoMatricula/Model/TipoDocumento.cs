@@ -11,7 +11,7 @@ namespace ProjetoMatricula.Model
         {
         }
 
-        public TipoDocumento(string descricao) : base(descricao)
+        public TipoDocumento(string descricao, int id) : base(descricao, id)
         {          
         }
     }

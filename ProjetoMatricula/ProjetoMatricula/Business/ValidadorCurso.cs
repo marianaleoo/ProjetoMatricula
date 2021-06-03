@@ -6,13 +6,13 @@ using System.Web;
 
 namespace ProjetoMatricula.Business
 {
-    public class ValidadorCurso : IStrategy
-    {
-        public String Processar(EntidadeDominio entidadeDominio)
-        {
-           
+    //public class ValidadorCurso : IStrategy
+    //{
+    //    public String Processar(EntidadeDominio entidadeDominio)
+    //    {
 
-        }
 
-    }
+    //    }
+
+    //}
 }

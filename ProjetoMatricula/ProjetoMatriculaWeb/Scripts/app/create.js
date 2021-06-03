@@ -32,13 +32,17 @@ var aluno = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                toastr.success("Dados salvos com sucesso!", "Aluno");
+                aluno.retornoIndex();
             },
             error: function (error) {
                 toastr.error("Erro ao salvar dados!", "Aluno");
                 location.reload();
             }
         });
+    },
+
+    retornoIndex: function () {
+        window.open(rootPath + 'Controle/Index')
     }
 };
 

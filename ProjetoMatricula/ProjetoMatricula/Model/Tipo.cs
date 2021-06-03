@@ -11,7 +11,7 @@ namespace ProjetoMatricula.Model
 
         public Tipo() { }
 
-        protected Tipo(string descricao)
+        protected Tipo(string descricao, int id) : base(id)
         {
             this.descricao = descricao;           
         }

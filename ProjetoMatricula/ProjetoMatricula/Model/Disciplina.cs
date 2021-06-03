@@ -8,11 +8,11 @@ namespace ProjetoMatricula.Model
     public class Disciplina : EntidadeDominio
     {        
         private string nome;
-        private Pessoa pessoa;
+        private Aluno aluno;
 
         public Disciplina() { }
 
-        public Disciplina(string nome)
+        public Disciplina(string nome, int id) : base(id)
         {
             this.nome = nome;
         }
@@ -27,14 +27,14 @@ namespace ProjetoMatricula.Model
             this.nome = nome;
         }
 
-        public Pessoa GetPessoa()
+        public Aluno GetAluno()
         {
-            return pessoa;
+            return aluno;
         }
 
-        public void SetPessoa(Pessoa pessoa)
+        public void SetAluno(Aluno aluno)
         {
-            this.pessoa = pessoa;
+            this.aluno = aluno;
         }
     }
 }

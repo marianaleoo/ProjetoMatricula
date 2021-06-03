@@ -10,11 +10,11 @@ namespace ProjetoMatricula.Model
         private TipoCurso tpCurso;
         private string nome;
         private string modeloCurso;
-        private Pessoa pessoa;
+        private Aluno aluno;
 
         public Curso() { }
 
-        public Curso(TipoCurso tpCurso, string nome, string modeloCurso)
+        public Curso(TipoCurso tpCurso, string nome, string modeloCurso, int id) : base(id)
         {
             this.tpCurso = tpCurso;
             this.nome = nome;
@@ -51,14 +51,14 @@ namespace ProjetoMatricula.Model
             this.modeloCurso = modeloCurso;
         }
 
-        public Pessoa GetPessoa()
+        public Aluno GetAluno()
         {
-            return pessoa;
+            return aluno;
         }
 
-        public void SetPessoa(Pessoa pessoa)
+        public void SetAluno(Aluno aluno)
         {
-            this.pessoa = pessoa;
+            this.aluno = aluno;
         }
     }
 }

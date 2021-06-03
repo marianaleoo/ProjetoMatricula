@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -54,28 +55,28 @@ namespace ProjetoMatricula.DAO
                 EnderecoDAO enderecoDao = new EnderecoDAO();
                 foreach (var item in aluno.GetEnderecos())
                 {
-                    item.SetPessoa(aluno);
+                    item.SetAluno(aluno);
                     enderecoDao.Salvar(item);
                 }
 
                 DocumentoDAO documentoDao = new DocumentoDAO();
                 foreach (var item in aluno.getDocumentos())
                 {
-                    item.SetPessoa(aluno);
+                    item.SetAluno(aluno);
                     documentoDao.Salvar(item);
                 }
 
                 CursoDAO cursoDao = new CursoDAO();
                 foreach (var item in aluno.GetCursos())
                 {
-                    item.SetPessoa(aluno);
+                    item.SetAluno(aluno);
                     cursoDao.Salvar(item);
                 }
 
                 DisciplinaDAO disciplinaDao = new DisciplinaDAO();
                 foreach (var item in aluno.GetDisciplinas())
                 {
-                    item.SetPessoa(aluno);
+                    item.SetAluno(aluno);
                     disciplinaDao.Salvar(item);
                 }                
             }
@@ -89,12 +90,15 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_aluno", "Salvar", entidade);
             return true;
         }
 
         public int ConsultarId()
         {
             int id = 0;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -131,9 +135,10 @@ namespace ProjetoMatricula.DAO
             return id;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Aluno aluno = (Aluno)entidade;
+
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -154,7 +159,7 @@ namespace ProjetoMatricula.DAO
 
                 strSQL.Append("UPDATE tb_aluno SET ");
                 strSQL.Append("dt_cadastro = @dt_cadastro, ra = @ra, nome = @nome, dt_nascimento = @dt_nascimento ");
-                strSQL.Append("WHERE id = " +id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@dt_cadastro", aluno.GetDataCadastro());
@@ -171,29 +176,29 @@ namespace ProjetoMatricula.DAO
                 EnderecoDAO enderecoDao = new EnderecoDAO();
                 foreach (var item in aluno.GetEnderecos())
                 {
-                    item.SetPessoa(aluno);
-                    enderecoDao.Alterar(id, item);
+                    item.SetAluno(aluno);
+                    enderecoDao.Alterar(item);
                 }
 
                 DocumentoDAO documentoDao = new DocumentoDAO();
                 foreach (var item in aluno.getDocumentos())
                 {
-                    item.SetPessoa(aluno);
-                    documentoDao.Alterar(id, item);
+                    item.SetAluno(aluno);
+                    documentoDao.Alterar(item);
                 }
 
                 CursoDAO cursoDao = new CursoDAO();
                 foreach (var item in aluno.GetCursos())
                 {
-                    item.SetPessoa(aluno);
-                    cursoDao.Alterar(id, item);
+                    item.SetAluno(aluno);
+                    cursoDao.Alterar(item);
                 }
 
                 DisciplinaDAO disciplinaDao = new DisciplinaDAO();
                 foreach (var item in aluno.GetDisciplinas())
                 {
-                    item.SetPessoa(aluno);
-                    disciplinaDao.Alterar(id, item);
+                    item.SetAluno(aluno);
+                    disciplinaDao.Alterar(item);
                 }
 
             }
@@ -206,6 +211,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_aluno", "Alterar", entidade);
             return true;
         }
 
@@ -222,6 +229,7 @@ namespace ProjetoMatricula.DAO
             var objComando = new SqlCommand();
             objComando.Connection = objConn;
             #endregion
+
             StringBuilder strSQL = new StringBuilder();
             try
             {
@@ -246,6 +254,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_aluno", "Excluir", entidade);
             return true;
         }
 

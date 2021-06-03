@@ -11,7 +11,7 @@ namespace ProjetoMatricula.Model
         {
         }
 
-        public TipoEndereco(string descricao) : base(descricao)
+        public TipoEndereco(string descricao, int id) : base(descricao, id)
         {                        
         }
     }

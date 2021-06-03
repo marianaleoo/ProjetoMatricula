@@ -1,4 +1,5 @@
-﻿using ProjetoMatricula.Model;
+﻿using ProjetoMatricula.Log;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatricula.Util;
 using System;
@@ -47,7 +48,7 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
                 objComando.Parameters.AddWithValue("@tpend_id", tipoDao.ConsultarId(endereco.GetTpEndereco()));
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
-                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().getDescricao());
+                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
                 objComando.Parameters.AddWithValue("@numero", endereco.GetNumero());
                 objComando.Parameters.AddWithValue("@cep", endereco.GetCep());
@@ -67,10 +68,12 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_endereco", "Salvar", entidade);
             return true;
         }
 
-        public bool Alterar(EntidadeDominio id, EntidadeDominio entidade)
+        public bool Alterar(EntidadeDominio entidade)
         {
             Endereco endereco = (Endereco)entidade;
             #region Conexão BD
@@ -88,17 +91,17 @@ namespace ProjetoMatricula.DAO
             try
             {
                 TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(id, endereco.GetTpEndereco());                
+                tipoDao.Alterar(endereco.GetTpEndereco());                
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_endereco SET ");
                 strSQL.Append("cidade = @cidade, estado = @estado, logradouro = @logradouro, numero = @numero, cep = @cep ");
-                strSQL.Append("WHERE id = " + id.GetId());
+                strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
-                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().getDescricao());
+                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
                 objComando.Parameters.AddWithValue("@numero", endereco.GetNumero());
                 objComando.Parameters.AddWithValue("@cep", endereco.GetCep());
@@ -119,6 +122,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_endereco", "Alterar", entidade);
             return true;
         }
 
@@ -162,6 +167,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao excluir registro " + ex.Message);
             }
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_endereco", "Excluir", entidade);
             return true;
         }
 
@@ -199,7 +206,7 @@ namespace ProjetoMatricula.DAO
                 objComando.Parameters.AddWithValue("@aluno_id", endereco.GetPessoa().GetId());
                 objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
-                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().getDescricao());
+                objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
                 objComando.Parameters.AddWithValue("@numero", endereco.GetNumero());
                 objComando.Parameters.AddWithValue("@cep", endereco.GetCep());

@@ -1,5 +1,6 @@
 ﻿using ProjetoMatricula.DAO;
 using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,16 @@ namespace ProjetoMatricula.Business
         {
             IDAO dao = new AlunoDAO();
 
-            List<Servico.DadosDTO> alunos = dao.Consultar(entidadeDominio);
+            List<DadosDTO> alunos = dao.Consultar(entidadeDominio);
 
-            //if(alunos.GetRa() != null && aluno.GetRa().Count() > 0)
-            //{
-            //    return "RA já cadastrado";
-            //}
+            if (alunos != null && alunos.Count() > 0)
+            {
+                return "RA já cadastrado";
+            }
 
             return null;
          
-        }
+        }        
 
     }
 }

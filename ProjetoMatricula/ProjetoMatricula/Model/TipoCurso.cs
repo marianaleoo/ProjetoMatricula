@@ -11,7 +11,7 @@ namespace ProjetoMatricula.Model
         {
         }
 
-        public TipoCurso(string descricao) : base (descricao)
+        public TipoCurso(string descricao, int id) : base (descricao, id)
         {                       
         }
     }

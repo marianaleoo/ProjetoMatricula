@@ -18,7 +18,7 @@ namespace ProjetoMatriculaWeb.Controllers
             IViewHelper vh = new VhAluno();
             AlunoDAO dao = new AlunoDAO();
 
-            var teste = vh.GetId(dados);
+            var teste = vh.GetEntidade(dados);
             var data = dao.Consultar(teste);
             return View(data);
         }        
@@ -80,9 +80,9 @@ namespace ProjetoMatriculaWeb.Controllers
                 AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
-                var teste2 = vh.GetId(dados);
+                //var teste2 = vh.GetId(dados);
 
-                return Json(new { success = dao.Alterar(teste2, teste) });
+                return Json(new { success = dao.Alterar(teste) });
             }
             catch
             {
@@ -119,7 +119,7 @@ namespace ProjetoMatriculaWeb.Controllers
                 IViewHelper vh = new VhAluno();
                 AlunoDAO dao = new AlunoDAO();
 
-                var teste = vh.GetId(dados);                
+                var teste = vh.GetEntidade(dados);                
 
                 return Json(new { success = dao.Excluir(teste) });
             }
@@ -137,7 +137,7 @@ namespace ProjetoMatriculaWeb.Controllers
                 IViewHelper vh = new VhAluno();
                 AlunoDAO dao = new AlunoDAO();
 
-                var teste = vh.GetId(dados);
+                var teste = vh.GetEntidade(dados);
 
                 var data = dao.Consultar(teste);
 
