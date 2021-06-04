@@ -212,6 +212,7 @@ namespace ProjetoMatricula.DAO
         public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
+            List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -232,19 +233,30 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("SELECT * FROM ");
                 strSQL.Append("tb_");
                 strSQL.Append(nmClass);
-                strSQL.Append("WHERE");               
-                strSQL.Append("descricao = @descricao ) ");
-
-                objComando.CommandText = strSQL.ToString();                
-                objComando.Parameters.AddWithValue("@descricao", tipo.GetDescricao());
-
-                if (objComando.ExecuteNonQuery() < 1)
+                if (!entidade.GetId().Equals(0))
                 {
-                    throw new Exception("Erro ao consultar registro " + tipo.GetDescricao());
+                    strSQL.Append(" WHERE ");
+                    strSQL.Append("id = " +  tipo.GetId());
                 }
-                objConn.Close();
 
-                List<EntidadeDominio> lst = new List<EntidadeDominio>();
+                objComando.CommandText = strSQL.ToString();
+
+                SqlDataReader reader = objComando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (nmClass.Equals("tipocurso"))
+                    {
+                        TipoCurso tipoCurso = new TipoCurso();
+                        tipoCurso.SetId(Convert.ToInt32(reader["id"]));
+                        tipoCurso.SetDescricao(reader["descricao"].ToString());
+                        lst.Add(tipoCurso);
+                    }
+                }
+
+                    objConn.Close();
+
+
 
                 return lst;
             }

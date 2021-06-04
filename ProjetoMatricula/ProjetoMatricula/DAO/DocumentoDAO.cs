@@ -224,5 +224,64 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
+
+        public List<Documento> ConsultarPorIdAluno(int id)
+        {
+            List<Documento> documentos = new List<Documento>();
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT * FROM tb_documento ");
+                strSQL.Append("WHERE ");
+                strSQL.Append("aluno_id = @aluno_id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@aluno_id", id);
+
+
+                SqlDataReader reader = objComando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    TipoDocumento tipoDocumento = new TipoDocumento();
+                    tipoDocumento.SetId(Convert.ToInt32(reader["tpdoc_id"]));
+                    Documento doc = new Documento(reader["codigo"].ToString(), Convert.ToDateTime(reader["validade"].ToString()), tipoDocumento, Convert.ToInt32(reader["id"]));
+                    documentos.Add(doc);
+
+                }
+
+                objConn.Close();
+
+
+                return documentos;
+
+            }
+
+
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
     }
 }

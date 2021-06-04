@@ -133,10 +133,31 @@ namespace ProjetoMatricula.Facade
 
         public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
-
-            IDAO dao = this.daos[entidade.GetType().Name];
-            return dao.Consultar(entidade);
+            if (rNegocio.ContainsKey(entidade.GetType().Name + "Consultar"))
+            {
+                List<IStrategy> validacoes = this.rNegocio[entidade.GetType().Name + "Consultar"];
+                string resultado = "";
+                foreach (var item in validacoes)
+                {
+                    resultado += item.Processar(entidade);
+                }
+                if (!string.IsNullOrEmpty(resultado))
+                {
+                    throw new Exception(resultado);
+                }
+            }
+            try
+            {
+                IDAO dao = this.daos[entidade.GetType().Name];
+                return  dao.Consultar(entidade);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
+
+        
     }
 }

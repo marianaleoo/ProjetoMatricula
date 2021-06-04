@@ -261,5 +261,67 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
+
+        public Curso ConsultarPorId(int id)
+        {
+            Curso curso = new Curso();
+
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT * FROM tb_curso ");
+                strSQL.Append("WHERE ");
+                strSQL.Append("id = @id");
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@id", id);
+
+
+                SqlDataReader reader = objComando.ExecuteReader();
+
+                TipoDAO tipoDao = new TipoDAO();
+                if (reader.Read())
+                {
+                    TipoCurso tipoCurso = new TipoCurso();
+                    tipoCurso.SetId(Convert.ToInt32(reader["tipoCurso_id"]));
+                    var tpCurso = tipoDao.Consultar(tipoCurso);
+                    curso = new Curso((TipoCurso)tpCurso[0],  reader["nome"].ToString(), reader["modeloCurso"].ToString(), Convert.ToInt32(reader["id"]));
+
+
+                }
+
+                objConn.Close();
+
+
+                return curso;
+
+            }
+
+
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
     }
 }

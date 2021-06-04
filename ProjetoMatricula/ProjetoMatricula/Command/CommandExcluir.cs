@@ -11,9 +11,9 @@ namespace ProjetoMatricula.Command
     {
         private readonly Fachada _fachada;
 
-        public CommandExcluir(Fachada fachada)
+        public CommandExcluir()
         {
-            _fachada = fachada;
+            _fachada = new Fachada();
         }
 
         public Object Executar(EntidadeDominio entidade)

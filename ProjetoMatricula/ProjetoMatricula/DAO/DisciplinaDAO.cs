@@ -212,5 +212,63 @@ namespace ProjetoMatricula.DAO
                 throw new Exception("Erro ao consultar registro " + ex.Message);
             }
         }
+
+        public List<Disciplina> ConsultarPorIdAluno(int id)
+        {
+            List<Disciplina> disciplinas = new List<Disciplina>();
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("SELECT d.* FROM tb_disciplina d ");
+                strSQL.Append("inner join tb_aluno_disciplina ad ");
+                strSQL.Append("on d.id = ad.disciplina_id ");
+                strSQL.Append("where ad.aluno_id =  @aluno_id" );
+
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@aluno_id", id);
+
+
+                SqlDataReader reader = objComando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Disciplina disciplina = new Disciplina(reader["nome"].ToString(), Convert.ToInt32(reader["id"]));
+                    disciplinas.Add(disciplina);
+
+                }
+
+                objConn.Close();
+
+
+                return disciplinas;
+
+            }
+
+
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar registro " + ex.Message);
+            }
+        }
+
     }
 }

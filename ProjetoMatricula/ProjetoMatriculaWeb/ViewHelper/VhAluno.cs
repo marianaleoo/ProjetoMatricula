@@ -34,15 +34,12 @@ namespace ProjetoMatriculaWeb.ViewHelper
 
             Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.Id);
 
-            List<Curso> cursos = new List<Curso>();
-            cursos.Add(curso);
-
             Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id);
 
             List<Disciplina> disciplinas = new List<Disciplina>();
             disciplinas.Add(disciplina);
 
-            Aluno aluno = new Aluno(documentos, enderecos, disciplinas, cursos, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento), dados.Id);
+            Aluno aluno = new Aluno(documentos, enderecos, disciplinas, curso, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento), dados.Id);
 
             return aluno;
         }

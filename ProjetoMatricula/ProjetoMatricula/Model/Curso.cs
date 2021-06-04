@@ -10,7 +10,6 @@ namespace ProjetoMatricula.Model
         private TipoCurso tpCurso;
         private string nome;
         private string modeloCurso;
-        private Aluno aluno;
 
         public Curso() { }
 
@@ -51,14 +50,5 @@ namespace ProjetoMatricula.Model
             this.modeloCurso = modeloCurso;
         }
 
-        public Aluno GetAluno()
-        {
-            return aluno;
-        }
-
-        public void SetAluno(Aluno aluno)
-        {
-            this.aluno = aluno;
-        }
     }
 }

@@ -11,12 +11,17 @@ namespace ProjetoMatricula.Command
     {
         private readonly Fachada _fachada;
 
-        public CommandConsultar(Fachada fachada)
+        public CommandConsultar()
         {
-            _fachada = fachada;
+            _fachada = new Fachada();
         }
 
         public Object Executar(EntidadeDominio entidade)
+        {
+            return _fachada.Consultar(entidade);
+        }
+
+        public List<EntidadeDominio> Exec(EntidadeDominio entidade)
         {
             return _fachada.Consultar(entidade);
         }

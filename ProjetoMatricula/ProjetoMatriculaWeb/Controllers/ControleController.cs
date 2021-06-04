@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ProjetoMatricula.Command;
 using ProjetoMatricula.DAO;
+using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
 using ProjetoMatriculaWeb.ViewHelper;
 using System;
@@ -18,12 +19,12 @@ namespace ProjetoMatriculaWeb.Controllers
         private CommandConsultar _commandConsultar;
         private CommandExcluir _commandExcluir;
 
-        public ControleController(CommandCadastrar commandCadastrar, CommandAlterar commandAlterar, CommandConsultar commandConsultar, CommandExcluir commandExcluir)
+        public ControleController()
         {
-            _commandCadastrar = commandCadastrar;
-            _commandAlterar = commandAlterar;
-            _commandConsultar = commandConsultar;
-            _commandExcluir = commandExcluir;
+            _commandCadastrar = new CommandCadastrar();
+            _commandAlterar = new CommandAlterar();
+            _commandConsultar = new CommandConsultar();
+            _commandExcluir = new CommandExcluir();
         }
 
         // GET: Controle        
@@ -33,9 +34,13 @@ namespace ProjetoMatriculaWeb.Controllers
             //AlunoDAO dao = new AlunoDAO();
 
             var teste = vh.GetEntidade(dados);
-            var data = _commandConsultar.Executar(teste);
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            List<Aluno> alunos = entidades.ConvertAll(item => (Aluno)item);
             //var data = dao.Consultar(teste);
-            return View(data);
+            //List<DadosDTO> dadosDTOs = new List<DadosDTO>();
+            //dadosDTOs.Add(new DadosDTO());
+            //dadosDTOs.Add(new DadosDTO());
+            return View(alunos);
         }        
 
         // GET: Controle/Details/5

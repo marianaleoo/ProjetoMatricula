@@ -11,9 +11,9 @@ namespace ProjetoMatricula.Command
     {
         private readonly Fachada _fachada;
 
-        public CommandCadastrar(Fachada fachada)
+        public CommandCadastrar()
         {
-            _fachada = fachada;
+            _fachada = new Fachada();
         }
 
         public Object Executar(EntidadeDominio entidade)

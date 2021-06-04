@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjetoMatricula.Servico.DadosDTO>
+﻿@model IEnumerable<ProjetoMatricula.Model.Aluno>
 
 @{
     ViewBag.Title = "Index";
@@ -12,46 +12,67 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Aluno)
+            Nome
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RA)
+            RA
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Curso)
+            Curso
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Modelo)
+            Modelo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TipoCurso)
+            TipoCurso
         </th>
+        <th>
+            Data Nascimento
+        </th>
+        <th>
+            Data Cadastro
+        </th>
+        <th></th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aluno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Curso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoCurso)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @item.GetNome()
+    </td>
+    <td>
+        @item.GetRa();
+    </td>
+    <td>
+        @item.GetCurso().GetNome();
+    </td>
+    <td>
+        @item.GetCurso().GetModeloCurso();
+    </td>
+    <td>
+        @item.GetCurso().GetTipoCurso().GetDescricao();
+    </td>
+    <td>
+        @item.GetDataNascimento();
+    </td>
+    <td>
+        @item.GetDataCadastro();
+    </td>
+    <td>
+        <select>
+            @foreach (var aluno in Model)
+            {
+                <option value="@aluno.GetId()">@aluno.GetNome()</option>
+            }
+            </select>
+    </td>
+     <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.GetId() }) |
+            @Html.ActionLink("Detalhes", "Details", new { id = item.GetId() })
+      </td>
+</tr>
     }
 
 </table>
