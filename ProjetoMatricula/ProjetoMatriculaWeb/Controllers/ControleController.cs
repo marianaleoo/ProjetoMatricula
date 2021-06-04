@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProjetoMatricula.Command;
 using ProjetoMatricula.DAO;
 using ProjetoMatricula.Servico;
 using ProjetoMatriculaWeb.ViewHelper;
@@ -12,19 +13,28 @@ namespace ProjetoMatriculaWeb.Controllers
 {
     public class ControleController : Controller
     {
-        private CommandCadastrar commandCadastrar;
-        private CommandAlterar commandAlterar;
-        private CommandConsultar commandConsultar;
-        private CommandExcluir commandExcluir;
+        private CommandCadastrar _commandCadastrar;
+        private CommandAlterar _commandAlterar;
+        private CommandConsultar _commandConsultar;
+        private CommandExcluir _commandExcluir;
+
+        public ControleController(CommandCadastrar commandCadastrar, CommandAlterar commandAlterar, CommandConsultar commandConsultar, CommandExcluir commandExcluir)
+        {
+            _commandCadastrar = commandCadastrar;
+            _commandAlterar = commandAlterar;
+            _commandConsultar = commandConsultar;
+            _commandExcluir = commandExcluir;
+        }
 
         // GET: Controle        
         public ActionResult Index(DadosDTO dados)
         {
             IViewHelper vh = new VhAluno();
-            
+            //AlunoDAO dao = new AlunoDAO();
 
             var teste = vh.GetEntidade(dados);
-            var data = dao.Consultar(teste);
+            var data = _commandConsultar.Executar(teste);
+            //var data = dao.Consultar(teste);
             return View(data);
         }        
 
@@ -63,11 +73,12 @@ namespace ProjetoMatriculaWeb.Controllers
             try
             {
                 IViewHelper vh = new VhAluno();
-                AlunoDAO dao = new AlunoDAO();
+                //AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
 
-                return Json(new { success = dao.Salvar(teste) });
+                return Json(new { success = _commandCadastrar.Executar(teste) });
+                //return Json(new { success = dao.Salvar(teste) });
             }
             catch
             {
@@ -82,12 +93,13 @@ namespace ProjetoMatriculaWeb.Controllers
             try
             {
                 IViewHelper vh = new VhAluno();
-                AlunoDAO dao = new AlunoDAO();
+                //AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
                 //var teste2 = vh.GetId(dados);
 
-                return Json(new { success = dao.Alterar(teste) });
+                return Json(new { success = _commandAlterar.Executar(teste) });
+                // return Json(new { success = dao.Alterar(teste) });
             }
             catch
             {
@@ -101,11 +113,11 @@ namespace ProjetoMatriculaWeb.Controllers
             try
             {
                 IViewHelper vh = new VhAluno();
-                AlunoDAO dao = new AlunoDAO();
+                //AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
 
-                var data = dao.Consultar(teste);
+                var data = _commandConsultar.Executar(teste);
 
                 return JsonConvert.SerializeObject(data);
             }
@@ -122,11 +134,13 @@ namespace ProjetoMatriculaWeb.Controllers
             try
             {
                 IViewHelper vh = new VhAluno();
-                AlunoDAO dao = new AlunoDAO();
+                //AlunoDAO dao = new AlunoDAO();
 
-                var teste = vh.GetEntidade(dados);                
+                var teste = vh.GetEntidade(dados);
 
-                return Json(new { success = dao.Excluir(teste) });
+                
+                return Json(new { success = _commandExcluir.Executar(teste) });
+                //return Json(new { success = dao.Excluir(teste) });
             }
             catch
             {
@@ -140,11 +154,11 @@ namespace ProjetoMatriculaWeb.Controllers
             try
             {
                 IViewHelper vh = new VhAluno();
-                AlunoDAO dao = new AlunoDAO();
+                //AlunoDAO dao = new AlunoDAO();
 
                 var teste = vh.GetEntidade(dados);
 
-                var data = dao.Consultar(teste);
+                var data = _commandConsultar.Executar(teste);
 
                 return JsonConvert.SerializeObject(data);
             }
