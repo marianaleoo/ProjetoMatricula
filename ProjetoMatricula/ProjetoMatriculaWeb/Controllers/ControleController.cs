@@ -12,11 +12,16 @@ namespace ProjetoMatriculaWeb.Controllers
 {
     public class ControleController : Controller
     {
+        private CommandCadastrar commandCadastrar;
+        private CommandAlterar commandAlterar;
+        private CommandConsultar commandConsultar;
+        private CommandExcluir commandExcluir;
+
         // GET: Controle        
         public ActionResult Index(DadosDTO dados)
         {
             IViewHelper vh = new VhAluno();
-            AlunoDAO dao = new AlunoDAO();
+            
 
             var teste = vh.GetEntidade(dados);
             var data = dao.Consultar(teste);

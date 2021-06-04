@@ -130,7 +130,7 @@ namespace ProjetoMatricula.DAO
                     objConn.Close();
                 }
 
-                throw new Exception("Erro ao inserir registro " + ex.Message);
+                throw new Exception("Erro ao consultar registro " + ex.Message);
             }
             return id;
         }
@@ -259,10 +259,10 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public List<DadosDTO> Consultar(EntidadeDominio entidade)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
-                   
-            List<DadosDTO> lst = new List<DadosDTO>();
+            Aluno aluno = (Aluno)entidade;
+            List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -300,25 +300,27 @@ namespace ProjetoMatricula.DAO
 
                     while (reader.Read())
                     {
-                        lst.Add(new DadosDTO
+                        lst.Add(new EntidadeDominio
                         {
-                            Id = Convert.ToInt32(reader["id"]),
-                            Aluno = reader["nomealuno"].ToString(),
-                            RA = reader["ra"].ToString(),
-                            DataNascimento = Convert.ToDateTime(reader["dt_nascimento"]),
-                            Codigo = reader["codigo"].ToString(),
-                            Validade = Convert.ToDateTime(reader["validade"]),
-                            TipoDocumento = reader["tpdocumentodescricao"].ToString(),
-                            Curso = reader["nomecurso"].ToString(),
-                            Modelo = reader["modeloCurso"].ToString(),
-                            Disciplina = reader["nomedisciplina"].ToString(),
-                            TipoCurso = reader["tpcursodescricao"].ToString(),
-                            Logradouro = reader["logradouro"].ToString(),
-                            Numero = reader["numero"].ToString(),
-                            Cep = reader["cep"].ToString(),
-                            Cidade = reader["cidade"].ToString(),
-                            Estado = reader["estado"].ToString(),
-                            TipoEndereco = reader["tpenderecodescricao"].ToString()
+                            //id = Convert.ToInt32(reader["id"]),
+                            //entidade.       aluno.GetNome(). = reader["nomealuno"].ToString(),
+
+
+                            //RA = reader["ra"].ToString(),
+                            //DataNascimento = Convert.ToDateTime(reader["dt_nascimento"]),
+                            //Codigo = reader["codigo"].ToString(),
+                            //Validade = Convert.ToDateTime(reader["validade"]),
+                            //TipoDocumento = reader["tpdocumentodescricao"].ToString(),
+                            //Curso = reader["nomecurso"].ToString(),
+                            //Modelo = reader["modeloCurso"].ToString(),
+                            //Disciplina = reader["nomedisciplina"].ToString(),
+                            //TipoCurso = reader["tpcursodescricao"].ToString(),
+                            //Logradouro = reader["logradouro"].ToString(),
+                            //Numero = reader["numero"].ToString(),
+                            //Cep = reader["cep"].ToString(),
+                            //Cidade = reader["cidade"].ToString(),
+                            //Estado = reader["estado"].ToString(),
+                            //TipoEndereco = reader["tpenderecodescricao"].ToString()
                         });
                     }
                 }
@@ -330,22 +332,22 @@ namespace ProjetoMatricula.DAO
                                                 from tb_aluno aluno
                                                 inner join tb_curso curso on aluno.id = curso.aluno_id
                                                 inner join tb_tipocurso tpcurso on curso.tipoCurso_id = tpcurso.id";
-                    
+
                     SqlDataReader reader = objComando.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        lst.Add(new DadosDTO
-                        {
-                            Id = Convert.ToInt32(reader["id"]),
-                            Aluno = reader["nome"].ToString(),
-                            RA = reader["ra"].ToString(),
-                            Curso = reader["nomecurso"].ToString(),
-                            Modelo = reader["modeloCurso"].ToString(),
-                            TipoCurso = reader["descricao"].ToString()
-                        });
-                    }
-                }          
+                    //while (reader.Read())
+                    //{
+                    //    lst.Add(new DadosDTO
+                    //    {
+                    //        Id = Convert.ToInt32(reader["id"]),
+                    //        Aluno = reader["nome"].ToString(),
+                    //        RA = reader["ra"].ToString(),
+                    //        Curso = reader["nomecurso"].ToString(),
+                    //        Modelo = reader["modeloCurso"].ToString(),
+                    //        TipoCurso = reader["descricao"].ToString()
+                    //    });
+                    //}
+                }
                 objConn.Close();
 
                 return lst;
@@ -358,7 +360,7 @@ namespace ProjetoMatricula.DAO
                 }
 
                 throw new Exception("Erro ao consultar registro " + ex.Message);
-            }            
+            }
         }
     }
 }

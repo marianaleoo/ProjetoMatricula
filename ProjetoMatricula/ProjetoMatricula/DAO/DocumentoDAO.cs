@@ -168,7 +168,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public List<DadosDTO> Consultar(EntidadeDominio entidadeDominio)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
         {
             Documento documento = (Documento)entidadeDominio;
 
@@ -209,7 +209,7 @@ namespace ProjetoMatricula.DAO
                 }
                 objConn.Close();
 
-                List<DadosDTO> lst = new List<DadosDTO>();
+                List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
                 return lst;
 

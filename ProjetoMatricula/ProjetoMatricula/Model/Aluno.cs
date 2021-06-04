@@ -18,6 +18,11 @@ namespace ProjetoMatricula.Model
 
         public Aluno() { }
 
+        public Aluno(string ra)
+        {
+            this.ra = ra;
+        }
+
         public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, List<Curso> cursos, string nome, string ra, DateTime dataNascimento, int id) : base(id)
         {
             this.documentos = documentos;

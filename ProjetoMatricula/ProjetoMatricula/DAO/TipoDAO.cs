@@ -209,7 +209,7 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public List<DadosDTO> Consultar(EntidadeDominio entidade)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
             Tipo tipo = (Tipo)entidade;
 
@@ -244,7 +244,7 @@ namespace ProjetoMatricula.DAO
                 }
                 objConn.Close();
 
-                List<DadosDTO> lst = new List<DadosDTO>();
+                List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
                 return lst;
             }

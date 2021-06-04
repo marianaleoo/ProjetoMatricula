@@ -12,6 +12,6 @@ namespace ProjetoMatricula.DAO
         bool Salvar(EntidadeDominio entidade);
         bool Alterar(EntidadeDominio entidade);
         bool Excluir(EntidadeDominio entidade);        
-        List<DadosDTO> Consultar(EntidadeDominio entidade);
+        List<EntidadeDominio> Consultar(EntidadeDominio entidade);
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ProjetoMatricula.Business
 {
-    public class ValidadorEndereco
+    public class ValidadorEndereco : IStrategy
     {
         public String Processar(EntidadeDominio entidade)
         {

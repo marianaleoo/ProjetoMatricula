@@ -1,4 +1,5 @@
 ﻿using ProjetoMatricula.Model;
+using ProjetoMatricula.Servico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace ProjetoMatricula.Facade
 {
     public interface IFachada
     {
-        String Cadastrar(EntidadeDominio entidade);
-        String Excluir(EntidadeDominio entidade);
-        String Alterar(EntidadeDominio entidade);
+        EntidadeDominio Cadastrar(EntidadeDominio entidade);
+        EntidadeDominio Excluir(EntidadeDominio entidade);
+        EntidadeDominio Alterar(EntidadeDominio entidade);
         List<EntidadeDominio> Consultar(EntidadeDominio entidade);
     }
 }

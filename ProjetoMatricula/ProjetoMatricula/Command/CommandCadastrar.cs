@@ -7,18 +7,18 @@ using System.Web;
 
 namespace ProjetoMatricula.Command
 {
-    //public class CommandCadastrar : ICommand
-    //{
-    //    private readonly Fachada _fachada;
+    public class CommandCadastrar : ICommand
+    {
+        private readonly Fachada _fachada;
 
-    //    public CommandCadastrar(Fachada fachada)
-    //    {
-    //        _fachada = fachada;
-    //    }
+        public CommandCadastrar(Fachada fachada)
+        {
+            _fachada = fachada;
+        }
 
-    //    public EntidadeDominio Executar(EntidadeDominio entidade) 
-    //    {
-		  //  return _fachada.Cadastrar(entidade);
-	   // }
-    //}
+        public Object Executar(EntidadeDominio entidade)
+        {
+            return _fachada.Cadastrar(entidade);
+        }
+    }
 }
