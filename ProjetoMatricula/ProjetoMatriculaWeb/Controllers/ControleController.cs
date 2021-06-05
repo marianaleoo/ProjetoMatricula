@@ -211,8 +211,12 @@ namespace ProjetoMatriculaWeb.Controllers
                 IViewHelper vh = new VhCurso();
 
                 var teste = vh.GetEntidade(dados);
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
 
-                return Json(new { success = _commandCadastrar.Executar(teste) });
+                var data = vh.GetDados(cursos);
+
+                return Json(new { data = data }, JsonRequestBehavior.AllowGet);                
             }
             catch (Exception ex)
             {

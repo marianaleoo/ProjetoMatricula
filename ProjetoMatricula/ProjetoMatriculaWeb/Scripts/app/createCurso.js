@@ -2,18 +2,19 @@
     DadosDTO: undefined,
 
     buscarDados: function () {
-        console.log(aluno.DadosDTO);
+        console.log(curso.DadosDTO);
         $.ajax({
             cache: false,
             method: "POST",
             url: rootPath + "Controle/GetTipoCurso",
-            data: JSON.stringify(aluno.DadosDTO),
+            data: JSON.stringify(curso.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 var select = $("ddlTpCurso");
                 $.each(data, function (d) {
-                    $('<option>').val(d.Id).text(d.Descricao).appendTo(select);
+                    console.log(data);
+                    $('<option>').val(d.Id).text(d.TipoCurso).appendTo(select);
                 });
             },
             error: function (error) {

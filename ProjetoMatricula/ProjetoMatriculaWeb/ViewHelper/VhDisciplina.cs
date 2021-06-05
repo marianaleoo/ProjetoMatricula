@@ -9,6 +9,11 @@ namespace ProjetoMatriculaWeb.ViewHelper
 {
     public class VhDisciplina : IViewHelper
     {
+        public List<DadosDTO> GetDados(List<Curso> entidade)
+        {
+            throw new NotImplementedException();
+        }
+
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {
             Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id);
