@@ -19,7 +19,7 @@
             },
             error: function (error) {
                 swal({
-                    title: "Desculpe, erro ao buscar dados do aluno",
+                    title: "Desculpe, erro ao buscar dados do curso",
                     text: error.responseJSON.mensagem,
                     type: "error",
                     closeOnConfirm: true,
@@ -34,7 +34,7 @@
         curso.DadosDTO = {            
             Curso: $("#txtCurso").val(),
             Modelo: $("#txtModelo").val(),
-            TipoCurso: $("#txtTpCurso").val()            
+            TipoCurso: $("#ddlTpCurso").val()            
         }
         curso.salvarBD();
     },
@@ -50,7 +50,7 @@
                 curso.retornoIndex();
             },
             error: function (error) {
-                toastr.error("Erro ao salvar dados!", "Aluno");
+                toastr.error("Erro ao salvar dados!", "Curso");
                 location.reload();
             }
         });
@@ -63,7 +63,7 @@
 
 
 $(document).ready(function () {
-    curso.buscarDados();
+/*    curso.buscarDados();*/
 
     $("#btnSalvar").click(function () {
         curso.salvarDados();

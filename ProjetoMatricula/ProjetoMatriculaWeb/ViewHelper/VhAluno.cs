@@ -39,7 +39,7 @@ namespace ProjetoMatriculaWeb.ViewHelper
 
             Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.Id);
 
-            Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id);
+            Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id, curso);
 
             List<Disciplina> disciplinas = new List<Disciplina>();
             disciplinas.Add(disciplina);

@@ -13,6 +13,7 @@ namespace ProjetoMatricula.Facade
     {
         private Dictionary<String, IDAO> daos;
         private Dictionary<String, List<IStrategy>> rNegocio;
+        //private Dictionary<String, List<IStrategy>> rNegocioCurso;
 
         public Fachada()
         {
@@ -22,37 +23,29 @@ namespace ProjetoMatricula.Facade
 
         private void DefinirNegocio()
         {
-            //analisar
-            Aluno aluno = new Aluno();
-            Curso curso = new Curso();
-
             rNegocio = new Dictionary<string, List<IStrategy>>();
 
+            List<IStrategy> rNegocioAluno = new List<IStrategy>();
             ValidadorCpf validCpf = new ValidadorCpf();
             ValidadorEndereco validEnd = new ValidadorEndereco();
             ValidadorRA validRA = new ValidadorRA();
             ValidadorCurso validCurso = new ValidadorCurso();
-
-            List<IStrategy> rNegocioAluno = new List<IStrategy>();
             rNegocioAluno.Add(validCpf);
             rNegocioAluno.Add(validEnd);
             rNegocioAluno.Add(validRA);
             rNegocioAluno.Add(validCurso);
-            rNegocio[aluno.GetType().Name + "Salvar"] = rNegocioAluno;
-            rNegocio[aluno.GetType().Name + "Alterar"] = rNegocioAluno;            
+            rNegocio["Aluno" + "Salvar"] = rNegocioAluno;
+            rNegocio["Aluno" + "Alterar"] = rNegocioAluno;            
         }
 
         private void DefinirDAOS()
         {
-            Aluno aluno = new Aluno();
+            daos = new Dictionary<string, IDAO>();
             AlunoDAO alunoDao = new AlunoDAO();
-            daos = new Dictionary<string, IDAO>();
-            daos[aluno.GetType().Name] = alunoDao;
+            daos["Aluno"] = alunoDao;
 
-            Curso curso = new Curso();
             CursoDAO cursoDao = new CursoDAO();
-            daos = new Dictionary<string, IDAO>();
-            daos[curso.GetType().Name] = cursoDao;
+            daos["Curso"] = cursoDao;
         }
 
         public EntidadeDominio Cadastrar(EntidadeDominio entidade)
