@@ -59,8 +59,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
-            RegistrarLog log = new RegistrarLog();
-            log.SalvarLog("tb_"+ nmClass, "Salvar", entidade);
+            //RegistrarLog log = new RegistrarLog();
+            //log.SalvarLog("tb_"+ nmClass, "Salvar", entidade);
             return true;
         }
 

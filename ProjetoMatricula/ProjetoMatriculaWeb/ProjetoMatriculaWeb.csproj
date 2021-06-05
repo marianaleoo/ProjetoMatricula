@@ -128,6 +128,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewHelper\IViewHelper.cs" />
     <Compile Include="ViewHelper\VhAluno.cs" />
+    <Compile Include="ViewHelper\VhCurso.cs" />
+    <Compile Include="ViewHelper\VhDisciplina.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -139,6 +141,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app\create.js" />
+    <Content Include="Scripts\app\createCurso.js" />
     <Content Include="Scripts\app\details.js" />
     <Content Include="Scripts\app\edit.js" />
     <Content Include="Scripts\app\index.js" />
@@ -174,6 +177,8 @@
     <Content Include="Views\Controle\Create.cshtml" />
     <Content Include="Views\Controle\Edit.cshtml" />
     <Content Include="Views\Controle\Delete.cshtml" />
+    <Content Include="Views\Controle\IndexCurso.cshtml" />
+    <Content Include="Views\Controle\CreateCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

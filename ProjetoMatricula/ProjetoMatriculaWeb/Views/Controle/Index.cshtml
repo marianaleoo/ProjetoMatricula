@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Inicio</h2>
+<h2>Lista de Alunos</h2>
 
 <p>
     @Html.ActionLink("Novo Aluno", "Create")
@@ -43,22 +43,22 @@
         @item.GetNome()
     </td>
     <td>
-        @item.GetRa();
+        @item.GetRa()
     </td>
     <td>
-        @item.GetCurso().GetNome();
+        @item.GetCurso().GetNome()
     </td>
     <td>
-        @item.GetCurso().GetModeloCurso();
+        @item.GetCurso().GetModeloCurso()
     </td>
     <td>
-        @item.GetCurso().GetTipoCurso().GetDescricao();
+        @item.GetCurso().GetTipoCurso().GetDescricao()
     </td>
     <td>
-        @item.GetDataNascimento();
+        @item.GetDataNascimento()
     </td>
     <td>
-        @item.GetDataCadastro();
+        @item.GetDataCadastro()
     </td>
     <td>
         <select>
@@ -71,7 +71,7 @@
      <td>
             @Html.ActionLink("Editar", "Edit", new { id = item.GetId() }) |
             @Html.ActionLink("Detalhes", "Details", new { id = item.GetId() })
-      </td>
+     </td>
 </tr>
     }
 

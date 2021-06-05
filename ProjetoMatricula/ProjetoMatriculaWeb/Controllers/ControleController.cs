@@ -30,16 +30,12 @@ namespace ProjetoMatriculaWeb.Controllers
         // GET: Controle        
         public ActionResult Index(DadosDTO dados)
         {
-            IViewHelper vh = new VhAluno();
-            //AlunoDAO dao = new AlunoDAO();
+            IViewHelper vh = new VhAluno();            
 
             var teste = vh.GetEntidade(dados);
             List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
             List<Aluno> alunos = entidades.ConvertAll(item => (Aluno)item);
-            //var data = dao.Consultar(teste);
-            //List<DadosDTO> dadosDTOs = new List<DadosDTO>();
-            //dadosDTOs.Add(new DadosDTO());
-            //dadosDTOs.Add(new DadosDTO());
+            
             return View(alunos);
         }        
 
@@ -85,7 +81,7 @@ namespace ProjetoMatriculaWeb.Controllers
                 return Json(new { success = _commandCadastrar.Executar(teste) });
                 //return Json(new { success = dao.Salvar(teste) });
             }
-            catch
+            catch(Exception ex)
             {
                 return Json(new { success = false });
             }
@@ -171,6 +167,68 @@ namespace ProjetoMatriculaWeb.Controllers
             {
                 return JsonConvert.SerializeObject(new { success = false });
             }
+        }
+
+        // GET: Controle        
+        public ActionResult IndexCurso(DadosDTO dados)
+        {
+            IViewHelper vh = new VhCurso();            
+
+            var teste = vh.GetEntidade(dados);
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
+            
+            return View(cursos);
+        }
+
+        public ActionResult CreateCurso()
+        {  
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SalvarCurso(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhCurso();                
+
+                var teste = vh.GetEntidade(dados);
+
+                return Json(new { success = _commandCadastrar.Executar(teste) });                
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetTipoCurso(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhCurso();
+
+                var teste = vh.GetEntidade(dados);
+
+                return Json(new { success = _commandCadastrar.Executar(teste) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        public ActionResult IndexDisciplina(DadosDTO dados)
+        {
+            IViewHelper vh = new VhDisciplina();
+
+            var teste = vh.GetEntidade(dados);
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            List<Disciplina> cursos = entidades.ConvertAll(item => (Disciplina)item);
+
+            return View(cursos);
         }
     }
 }

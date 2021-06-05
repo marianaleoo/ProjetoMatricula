@@ -163,9 +163,9 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
-             Disciplina disciplina = (Disciplina)entidadeDominio;
+            List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -181,26 +181,43 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                StringBuilder strSQL = new StringBuilder();
+                objComando.CommandType = CommandType.Text;
+                if (!entidade.GetId().Equals(0))
+                {
 
-                strSQL.Append("SELECT * FROM");
-                strSQL.Append("tb_curso");
-                strSQL.Append("WHERE");
-                strSQL.Append("dt_cadastro = @dt_cadastro");
-                strSQL.Append("curso_id = @curso_id");
-                strSQL.Append("descricao = @descricao");
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = $@"select c.nome nomecurso, d.nome nomedisciplina, d.id 
+                                                from tb_disciplina d
+                                                inner join tb_curso c on c.id = d.curso_id
+                                                where d.id = " + entidade.GetId();
 
-                objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@dt_cadastro", disciplina.GetDataCadastro());
-                //objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCursos());
-                objComando.Parameters.AddWithValue("@descricao", disciplina.GetNome());
 
+                }
+                else
+                {
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = $@"select c.nome nomecurso, d.nome nomedisciplina, c.id curso_id 
+                                                from tb_disciplina d
+                                                inner join tb_curso c on c.id = d.curso_id";
+
+
+                }
+
+                SqlDataReader reader = objComando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Curso curso = new Curso();
+                    curso.SetNome(reader["nomecurso"].ToString());
+                    //Disciplina disciplina = new Disciplina(Convert.ToInt32(reader["curso_id"]), );
+                    //tpCurso.SetDescricao(reader["descricao"].ToString());
+                    //Curso curso = new Curso(tpCurso, reader["nome"].ToString(), reader["modeloCurso"].ToString(), Convert.ToInt32(reader["id"]));
+
+                    lst.Add(curso);
+                }
                 objConn.Close();
 
-                List<EntidadeDominio> lst = new List<EntidadeDominio>();
-
                 return lst;
-
             }
             catch (Exception ex)
             {

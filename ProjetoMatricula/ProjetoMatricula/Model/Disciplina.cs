@@ -10,6 +10,7 @@ namespace ProjetoMatricula.Model
         private string nome;
         private Aluno aluno;
 
+
         public Disciplina() { }
 
         public Disciplina(string nome, int id) : base(id)

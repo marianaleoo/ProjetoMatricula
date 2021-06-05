@@ -41,12 +41,11 @@ namespace ProjetoMatricula.DAO
 
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("INSERT INTO tb_curso (aluno_id, tipoCurso_id, nome, modeloCurso) ");
-                strSQL.Append("VALUES (@aluno_id, @tipoCurso_id, @nome, @modeloCurso)");
+                strSQL.Append("INSERT INTO tb_curso (tipoCurso_id, nome, modeloCurso) ");
+                strSQL.Append("VALUES (@tipoCurso_id, @nome, @modeloCurso)");
 
 
-                objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
+                objComando.CommandText = strSQL.ToString();                
                 objComando.Parameters.AddWithValue("@tipoCurso_id", tipoDAO.ConsultarId(curso.GetTipoCurso()));
                 objComando.Parameters.AddWithValue("@nome", curso.GetNome());
                 objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
@@ -67,8 +66,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
-            RegistrarLog log = new RegistrarLog();
-            log.SalvarLog("tb_curso", "Salvar", entidadeDominio);
+            //RegistrarLog log = new RegistrarLog();
+            //log.SalvarLog("tb_curso", "Salvar", entidadeDominio);
             return true;
         }
 
@@ -210,9 +209,9 @@ namespace ProjetoMatricula.DAO
             return true;
         }
 
-        public List<EntidadeDominio> Consultar(EntidadeDominio entidadeDominio)
+        public List<EntidadeDominio> Consultar(EntidadeDominio entidade)
         {
-            Curso curso = (Curso)entidadeDominio;
+            List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
             #region Conexão BD
             Conexao conn = new Conexao();
@@ -228,26 +227,37 @@ namespace ProjetoMatricula.DAO
 
             try
             {
+                objComando.CommandType = CommandType.Text;
+                if (!entidade.GetId().Equals(0))
+                {
 
-                StringBuilder strSQL = new StringBuilder();
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = $@"select * from tb_curso c
+                                                inner join tb_tipocurso tc on c.tipoCurso_id = c.id
+                                                where id = " + entidade.GetId();
 
-                strSQL.Append("SELECT * FROM");
-                strSQL.Append("tb_curso");
-                strSQL.Append("WHERE");
-                strSQL.Append("dt_cadastro = @dt_cadastro");
-                strSQL.Append("tipoCurso_id = @tipoCurso_id");
-                strSQL.Append("descricao = @descricao ");
-                strSQL.Append("modeloCurso = @modeloCurso ");
 
-                objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@dt_cadastro", curso.GetDataCadastro());
-                objComando.Parameters.AddWithValue("@tipoCurso_id", curso.GetTipoCurso());
-                objComando.Parameters.AddWithValue("@descricao", curso.GetNome());
-                objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
+                }
+                else
+                {
+                    objComando.CommandTimeout = 0;
+                    objComando.CommandText = $@"select * from tb_curso c
+                                                inner join tb_tipocurso tc on c.tipoCurso_id = tc.id";
 
+
+                }
+
+                SqlDataReader reader = objComando.ExecuteReader(); 
+
+                while (reader.Read())
+                {                    
+                    TipoCurso tpCurso = new TipoCurso();
+                    tpCurso.SetDescricao(reader["descricao"].ToString());
+                    Curso curso = new Curso(tpCurso, reader["nome"].ToString(), reader["modeloCurso"].ToString(), Convert.ToInt32(reader["id"]));                   
+                                      
+                    lst.Add(curso);
+                }
                 objConn.Close();
-
-                List<EntidadeDominio> lst = new List<EntidadeDominio>();
 
                 return lst;
             }

@@ -16,12 +16,7 @@ namespace ProjetoMatricula.Model
         private Curso curso;
         public List<Documento> documentos;
 
-        public Aluno() { }
-
-        public Aluno(string ra)
-        {
-            this.ra = ra;
-        }
+        public Aluno() { }        
 
         public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, Curso curso, string nome, string ra, DateTime dataNascimento, int id) : base(id)
         {

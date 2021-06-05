@@ -42,13 +42,6 @@ namespace ProjetoMatriculaWeb.ViewHelper
             Aluno aluno = new Aluno(documentos, enderecos, disciplinas, curso, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento), dados.Id);
 
             return aluno;
-        }
-
-        //public EntidadeDominio GetId(DadosDTO dados)
-        //{
-        //    EntidadeDominio id = new EntidadeDominio(dados.Id);            
-
-        //    return id;
-        //}
+        }        
     }
 }

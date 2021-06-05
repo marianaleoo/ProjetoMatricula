@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template Bootstrap</title>	  	  <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="Index">Projeto Engenharia 3</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div id="main" class="container-fluid">
+        <h2 class="page-header">Adicionar Curso</h2>
+        <div class="row">
+            <h3>Curso</h3>
+            <div class="form-group col-md-4">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="txtCurso" placeholder="Digite o nome do curso">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="modelo">Modelo</label>
+                <select name="modelo" type="text" class="form-control" id="txtModelo">
+                    <option value="Presencial">Presencial</option>
+                    <option value="EAD">EAD</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="tpCurso">Tipo Curso</label>
+                <select name="tpCurso" type="text" class="form-control" id="ddlTpCurso">
+                    @*<option value="Graduação">Graduação</option>
+                    <option value="Pós-Graduação">Pós-Graduação</option>*@
+                </select>
+            </div>            
+        </div>
+        <hr />
+        <div id="actions" class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+                <a href="/Controle/Index" class="btn btn-default">Cancelar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessario para os plugins Javascript do Bootstrap) -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/toastr")
+    @Scripts.Render("~/Scripts/app/createCurso.js")
+}
+

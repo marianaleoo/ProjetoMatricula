@@ -24,6 +24,7 @@ namespace ProjetoMatricula.Facade
         {
             //analisar
             Aluno aluno = new Aluno();
+            Curso curso = new Curso();
 
             rNegocio = new Dictionary<string, List<IStrategy>>();
 
@@ -38,7 +39,7 @@ namespace ProjetoMatricula.Facade
             rNegocioAluno.Add(validRA);
             rNegocioAluno.Add(validCurso);
             rNegocio[aluno.GetType().Name + "Salvar"] = rNegocioAluno;
-            rNegocio[aluno.GetType().Name + "Alterar"] = rNegocioAluno;
+            rNegocio[aluno.GetType().Name + "Alterar"] = rNegocioAluno;            
         }
 
         private void DefinirDAOS()
@@ -47,7 +48,11 @@ namespace ProjetoMatricula.Facade
             AlunoDAO alunoDao = new AlunoDAO();
             daos = new Dictionary<string, IDAO>();
             daos[aluno.GetType().Name] = alunoDao;
-        
+
+            Curso curso = new Curso();
+            CursoDAO cursoDao = new CursoDAO();
+            daos = new Dictionary<string, IDAO>();
+            daos[curso.GetType().Name] = cursoDao;
         }
 
         public EntidadeDominio Cadastrar(EntidadeDominio entidade)
