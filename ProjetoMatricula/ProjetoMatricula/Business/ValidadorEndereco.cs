@@ -10,13 +10,14 @@ namespace ProjetoMatricula.Business
     {
         public String Processar(EntidadeDominio entidade)
         {
-            Endereco endereco = (Endereco)entidade;
 
-            String cidade = endereco.GetCidade().GetDescricao();
-            String logradouro = endereco.GetLogradouro();
-            String estado = endereco.GetCidade().GetEstado().GetDescricao();
-            String numero = endereco.GetNumero();
-            String tipoEndereco = endereco.GetTpEndereco().GetDescricao();
+            Aluno aluno = (Aluno)entidade;
+            var tipoEndereco = aluno.GetEnderecos().FirstOrDefault().GetTpEndereco().GetDescricao();
+            var logradouro = aluno.GetEnderecos().FirstOrDefault().GetLogradouro();
+            var numero = aluno.GetEnderecos().FirstOrDefault().GetNumero();
+            var cidade = aluno.GetEnderecos().FirstOrDefault().GetCidade().GetDescricao();
+            var estado = aluno.GetEnderecos().FirstOrDefault().GetCidade().GetEstado().GetDescricao();
+
 
             if (logradouro == null || cidade == null || estado == null || numero == null)
             {
@@ -26,10 +27,8 @@ namespace ProjetoMatricula.Business
             {
                 return "Cidade, estado e numero no endere�o:" + tipoEndereco + "são de preenchimento obrigatório!";
             }
-            else
-            {
-                return "Deve ser registrado um endereco!";
-            }
+
+            return null;
 
         }
     }

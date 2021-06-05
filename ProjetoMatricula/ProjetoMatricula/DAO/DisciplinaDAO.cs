@@ -260,12 +260,16 @@ namespace ProjetoMatricula.DAO
 
 
                 SqlDataReader reader = objComando.ExecuteReader();
+                CursoDAO cursoDao = new CursoDAO();
+                AlunoDAO alunoDao = new AlunoDAO();
 
                 while (reader.Read())
                 {
-                    Disciplina disciplina = new Disciplina(reader["nome"].ToString(), Convert.ToInt32(reader["id"]));
-                    disciplinas.Add(disciplina);
-
+                    var curso = cursoDao.ConsultarPorId(Convert.ToInt32(reader["curso_id"]));
+                    Disciplina disciplina = new Disciplina();
+                    disciplina.SetNome(reader["nome"].ToString());
+                    disciplina.SetId(Convert.ToInt32(reader["id"]));
+                    disciplina.SetCurso(curso);
                 }
 
                 objConn.Close();

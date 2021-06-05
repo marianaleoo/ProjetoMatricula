@@ -2,12 +2,12 @@
     DadosDTO: undefined,
 
     buscarDados: function () {
-        console.log(aluno.DadosDTO);
+        console.log(curso.DadosDTO);
         $.ajax({
             cache: false,
             method: "POST",
             url: rootPath + "Controle/GetTipoCurso",
-            data: JSON.stringify(aluno.DadosDTO),
+            data: JSON.stringify(curso.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -18,7 +18,7 @@
             },
             error: function (error) {
                 swal({
-                    title: "Desculpe, erro ao buscar dados do aluno",
+                    title: "Desculpe, erro ao buscar dados do curso",
                     text: error.responseJSON.mensagem,
                     type: "error",
                     closeOnConfirm: true,
@@ -33,7 +33,7 @@
         curso.DadosDTO = {            
             Curso: $("#txtCurso").val(),
             Modelo: $("#txtModelo").val(),
-            TipoCurso: $("#txtTpCurso").val()            
+            TipoCurso: $("#ddlTpCurso").val()            
         }
         curso.salvarBD();
     },
@@ -49,7 +49,7 @@
                 curso.retornoIndex();
             },
             error: function (error) {
-                toastr.error("Erro ao salvar dados!", "Aluno");
+                toastr.error("Erro ao salvar dados!", "Curso");
                 location.reload();
             }
         });
@@ -62,7 +62,7 @@
 
 
 $(document).ready(function () {
-    curso.buscarDados();
+/*    curso.buscarDados();*/
 
     $("#btnSalvar").click(function () {
         curso.salvarDados();

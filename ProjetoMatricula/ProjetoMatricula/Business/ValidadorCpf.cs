@@ -13,15 +13,15 @@ namespace ProjetoMatricula.Business
             bool cpf = false;
 
             Aluno aluno = (Aluno)entidadeDominio;
+            var tipo = aluno.getDocumentos().FirstOrDefault().GetTpDocumento().GetDescricao();
+            var codigo = aluno.getDocumentos().FirstOrDefault().GetCodigo();     
 
             if (aluno.getDocumentos() != null)
             {
-                Documento documento = (Documento)entidadeDominio;
-
-                if (documento.GetTpDocumento().GetDescricao().Equals("CPF"))
+                if (tipo.Equals("CPF"))
                 {
                     cpf = true;
-                    if (documento.GetCodigo() == null || documento.GetCodigo().Length < 11)
+                    if (codigo == null || codigo.Length < 11)
                     {
                         return "CPF deve conter 11 digitos!";
                     }

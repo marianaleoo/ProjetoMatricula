@@ -67,12 +67,12 @@ namespace ProjetoMatricula.DAO
                 }
 
 
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetAluno(aluno);
-                    disciplinaDao.Salvar(item);
-                }                
+                //DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+                //foreach (var item in aluno.GetDisciplinas())
+                //{
+                //    item.SetAluno(aluno);
+                //    disciplinaDao.Salvar(item);
+                //}                
             }
 
             catch (Exception ex)
@@ -188,12 +188,12 @@ namespace ProjetoMatricula.DAO
                 //    cursoDao.Alterar(item);
                 //}
 
-                DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                foreach (var item in aluno.GetDisciplinas())
-                {
-                    item.SetAluno(aluno);
-                    disciplinaDao.Alterar(item);
-                }
+                //DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+                //foreach (var item in aluno.GetDisciplinas())
+                //{
+                //    item.SetAluno(aluno);
+                //    disciplinaDao.Alterar(item);
+                //}
 
             }
             catch (Exception ex)

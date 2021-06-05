@@ -179,6 +179,7 @@
     <Content Include="Views\Controle\Delete.cshtml" />
     <Content Include="Views\Controle\IndexCurso.cshtml" />
     <Content Include="Views\Controle\CreateCurso.cshtml" />
+    <Content Include="Views\Controle\IndexDisciplina.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
