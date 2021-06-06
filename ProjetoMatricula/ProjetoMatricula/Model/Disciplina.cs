@@ -7,7 +7,7 @@ namespace ProjetoMatricula.Model
 {
     public class Disciplina : EntidadeDominio
     {        
-        private string nome;
+        public string nome;
         private Curso curso;
 
 

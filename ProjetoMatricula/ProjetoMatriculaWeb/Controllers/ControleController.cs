@@ -177,8 +177,8 @@ namespace ProjetoMatriculaWeb.Controllers
             Curso teste = new Curso();
 
             List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
-            List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
-            
+            List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);           
+
             return View(cursos);
         }
 
@@ -212,7 +212,7 @@ namespace ProjetoMatriculaWeb.Controllers
                 Curso teste = new Curso();
 
                 List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
-                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
+                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);                
 
                 return Json(new { data = cursos }, JsonRequestBehavior.AllowGet);
             }
@@ -267,6 +267,24 @@ namespace ProjetoMatriculaWeb.Controllers
                 var teste = vh.GetEntidade(dados);
 
                 return Json(new { success = _commandCadastrar.Executar(teste) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetDisciplina(DadosDTO dados)
+        {
+            try
+            {
+                Disciplina teste = new Disciplina();
+
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<Disciplina> disciplinas = entidades.ConvertAll(item => (Disciplina)item);
+
+                return Json(new { data = disciplinas }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
