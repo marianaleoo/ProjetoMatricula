@@ -142,6 +142,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app\create.js" />
     <Content Include="Scripts\app\createCurso.js" />
+    <Content Include="Scripts\app\createDisciplina.js" />
     <Content Include="Scripts\app\details.js" />
     <Content Include="Scripts\app\edit.js" />
     <Content Include="Scripts\app\index.js" />
@@ -180,6 +181,7 @@
     <Content Include="Views\Controle\IndexCurso.cshtml" />
     <Content Include="Views\Controle\CreateCurso.cshtml" />
     <Content Include="Views\Controle\IndexDisciplina.cshtml" />
+    <Content Include="Views\Controle\CreateDisciplina.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

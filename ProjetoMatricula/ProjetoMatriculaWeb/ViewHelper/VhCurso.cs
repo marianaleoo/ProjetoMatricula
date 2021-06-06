@@ -11,7 +11,9 @@ namespace ProjetoMatriculaWeb.ViewHelper
     {
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {
-            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso, dados.Id);
+            dados.IdTpCurso = dados.TipoCurso.Contains("Graduação") ? 1 : 2;
+
+            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso, dados.IdTpCurso);
 
             Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.Id); 
             

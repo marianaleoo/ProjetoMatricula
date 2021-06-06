@@ -1,22 +1,23 @@
-﻿var curso = {
+﻿var disciplina = {
     DadosDTO: undefined,
 
-    buscarDados: function () {        
+    buscarDados: function () {
         $.ajax({
             cache: false,
             method: "POST",
-            url: rootPath + "Controle/GetTipoCurso",
-            data: JSON.stringify(curso.DadosDTO),
+            url: rootPath + "Controle/GetCurso",
+            data: JSON.stringify(disciplina.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {                
-                $.each(data.data, function (i, d) {
-                    $('#ddlTpCurso').append($('<option></option>').attr('values', d.id).text(d.descricao));                    
-                });                
+            success: function (data) {
+                console.log(data);
+                $.each(data.data, function (i, d) {                    
+                    $('#ddlCurso').append($('<option></option>').attr('values', d.id).text(d.nome));
+                });
             },
             error: function (error) {
                 swal({
-                    title: "Desculpe, erro ao buscar dados do curso",
+                    title: "Desculpe, erro ao buscar dados da disciplina",
                     text: error.responseJSON.mensagem,
                     type: "error",
                     closeOnConfirm: true,
@@ -27,24 +28,23 @@
         });
     },
 
-    salvarDados: function () {         
-        curso.DadosDTO = {              
-            Curso: $('#txtCurso').val(),
-            Modelo: $('#txtModelo').val(),            
-            TipoCurso: $('#ddlTpCurso').val()
+    salvarDados: function () {
+        disciplina.DadosDTO = {
+            Curso: $('#ddlCurso').val(),
+            Disciplina: $('#txtDisciplina').val()            
         }
-        curso.salvarBD();
+        disciplina.salvarBD();
     },
 
     salvarBD: function () {
         $.ajax({
             method: "POST",
-            url: rootPath + "Controle/SalvarCurso",
-            data: JSON.stringify(curso.DadosDTO),
+            url: rootPath + "Controle/SalvarDisciplina",
+            data: JSON.stringify(disciplina.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                curso.retornoIndex();
+                disciplina.retornoIndex();
             },
             error: function (error) {
                 toastr.error("Erro ao salvar dados!", "Curso");
@@ -54,15 +54,15 @@
     },
 
     retornoIndex: function () {
-        window.open(rootPath + 'Controle/IndexCurso')
+        window.open(rootPath + 'Controle/IndexDisciplina')
     }
 };
 
 
 $(document).ready(function () {
-    curso.buscarDados();
+    disciplina.buscarDados();
 
     $("#btnSalvar").click(function () {
-        curso.salvarDados();
+        disciplina.salvarDados();
     });
 });

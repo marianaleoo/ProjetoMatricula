@@ -19,27 +19,18 @@
     <br>
     <br>
     <div id="main" class="container-fluid">
-        <h2 class="page-header">Adicionar Curso</h2>
+        <h2 class="page-header">Adicionar Disciplina</h2>
         <div class="row">
             <h3>Curso</h3>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="txtCurso" placeholder="Digite o nome do curso">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="modelo">Modelo</label>
-                <select name="modelo" type="text" class="form-control" id="txtModelo">
-                    <option value="Presencial">Presencial</option>
-                    <option value="EAD">EAD</option>
+                <input type="text" class="form-control" id="txtDisciplina" placeholder="Digite o nome da disciplina">
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="curso">Curso</label>
+                <select name="curso" type="text" class="form-control" id="ddlCurso">
                 </select>
             </div>
-
-            <div class="form-group col-md-4">
-                <label for="tpCurso">Tipo Curso</label>
-                <select name="tpCurso" type="text" class="form-control" id="ddlTpCurso">                    
-                </select>
-            </div>            
         </div>
         <hr />
         <div id="actions" class="row">
@@ -59,6 +50,8 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/toastr")
-    @Scripts.Render("~/Scripts/app/createCurso.js")
+    @Scripts.Render("~/Scripts/app/createDisciplina.js")
 }
+
+
 

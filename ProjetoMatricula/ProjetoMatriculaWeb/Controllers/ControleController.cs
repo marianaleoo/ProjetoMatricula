@@ -27,12 +27,12 @@ namespace ProjetoMatriculaWeb.Controllers
             _commandExcluir = new CommandExcluir();
         }
 
+        #region Aluno
         // GET: Controle        
-        public ActionResult Index(DadosDTO dados)
+        public ActionResult Index()
         {
-            IViewHelper vh = new VhAluno();            
+            Aluno teste = new Aluno();
 
-            var teste = vh.GetEntidade(dados);
             List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
             List<Aluno> alunos = entidades.ConvertAll(item => (Aluno)item);
             
@@ -168,13 +168,14 @@ namespace ProjetoMatriculaWeb.Controllers
                 return JsonConvert.SerializeObject(new { success = false });
             }
         }
+        #endregion
 
+        #region Curso
         // GET: Controle        
-        public ActionResult IndexCurso(DadosDTO dados)
+        public ActionResult IndexCurso()
         {
-            IViewHelper vh = new VhCurso();            
+            Curso teste = new Curso();
 
-            var teste = vh.GetEntidade(dados);
             List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
             List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
             
@@ -204,19 +205,16 @@ namespace ProjetoMatriculaWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetTipoCurso(DadosDTO dados)
+        public JsonResult GetCurso(DadosDTO dados)
         {
             try
             {
-                IViewHelper vh = new VhCurso();
+                Curso teste = new Curso();
 
-                var teste = vh.GetEntidade(dados);
                 List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
                 List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
 
-                var data = vh.GetDados(cursos);
-
-                return Json(new { data = data }, JsonRequestBehavior.AllowGet);                
+                return Json(new { data = cursos }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -224,15 +222,57 @@ namespace ProjetoMatriculaWeb.Controllers
             }
         }
 
-        public ActionResult IndexDisciplina(DadosDTO dados)
+        [HttpPost]
+        public JsonResult GetTipoCurso(DadosDTO dados)
         {
-            IViewHelper vh = new VhDisciplina();
+            try
+            {
+                TipoCurso teste = new TipoCurso(); 
+                
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<TipoCurso> tpCursos = entidades.ConvertAll(item => (TipoCurso)item);                
 
-            var teste = vh.GetEntidade(dados);
-            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
-            List<Disciplina> cursos = entidades.ConvertAll(item => (Disciplina)item);
-
-            return View(cursos);
+                return Json(new { data = tpCursos }, JsonRequestBehavior.AllowGet);                
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
         }
+        #endregion
+
+        #region Disciplina
+        public ActionResult IndexDisciplina()
+        {
+            Disciplina teste = new Disciplina();
+
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            List<Disciplina> disciplinas = entidades.ConvertAll(item => (Disciplina)item);
+
+            return View(disciplinas);
+        }
+
+        public ActionResult CreateDisciplina()
+        {
+            return View();
+        }        
+
+        [HttpPost]
+        public JsonResult SalvarDisciplina(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhDisciplina();
+
+                var teste = vh.GetEntidade(dados);
+
+                return Json(new { success = _commandCadastrar.Executar(teste) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+        #endregion
     }
 }

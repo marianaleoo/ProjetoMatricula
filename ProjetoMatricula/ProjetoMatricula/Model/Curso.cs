@@ -8,8 +8,8 @@ namespace ProjetoMatricula.Model
     public class Curso : EntidadeDominio
     {
         private TipoCurso tpCurso;
-        private string nome;
-        private string modeloCurso;
+        public string nome;
+        public string modeloCurso;
 
         public Curso() { }
 

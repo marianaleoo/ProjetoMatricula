@@ -4,35 +4,35 @@
     ViewBag.Title = "IndexDisciplina";
 }
 
-<h2>IndexDisciplina</h2>
+<h2>Lista Disciplina</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nova Disciplina", "CreateDisciplina")
 </p>
 <table class="table">
     <tr>
         <th>
-            Curso
+            Disciplina
         </th>
         <th>
-            Disciplina
+            Curso
         </th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.GetCurso().GetNome();
-        </td>
-        <td>
-            @item.GetNome();
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @item.GetNome()
+    </td>
+    <td>
+        @item.GetCurso().GetNome()
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
 }
 
 </table>

@@ -34,10 +34,10 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                TipoDAO tipoDAO = new TipoDAO();
-                tipoDAO.Salvar(curso.GetTipoCurso());
+                //TipoDAO tipoDAO = new TipoDAO();
+                //tipoDAO.Salvar(curso.GetTipoCurso());
 
-                AlunoDAO aluno = new AlunoDAO();
+                //AlunoDAO aluno = new AlunoDAO();
 
                 StringBuilder strSQL = new StringBuilder();
 
@@ -45,8 +45,8 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("VALUES (@tipoCurso_id, @nome, @modeloCurso)");
 
 
-                objComando.CommandText = strSQL.ToString();                
-                objComando.Parameters.AddWithValue("@tipoCurso_id", tipoDAO.ConsultarId(curso.GetTipoCurso()));
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@tipoCurso_id", curso.GetTipoCurso().GetId());
                 objComando.Parameters.AddWithValue("@nome", curso.GetNome());
                 objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
 
@@ -232,28 +232,25 @@ namespace ProjetoMatricula.DAO
                 {
 
                     objComando.CommandTimeout = 0;
-                    objComando.CommandText = $@"select * from tb_curso c
-                                                inner join tb_tipocurso tc on c.tipoCurso_id = c.id
-                                                where id = " + entidade.GetId();
-
-
+                    objComando.CommandText = $@"select * from tb_curso where id = " + entidade.GetId();
                 }
                 else
                 {
                     objComando.CommandTimeout = 0;
-                    objComando.CommandText = $@"select * from tb_curso c
-                                                inner join tb_tipocurso tc on c.tipoCurso_id = tc.id";
-
-
+                    objComando.CommandText = $@"select * from tb_curso";
                 }
 
                 SqlDataReader reader = objComando.ExecuteReader(); 
 
                 while (reader.Read())
-                {                    
+                {
                     TipoCurso tpCurso = new TipoCurso();
-                    tpCurso.SetDescricao(reader["descricao"].ToString());
-                    Curso curso = new Curso(tpCurso, reader["nome"].ToString(), reader["modeloCurso"].ToString(), Convert.ToInt32(reader["id"]));                   
+                    tpCurso.SetId(Convert.ToInt32(reader["tipoCurso_id"]));
+                    Curso curso = new Curso();
+                    curso.SetId(Convert.ToInt32(reader["id"]));
+                    curso.SetTipoCurso(tpCurso);
+                    curso.SetNome(reader["nome"].ToString());
+                    curso.SetModeloCurso(reader["modeloCurso"].ToString());
                                       
                     lst.Add(curso);
                 }

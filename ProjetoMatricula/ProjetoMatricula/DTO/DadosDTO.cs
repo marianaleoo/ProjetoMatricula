@@ -7,7 +7,7 @@ namespace ProjetoMatricula.Servico
 {
     public class DadosDTO
     {
-        public int Id { get; set; }
+        public int Id { get; set; }        
         public string Aluno { get; set; }
         public string RA { get; set; }
         public DateTime DataNascimento { get; set; }
@@ -24,6 +24,8 @@ namespace ProjetoMatricula.Servico
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public string TipoEndereco { get; set; }
+        public int IdTpCurso { get; set; }
+        public int IdCurso { get; set; }
 
     }
 }

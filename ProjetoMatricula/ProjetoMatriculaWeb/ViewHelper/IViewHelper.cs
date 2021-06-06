@@ -11,6 +11,6 @@ namespace ProjetoMatriculaWeb.ViewHelper
     public interface IViewHelper
     {
         EntidadeDominio GetEntidade(DadosDTO dados);
-        List<DadosDTO> GetDados(List<Curso> entidade);
+        //List<DadosDTO> GetDados(List<Curso> entidade);
     }
 }

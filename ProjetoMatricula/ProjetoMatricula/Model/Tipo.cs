@@ -7,11 +7,11 @@ namespace ProjetoMatricula.Model
 {
     public class Tipo : EntidadeDominio
     {        
-        protected string descricao;
+        public string descricao;
 
         public Tipo() { }
 
-        protected Tipo(string descricao, int id) : base(id)
+        public Tipo(string descricao, int id) : base(id)
         {
             this.descricao = descricao;           
         }

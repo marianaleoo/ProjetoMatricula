@@ -12,8 +12,7 @@ namespace ProjetoMatricula.Facade
     public class Fachada : IFachada
     {
         private Dictionary<String, IDAO> daos;
-        private Dictionary<String, List<IStrategy>> rNegocio;
-        //private Dictionary<String, List<IStrategy>> rNegocioCurso;
+        private Dictionary<String, List<IStrategy>> rNegocio;        
 
         public Fachada()
         {
@@ -46,6 +45,14 @@ namespace ProjetoMatricula.Facade
 
             CursoDAO cursoDao = new CursoDAO();
             daos["Curso"] = cursoDao;
+
+            DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+            daos["Disciplina"] = disciplinaDao;
+
+            TipoDAO tipoDao = new TipoDAO();
+            daos["TipoCurso"] = tipoDao;            
+            daos["TipoEndereco"] = tipoDao;
+            daos["TipoDocumento"] = tipoDao;
         }
 
         public EntidadeDominio Cadastrar(EntidadeDominio entidade)

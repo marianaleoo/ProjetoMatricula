@@ -8,16 +8,11 @@ using System.Web;
 namespace ProjetoMatriculaWeb.ViewHelper
 {
     public class VhDisciplina : IViewHelper
-    {
-        public List<DadosDTO> GetDados(List<Curso> entidade)
-        {
-            throw new NotImplementedException();
-        }
-
+    {  
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {
             Curso curso = new Curso();
-            curso.SetId(dados.Id);
+            curso.SetId(dados.IdCurso);
             Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id, curso);
 
             return disciplina;
