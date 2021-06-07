@@ -16,10 +16,7 @@
         </th>
         <th>
             Modelo
-        </th>
-        <th>
-            Tipo do Curso
-        </th>        
+        </th>              
         <th></th>
         <th></th>
     </tr>
@@ -32,10 +29,7 @@
             </td>
             <td>
                 @item.GetModeloCurso()
-            </td>
-            <td>
-                @item.GetTipoCurso().GetDescricao()
-            </td>            
+            </td>                      
             <td>
                 <select>
                     @foreach (var aluno in Model)
@@ -46,7 +40,7 @@
             </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.GetId() }) |
-                @Html.ActionLink("Detalhes", "Details", new { id = item.GetId() })
+                @Html.ActionLink("Deletar", "DeleteCurso", new { id = item.GetId() })
             </td>
         </tr>
     }

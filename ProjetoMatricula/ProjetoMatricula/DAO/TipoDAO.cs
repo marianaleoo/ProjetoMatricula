@@ -252,11 +252,23 @@ namespace ProjetoMatricula.DAO
                         tipoCurso.SetDescricao(reader["descricao"].ToString());
                         lst.Add(tipoCurso);
                     }
+                    else if (nmClass.Equals("tipodocumento"))
+                    {
+                        TipoDocumento tipoDocumento = new TipoDocumento();
+                        tipoDocumento.SetId(Convert.ToInt32(reader["id"]));
+                        tipoDocumento.SetDescricao(reader["descricao"].ToString());
+                        lst.Add(tipoDocumento);
+                    }
+                    else if (nmClass.Equals("tipoendereco"))
+                    {
+                        TipoEndereco tipoEndereco = new TipoEndereco();
+                        tipoEndereco.SetId(Convert.ToInt32(reader["id"]));
+                        tipoEndereco.SetDescricao(reader["descricao"].ToString());
+                        lst.Add(tipoEndereco);
+                    }
                 }
 
-                    objConn.Close();
-
-
+                objConn.Close();
 
                 return lst;
             }

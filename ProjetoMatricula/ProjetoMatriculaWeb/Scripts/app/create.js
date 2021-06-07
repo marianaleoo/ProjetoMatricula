@@ -28,6 +28,58 @@ var aluno = {
         });
     },
 
+    buscarTipoDocumento: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetTipoDocumento",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $.each(data.data, function (i, d) {
+                    $('#ddlTpDocumento').append($('<option></option>').attr('values', d.id).text(d.descricao));
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
+    buscarTipoEndereco: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetTipoEndereco",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $.each(data.data, function (i, d) {
+                    $('#ddlTpEndereco').append($('<option></option>').attr('values', d.id).text(d.descricao));
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
     buscarCursos: function () {
         $.ajax({
             cache: false,
@@ -129,8 +181,10 @@ var aluno = {
 
 $(document).ready(function () {
     aluno.buscarTipoCurso();
+    aluno.buscarTipoDocumento();
     aluno.buscarCursos();
-    aluno.buscarDisciplinas();
+    aluno.buscarDisciplinas(); 
+    aluno.buscarTipoEndereco();
 
     $("#btnSalvar").click(function () {
         aluno.salvarDados();

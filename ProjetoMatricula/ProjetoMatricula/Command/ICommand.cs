@@ -9,6 +9,8 @@ namespace ProjetoMatricula.Command
 {
     public interface ICommand
     {
-        Object Executar(EntidadeDominio entidade);
+        EntidadeDominio Executar(EntidadeDominio entidade);
+
+        List<EntidadeDominio> Exec(EntidadeDominio entidade);
     }
 }

@@ -25,16 +25,20 @@ namespace ProjetoMatricula.Facade
             rNegocio = new Dictionary<string, List<IStrategy>>();
 
             List<IStrategy> rNegocioAluno = new List<IStrategy>();
+            List<IStrategy> rNegocioCurso = new List<IStrategy>();
             ValidadorCpf validCpf = new ValidadorCpf();
             ValidadorEndereco validEnd = new ValidadorEndereco();
             ValidadorRA validRA = new ValidadorRA();
             ValidadorCurso validCurso = new ValidadorCurso();
+            ValidadorExcluirCurso validExcluirCurso = new ValidadorExcluirCurso();
             rNegocioAluno.Add(validCpf);
             rNegocioAluno.Add(validEnd);
             rNegocioAluno.Add(validRA);
             rNegocioAluno.Add(validCurso);
+            rNegocioCurso.Add(validExcluirCurso);
             rNegocio["Aluno" + "Salvar"] = rNegocioAluno;
-            rNegocio["Aluno" + "Alterar"] = rNegocioAluno;            
+            rNegocio["Aluno" + "Alterar"] = rNegocioAluno;
+            rNegocio["Curso" + "Excluir"] = rNegocioCurso;
         }
 
         private void DefinirDAOS()

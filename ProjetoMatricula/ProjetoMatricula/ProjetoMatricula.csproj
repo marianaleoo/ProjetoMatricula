@@ -72,6 +72,7 @@
     <Compile Include="Business\ValidadorCpf.cs" />
     <Compile Include="Business\ValidadorDisciplina.cs" />
     <Compile Include="Business\ValidadorEndereco.cs" />
+    <Compile Include="Business\ValidadorExcluirCurso.cs" />
     <Compile Include="Business\ValidadorRA.cs" />
     <Compile Include="Command\CommandAlterar.cs" />
     <Compile Include="Command\CommandCadastrar.cs" />

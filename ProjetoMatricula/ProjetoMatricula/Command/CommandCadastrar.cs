@@ -16,7 +16,12 @@ namespace ProjetoMatricula.Command
             _fachada = new Fachada();
         }
 
-        public Object Executar(EntidadeDominio entidade)
+        public List<EntidadeDominio> Exec(EntidadeDominio entidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EntidadeDominio Executar(EntidadeDominio entidade)
         {
             return _fachada.Cadastrar(entidade);
         }

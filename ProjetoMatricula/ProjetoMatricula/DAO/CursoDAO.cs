@@ -245,7 +245,7 @@ namespace ProjetoMatricula.DAO
                 while (reader.Read())
                 {
                     TipoCurso tpCurso = new TipoCurso();
-                    tpCurso.SetId(Convert.ToInt32(reader["tipoCurso_id"]));
+                    tpCurso.SetId(Convert.ToInt32(reader["tipoCurso_id"]));                    
                     Curso curso = new Curso();
                     curso.SetId(Convert.ToInt32(reader["id"]));
                     curso.SetTipoCurso(tpCurso);

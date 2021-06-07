@@ -8,11 +8,7 @@ using System.Web;
 namespace ProjetoMatriculaWeb.ViewHelper
 {
     public class VhAluno : IViewHelper
-    {
-        public List<DadosDTO> GetDados(List<Curso> entidade)
-        {
-            throw new NotImplementedException();
-        }
+    {     
 
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {  
@@ -47,6 +43,11 @@ namespace ProjetoMatriculaWeb.ViewHelper
             Aluno aluno = new Aluno(documentos, enderecos, disciplinas, curso, dados.Aluno, dados.RA, Convert.ToDateTime(dados.DataNascimento), dados.Id);
 
             return aluno;
-        }        
+        }
+
+        public EntidadeDominio GetId(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

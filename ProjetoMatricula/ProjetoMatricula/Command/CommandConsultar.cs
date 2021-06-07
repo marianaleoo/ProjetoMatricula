@@ -14,16 +14,16 @@ namespace ProjetoMatricula.Command
         public CommandConsultar()
         {
             _fachada = new Fachada();
-        }
-
-        public Object Executar(EntidadeDominio entidade)
-        {
-            return _fachada.Consultar(entidade);
-        }
+        }        
 
         public List<EntidadeDominio> Exec(EntidadeDominio entidade)
         {
             return _fachada.Consultar(entidade);
+        }
+
+        public EntidadeDominio Executar(EntidadeDominio entidade)
+        {
+            throw new NotImplementedException();
         }
     }
 }

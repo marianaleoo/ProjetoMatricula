@@ -28,9 +28,8 @@
         @item.GetCurso().GetNome()
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        @Html.ActionLink("Editar", "EditDisciplina", new { id=item.GetId()  }) |        
+        @Html.ActionLink("Deletar", "DeleteDisciplina", new {  id=item.GetId()  })
     </td>
 </tr>
 }

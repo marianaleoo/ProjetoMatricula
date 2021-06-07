@@ -118,7 +118,7 @@ namespace ProjetoMatriculaWeb.Controllers
 
                 var teste = vh.GetEntidade(dados);
 
-                var data = _commandConsultar.Executar(teste);
+                var data = _commandConsultar.Exec(teste);
 
                 return JsonConvert.SerializeObject(data);
             }
@@ -159,13 +159,49 @@ namespace ProjetoMatriculaWeb.Controllers
 
                 var teste = vh.GetEntidade(dados);
 
-                var data = _commandConsultar.Executar(teste);
+                var data = _commandConsultar.Exec(teste);
 
                 return JsonConvert.SerializeObject(data);
             }
             catch
             {
                 return JsonConvert.SerializeObject(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetTipoDocumento(DadosDTO dados)
+        {
+            try
+            {
+                TipoDocumento teste = new TipoDocumento();
+
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<TipoDocumento> tpDocumentos = entidades.ConvertAll(item => (TipoDocumento)item);
+
+                return Json(new { data = tpDocumentos }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetTipoEndereco(DadosDTO dados)
+        {
+            try
+            {
+                TipoEndereco teste = new TipoEndereco();
+
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<TipoEndereco> tpEnderecos = entidades.ConvertAll(item => (TipoEndereco)item);
+
+                return Json(new { data = tpEnderecos }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
             }
         }
         #endregion
@@ -239,6 +275,29 @@ namespace ProjetoMatriculaWeb.Controllers
                 return Json(new { success = false });
             }
         }
+
+        public ActionResult DeleteCurso(int id)
+        {
+            ViewBag.Id = id;
+
+            IViewHelper vh = new VhCurso();
+
+            var teste = vh.GetId(id);
+
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            Curso curso = entidades.ConvertAll(item => (Curso)item).FirstOrDefault();
+
+            return View(curso);
+        }
+
+        public ActionResult ExcluirCurso(int id)
+        {
+            IViewHelper vh = new VhCurso();
+
+            var teste = vh.GetId(id);
+
+            return Json(new { success = _commandExcluir.Executar(teste) });
+        }
         #endregion
 
         #region Disciplina
@@ -290,6 +349,29 @@ namespace ProjetoMatriculaWeb.Controllers
             {
                 return Json(new { success = false });
             }
+        }
+
+        public ActionResult DeleteDisciplina(int id)
+        {
+            ViewBag.Id = id;
+
+            IViewHelper vh = new VhDisciplina();
+
+            var teste = vh.GetId(id);
+
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            Disciplina disciplinas = entidades.ConvertAll(item => (Disciplina)item).FirstOrDefault();
+
+            return View(disciplinas);
+        }
+        
+        public ActionResult ExcluirDisciplina(int id)
+        {   
+            IViewHelper vh = new VhDisciplina();
+
+            var teste = vh.GetId(id);
+
+            return Json(new { success = _commandExcluir.Executar(teste) });
         }
         #endregion
     }

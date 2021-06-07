@@ -20,21 +20,11 @@ namespace ProjetoMatriculaWeb.ViewHelper
             return curso;
         }
 
-        public List<DadosDTO> GetDados(List<Curso> entidade)
+        public EntidadeDominio GetId(int id)
         {
-            List<DadosDTO> dados = new List<DadosDTO>();
+            Curso curso = new Curso(null, null, null, id);            
 
-            DadosDTO dado = new DadosDTO();  
-
-            foreach (var item in entidade)
-            {
-                dado.Id = item.GetId();
-                dado.TipoCurso = item.GetTipoCurso().GetDescricao();
-
-                dados.Add(dado);
-            }            
-
-            return dados;
+            return curso;
         }
     }
 }

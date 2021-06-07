@@ -194,8 +194,7 @@ namespace ProjetoMatricula.DAO
 
                 while (reader.Read())
                 {
-                    CursoDAO cursoDao = new CursoDAO();
-                    //curso.SetId(Convert.ToInt32(reader["curso_id"]));
+                    CursoDAO cursoDao = new CursoDAO();                    
                     var curso = cursoDao.ConsultarPorId(Convert.ToInt32(reader["curso_id"]));
                     Disciplina disciplina = new Disciplina();
                     disciplina.SetNome(reader["nome"].ToString());
