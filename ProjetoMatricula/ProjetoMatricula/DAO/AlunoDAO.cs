@@ -37,10 +37,11 @@ namespace ProjetoMatricula.DAO
                 StringBuilder strSQL = new StringBuilder();
 
 
-                strSQL.Append("INSERT INTO tb_aluno (dt_cadastro, ra, nome, dt_nascimento) ");
-                strSQL.Append("VALUES (@dt_cadastro, @ra, @nome, @dt_nascimento)");
+                strSQL.Append("INSERT INTO tb_aluno (id_curso, dt_cadastro, ra, nome, dt_nascimento) ");
+                strSQL.Append("VALUES (@id_curso, @dt_cadastro, @ra, @nome, @dt_nascimento)");
 
                 objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@id_curso", aluno.GetCurso().GetId());
                 objComando.Parameters.AddWithValue("@dt_cadastro", aluno.GetDataCadastro());
                 objComando.Parameters.AddWithValue("@ra", aluno.GetRa());
                 objComando.Parameters.AddWithValue("@nome", aluno.GetNome());
@@ -64,15 +65,7 @@ namespace ProjetoMatricula.DAO
                 {
                     item.SetAluno(aluno);
                     documentoDao.Salvar(item);
-                }
-
-
-                //DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                //foreach (var item in aluno.GetDisciplinas())
-                //{
-                //    item.SetAluno(aluno);
-                //    disciplinaDao.Salvar(item);
-                //}                
+                }                              
             }
 
             catch (Exception ex)
@@ -180,20 +173,6 @@ namespace ProjetoMatricula.DAO
                     item.SetAluno(aluno);
                     documentoDao.Alterar(item);
                 }
-
-                //CursoDAO cursoDao = new CursoDAO();
-                //foreach (var item in aluno.GetCurso())
-                //{
-                //    item.SetAluno(aluno);
-                //    cursoDao.Alterar(item);
-                //}
-
-                //DisciplinaDAO disciplinaDao = new DisciplinaDAO();
-                //foreach (var item in aluno.GetDisciplinas())
-                //{
-                //    item.SetAluno(aluno);
-                //    disciplinaDao.Alterar(item);
-                //}
 
             }
             catch (Exception ex)

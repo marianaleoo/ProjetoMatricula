@@ -1,7 +1,14 @@
 ﻿var disciplina = {
     DadosDTO: undefined,
 
-    buscarDados: function () {
+    carregarId: function () {
+        disciplina.DadosDTO = {
+            IdDisciplina: parseInt($("#idDisciplina").val())
+        }
+        disciplina.buscarDisciplina();
+    },
+
+    buscarCurso: function () {
         $.ajax({
             cache: false,
             method: "POST",
@@ -11,13 +18,13 @@
             dataType: "json",
             success: function (data) {
                 var select = $("#ddlCurso");
-                $.each(data.data, function (i, d) {                    
+                $.each(data.data, function (i, d) {
                     $('<option>').val(d.id).text(d.nome).appendTo(select);
                 });
             },
             error: function (error) {
                 swal({
-                    title: "Desculpe, erro ao buscar dados da disciplina",
+                    title: "Desculpe, erro ao buscar dados do curso",
                     text: error.responseJSON.mensagem,
                     type: "error",
                     closeOnConfirm: true,
@@ -28,10 +35,41 @@
         });
     },
 
+    buscarDisciplina: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetDisciplina",
+            data: JSON.stringify(disciplina.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                disciplina.carregarDados(data);
+                disciplina.buscarCurso();
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
+    carregarDados: function (data) {
+        var data = $(data).get(0);
+        $("#txtDisciplina").val(data.nome)           
+    },
+
     salvarDados: function () {
         disciplina.DadosDTO = {
-            IdCurso: $('#ddlCurso').val(),
-            Disciplina: $('#txtDisciplina').val()            
+            IdDisciplina: $("#idDisciplina").val(),
+            Disciplina: $("#txtDisciplina").val(),
+            IdCurso: $("#ddlCurso").val()
         }
         disciplina.salvarBD();
     },
@@ -39,7 +77,7 @@
     salvarBD: function () {
         $.ajax({
             method: "POST",
-            url: rootPath + "Controle/SalvarDisciplina",
+            url: rootPath + "Controle/AtualizarDisciplina",
             data: JSON.stringify(disciplina.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -60,9 +98,9 @@
 
 
 $(document).ready(function () {
-    disciplina.buscarDados();
+    disciplina.carregarId();
 
-    $("#btnSalvar").click(function () {
+    $("#btnEditar").click(function () {
         disciplina.salvarDados();
     });
 });

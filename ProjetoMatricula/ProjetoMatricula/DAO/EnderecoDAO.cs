@@ -45,8 +45,8 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("logradouro, numero, cep) VALUES (@aluno_id, @tpend_id, @cidade, @estado, @logradouro, @numero, @cep)");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
-                objComando.Parameters.AddWithValue("@tpend_id", tipoDao.ConsultarId(endereco.GetTpEndereco()));
+                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetAluno().GetId());
+                objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
                 objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());
@@ -203,7 +203,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("cep = @cep");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetPessoa().GetId());
+                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetAluno().GetId());
                 objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
                 objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());

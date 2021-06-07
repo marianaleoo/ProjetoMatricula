@@ -1,5 +1,4 @@
-﻿//var mensagem;
-var aluno = {
+﻿var aluno = {
     DadosDTO: undefined,
 
     buscarTipoCurso: function () {
@@ -11,9 +10,10 @@ var aluno = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+                var select = $("#ddlTpCurso");
                 $.each(data.data, function (i, d) {
-                    $('#ddlTpCurso').append($('<option></option>').attr('values', d.id).text(d.descricao));                    
-                });
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
+                });  
             },
             error: function (error) {
                 swal({
@@ -37,9 +37,10 @@ var aluno = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+                var select = $("#ddlTpDocumento");
                 $.each(data.data, function (i, d) {
-                    $('#ddlTpDocumento').append($('<option></option>').attr('values', d.id).text(d.descricao));
-                });
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
+                });  
             },
             error: function (error) {
                 swal({
@@ -63,8 +64,9 @@ var aluno = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+                var select = $("#ddlTpEndereco");
                 $.each(data.data, function (i, d) {
-                    $('#ddlTpEndereco').append($('<option></option>').attr('values', d.id).text(d.descricao));
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
                 });
             },
             error: function (error) {
@@ -84,14 +86,14 @@ var aluno = {
         $.ajax({
             cache: false,
             method: "POST",
-            url: rootPath + "Controle/GetCurso",
+            url: rootPath + "Controle/GetCursos",
             data: JSON.stringify(aluno.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {
-                console.log(data);
+            success: function (data) {                
+                var select = $("#ddlCurso");
                 $.each(data.data, function (i, d) {
-                    $('#ddlCurso').append($('<option></option>').attr('values', d.id).text(d.nome));                    
+                    $('<option>').val(d.id).text(d.nome).appendTo(select);
                 });
             },
             error: function (error) {
@@ -111,14 +113,14 @@ var aluno = {
         $.ajax({
             cache: false,
             method: "POST",
-            url: rootPath + "Controle/GetDisciplina",
+            url: rootPath + "Controle/GetDisciplinas",
             data: JSON.stringify(aluno.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {
-                console.log(data);
+            success: function (data) {                
+                var select = $("#ddlDisciplina");
                 $.each(data.data, function (i, d) {
-                    $('#ddlDisciplina').append($('<option></option>').attr('values', d.id).text(d.nome));
+                    $('<option>').val(d.id).text(d.nome).appendTo(select);
                 });
             },
             error: function (error) {
@@ -141,17 +143,17 @@ var aluno = {
             DataNascimento: $("#txtDtNascimento").val(),
             Codigo: $("#txtCodigo").val(),
             Validade: $("#txtValidade").val(),
-            TipoDocumento: $("#txtTpDocumento").val(),
-            Curso: $("#ddlCurso").val(),
+            IdTpDocumento: $("#ddlTpDocumento").val(),
+            IdCurso: $("#ddlCurso").val(),
             Modelo: $("#ddlModelo").val(),
-            TipoCurso: $("#ddlTpCurso").val(),
-            Disciplina: $("#ddlDisciplina").val(),
+            IdTpCurso: $("#ddlTpCurso").val(),
+            IdDisciplina: $("#ddlDisciplina").val(),
             Logradouro: $("#txtLogradouro").val(),
             Numero: $("#txtNumero").val(),
             Cep: $("#txtCep").val(),
             Cidade: $("#txtCidade").val(),
             Estado: $("#txtEstado").val(),
-            TipoEndereco: $("#txtTpEndereco").val()            
+            IdTpEndereco: $("#ddlTpEndereco").val()            
         }
         aluno.salvarBD();
     },

@@ -26,7 +26,7 @@ namespace ProjetoMatricula.Model
             this.tpEndereco = tpEndereco;
         }
 
-        public Aluno GetPessoa()
+        public Aluno GetAluno()
         {
             return aluno;
         }

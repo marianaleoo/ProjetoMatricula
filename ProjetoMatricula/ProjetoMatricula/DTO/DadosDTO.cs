@@ -26,6 +26,10 @@ namespace ProjetoMatricula.Servico
         public string TipoEndereco { get; set; }
         public int IdTpCurso { get; set; }
         public int IdCurso { get; set; }
+        public int IdDisciplina { get; set; }
+        public int IdTpEndereco { get; set; }
+        public int IdTpDocumento { get; set; }
+
 
     }
 }

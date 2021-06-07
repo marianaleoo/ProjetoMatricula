@@ -12,8 +12,8 @@ namespace ProjetoMatriculaWeb.ViewHelper
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {
             Curso curso = new Curso();
-            //curso.SetId(dados.IdCurso);
-            Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id, curso);
+            curso.SetId(dados.IdCurso);
+            Disciplina disciplina = new Disciplina(dados.Disciplina, dados.IdDisciplina, curso);
 
             return disciplina;
         }

@@ -145,6 +145,8 @@
     <Content Include="Scripts\app\createDisciplina.js" />
     <Content Include="Scripts\app\details.js" />
     <Content Include="Scripts\app\edit.js" />
+    <Content Include="Scripts\app\editCurso.js" />
+    <Content Include="Scripts\app\editDisciplina.js" />
     <Content Include="Scripts\app\index.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -184,6 +186,8 @@
     <Content Include="Views\Controle\CreateDisciplina.cshtml" />
     <Content Include="Views\Controle\DeleteDisciplina.cshtml" />
     <Content Include="Views\Controle\DeleteCurso.cshtml" />
+    <Content Include="Views\Controle\EditCurso.cshtml" />
+    <Content Include="Views\Controle\EditDisciplina.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

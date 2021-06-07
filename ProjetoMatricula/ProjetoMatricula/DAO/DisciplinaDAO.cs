@@ -87,10 +87,11 @@ namespace ProjetoMatricula.DAO
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_disciplina SET ");
-                strSQL.Append("nome = @nome ");
+                strSQL.Append("curso_id = @curso_id, nome = @nome ");
                 strSQL.Append("WHERE id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@curso_id", disciplina.GetCurso().GetId());
                 objComando.Parameters.AddWithValue("@nome", disciplina.GetNome());                
 
                 if (objComando.ExecuteNonQuery() < 1)

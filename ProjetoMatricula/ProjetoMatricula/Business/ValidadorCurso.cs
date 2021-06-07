@@ -27,7 +27,7 @@ namespace ProjetoMatricula.Business
 
         public int ConsultarAluno(EntidadeDominio entidadeDominio)
         {
-            Aluno aluno = (Aluno)entidadeDominio;
+            Aluno aluno = (Aluno)entidadeDominio;            
             int curso = 0;
 
             #region Conexão BD
@@ -47,7 +47,9 @@ namespace ProjetoMatricula.Business
 
                 objComando.CommandType = CommandType.Text;
                 objComando.CommandTimeout = 0;
-                objComando.CommandText = $@"select Count(id) from tb_curso where aluno_id =" + aluno.GetId();
+                objComando.CommandText = $@"select count(id) from tb_aluno 
+                                            where id_curso =" + aluno.GetCurso().GetId() +
+                                            " and id =" +aluno.GetId();
 
                 curso = Convert.ToInt32(objComando.ExecuteScalar());
 

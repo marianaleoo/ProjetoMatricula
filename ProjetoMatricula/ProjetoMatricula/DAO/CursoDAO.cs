@@ -34,10 +34,6 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                //TipoDAO tipoDAO = new TipoDAO();
-                //tipoDAO.Salvar(curso.GetTipoCurso());
-
-                //AlunoDAO aluno = new AlunoDAO();
 
                 StringBuilder strSQL = new StringBuilder();
 
@@ -66,8 +62,8 @@ namespace ProjetoMatricula.DAO
 
                 throw new Exception("Erro ao inserir registro " + ex.Message);
             }
-            //RegistrarLog log = new RegistrarLog();
-            //log.SalvarLog("tb_curso", "Salvar", entidadeDominio);
+            RegistrarLog log = new RegistrarLog();
+            log.SalvarLog("tb_curso", "Salvar", entidadeDominio);
             return true;
         }
 
@@ -128,17 +124,16 @@ namespace ProjetoMatricula.DAO
             #endregion
 
             try
-            {
-                TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(curso.GetTipoCurso());
+            {               
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_curso SET ");
-                strSQL.Append("nome = @nome, modeloCurso = @modeloCurso ");
+                strSQL.Append("tipoCurso_id = @tipoCurso_id, nome = @nome, modeloCurso = @modeloCurso ");
                 strSQL.Append("WHERE id = " + entidade.GetId());
 
-                objComando.CommandText = strSQL.ToString();                
+                objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@tipoCurso_id", curso.GetTipoCurso().GetId());
                 objComando.Parameters.AddWithValue("@nome", curso.GetNome());
                 objComando.Parameters.AddWithValue("@modeloCurso", curso.GetModeloCurso());
 

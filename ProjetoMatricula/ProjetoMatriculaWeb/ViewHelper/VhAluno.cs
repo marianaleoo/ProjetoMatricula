@@ -13,14 +13,14 @@ namespace ProjetoMatriculaWeb.ViewHelper
         public EntidadeDominio GetEntidade(DadosDTO dados)
         {  
 
-            TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento, dados.Id);            
+            TipoDocumento tipoDocumento = new TipoDocumento(dados.TipoDocumento, dados.IdTpDocumento);            
 
             Documento documento = new Documento(dados.Codigo, Convert.ToDateTime(dados.Validade), tipoDocumento, dados.Id);
 
             List<Documento> documentos = new List<Documento>();
             documentos.Add(documento);
 
-            TipoEndereco tipoEndereco = new TipoEndereco(dados.TipoEndereco, dados.Id);
+            TipoEndereco tipoEndereco = new TipoEndereco(dados.TipoEndereco, dados.IdTpEndereco);
 
             Estado estado = new Estado(dados.Estado);
 
@@ -31,9 +31,9 @@ namespace ProjetoMatriculaWeb.ViewHelper
             List<Endereco> enderecos = new List<Endereco>();
             enderecos.Add(endereco);
 
-            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso, dados.Id);
+            TipoCurso tipoCurso = new TipoCurso(dados.TipoCurso, dados.IdTpCurso);
 
-            Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.Id);
+            Curso curso = new Curso(tipoCurso, dados.Curso, dados.Modelo, dados.IdCurso);
 
             Disciplina disciplina = new Disciplina(dados.Disciplina, dados.Id, curso);
 

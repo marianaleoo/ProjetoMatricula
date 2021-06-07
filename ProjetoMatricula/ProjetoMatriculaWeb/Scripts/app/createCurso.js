@@ -9,9 +9,10 @@
             data: JSON.stringify(curso.DadosDTO),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (data) {                
+            success: function (data) {    
+                var select = $("#ddlTpCurso");
                 $.each(data.data, function (i, d) {
-                    $('#ddlTpCurso').append($('<option></option>').attr('values', d.id).text(d.descricao));                    
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);                                        
                 });                
             },
             error: function (error) {
@@ -31,7 +32,7 @@
         curso.DadosDTO = {              
             Curso: $('#txtCurso').val(),
             Modelo: $('#txtModelo').val(),            
-            TipoCurso: $('#ddlTpCurso').val()
+            IdTpCurso: $('#ddlTpCurso').val()
         }
         curso.salvarBD();
     },

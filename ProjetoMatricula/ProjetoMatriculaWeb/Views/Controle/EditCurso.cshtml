@@ -19,7 +19,8 @@
     <br>
     <br>
     <div id="main" class="container-fluid">
-        <h2 class="page-header">Adicionar Curso</h2>
+        <input type="hidden" id="idCurso" value="@ViewBag.Id">
+        <h2 class="page-header">Editar Curso</h2>
         <div class="row">
             <h3>Curso</h3>
             <div class="form-group col-md-4">
@@ -37,14 +38,14 @@
 
             <div class="form-group col-md-4">
                 <label for="tpCurso">Tipo Curso</label>
-                <select name="tpCurso" type="text" class="form-control" id="ddlTpCurso">                    
+                <select name="tpCurso" type="text" class="form-control" id="ddlTpCurso">
                 </select>
-            </div>            
+            </div>
         </div>
         <hr />
         <div id="actions" class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+                <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
                 <a href="/Controle/IndexCurso" class="btn btn-default">Cancelar</a>
             </div>
         </div>
@@ -59,6 +60,8 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/toastr")
-    @Scripts.Render("~/Scripts/app/createCurso.js")
+    @Scripts.Render("~/Scripts/app/editCurso.js")
 }
+
+
 

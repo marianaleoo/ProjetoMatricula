@@ -73,13 +73,11 @@ namespace ProjetoMatriculaWeb.Controllers
         {
             try
             {
-                IViewHelper vh = new VhAluno();
-                //AlunoDAO dao = new AlunoDAO();
+                IViewHelper vh = new VhAluno();                
 
                 var teste = vh.GetEntidade(dados);
 
-                return Json(new { success = _commandCadastrar.Executar(teste) });
-                //return Json(new { success = dao.Salvar(teste) });
+                return Json(new { success = _commandCadastrar.Executar(teste) });                
             }
             catch(Exception ex)
             {
@@ -93,14 +91,11 @@ namespace ProjetoMatriculaWeb.Controllers
         {
             try
             {
-                IViewHelper vh = new VhAluno();
-                //AlunoDAO dao = new AlunoDAO();
+                IViewHelper vh = new VhAluno();                
 
-                var teste = vh.GetEntidade(dados);
-                //var teste2 = vh.GetId(dados);
+                var teste = vh.GetEntidade(dados);                
 
-                return Json(new { success = _commandAlterar.Executar(teste) });
-                // return Json(new { success = dao.Alterar(teste) });
+                return Json(new { success = _commandAlterar.Executar(teste) });                
             }
             catch
             {
@@ -113,8 +108,7 @@ namespace ProjetoMatriculaWeb.Controllers
         {
             try
             {
-                IViewHelper vh = new VhAluno();
-                //AlunoDAO dao = new AlunoDAO();
+                IViewHelper vh = new VhAluno();                
 
                 var teste = vh.GetEntidade(dados);
 
@@ -134,14 +128,11 @@ namespace ProjetoMatriculaWeb.Controllers
         {
             try
             {
-                IViewHelper vh = new VhAluno();
-                //AlunoDAO dao = new AlunoDAO();
+                IViewHelper vh = new VhAluno();                
 
                 var teste = vh.GetEntidade(dados);
-
                 
-                return Json(new { success = _commandExcluir.Executar(teste) });
-                //return Json(new { success = dao.Excluir(teste) });
+                return Json(new { success = _commandExcluir.Executar(teste) });                
             }
             catch
             {
@@ -154,8 +145,7 @@ namespace ProjetoMatriculaWeb.Controllers
         {
             try
             {
-                IViewHelper vh = new VhAluno();
-                //AlunoDAO dao = new AlunoDAO();
+                IViewHelper vh = new VhAluno();                
 
                 var teste = vh.GetEntidade(dados);
 
@@ -241,16 +231,44 @@ namespace ProjetoMatriculaWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCurso(DadosDTO dados)
+        public string GetCurso(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhCurso();
+
+                #region Convert Id
+                int id = 0;
+                if (!dados.IdCurso.Equals(0))
+                {
+                    id = dados.IdCurso;
+                }
+                #endregion
+
+                var teste = vh.GetId(id);                
+
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
+
+                return JsonConvert.SerializeObject(cursos);
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetCursos(DadosDTO dados)
         {
             try
             {
                 Curso teste = new Curso();
 
                 List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
-                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);                
+                List<Curso> cursos = entidades.ConvertAll(item => (Curso)item);
 
-                return Json(new { data = cursos }, JsonRequestBehavior.AllowGet);
+                return Json(new { data = cursos }, JsonRequestBehavior.AllowGet);                
             }
             catch (Exception ex)
             {
@@ -298,6 +316,30 @@ namespace ProjetoMatriculaWeb.Controllers
 
             return Json(new { success = _commandExcluir.Executar(teste) });
         }
+
+        public ActionResult EditCurso(int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AtualizarCurso(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhCurso();
+
+                var teste = vh.GetEntidade(dados);
+
+                return Json(new { success = _commandAlterar.Executar(teste) });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+        }
         #endregion
 
         #region Disciplina
@@ -334,7 +376,7 @@ namespace ProjetoMatriculaWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetDisciplina(DadosDTO dados)
+        public JsonResult GetDisciplinas(DadosDTO dados)
         {
             try
             {
@@ -348,6 +390,34 @@ namespace ProjetoMatriculaWeb.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public string GetDisciplina(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhDisciplina();
+
+                #region Convert Id
+                int id = 0;
+                if (!dados.IdDisciplina.Equals(0))
+                {
+                    id = dados.IdDisciplina;
+                }
+                #endregion
+
+                var teste = vh.GetId(id);
+
+                List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+                List<Disciplina> disciplina = entidades.ConvertAll(item => (Disciplina)item);
+
+                return JsonConvert.SerializeObject(disciplina);
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { success = false });
             }
         }
 
@@ -372,6 +442,30 @@ namespace ProjetoMatriculaWeb.Controllers
             var teste = vh.GetId(id);
 
             return Json(new { success = _commandExcluir.Executar(teste) });
+        }
+
+        public ActionResult EditDisciplina(int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AtualizarDisciplina(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhDisciplina();
+
+                var teste = vh.GetEntidade(dados);
+
+                return Json(new { success = _commandAlterar.Executar(teste) });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
         }
         #endregion
     }
