@@ -47,7 +47,9 @@ namespace ProjetoMatriculaWeb.ViewHelper
 
         public EntidadeDominio GetId(int id)
         {
-            throw new NotImplementedException();
+            Aluno aluno = new Aluno(null, null, null, null, null, null, null, id);
+
+            return aluno;
         }
     }
 }

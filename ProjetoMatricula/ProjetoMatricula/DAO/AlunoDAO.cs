@@ -206,6 +206,10 @@ namespace ProjetoMatricula.DAO
             StringBuilder strSQL = new StringBuilder();
             try
             {
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                enderecoDAO.Excluir(entidade);
+                DocumentoDAO documentoDAO = new DocumentoDAO();
+                documentoDAO.Excluir(entidade);
                 if (!entidade.GetId().Equals(0))
                 {
                     strSQL.Append("DELETE FROM tb_aluno WHERE id = " + entidade.GetId());

@@ -10,7 +10,7 @@ namespace ProjetoMatricula.Model
     {        
         private string nome;
         private string ra;
-        private DateTime dataNascimento;
+        private DateTime? dataNascimento;
         private List<Endereco> enderecos;
         private List<Disciplina> disciplinas;
         private Curso curso;
@@ -18,7 +18,7 @@ namespace ProjetoMatricula.Model
 
         public Aluno() { }        
 
-        public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, Curso curso, string nome, string ra, DateTime dataNascimento, int id) : base(id)
+        public Aluno(List<Documento> documentos, List<Endereco> enderecos, List<Disciplina> disciplinas, Curso curso, string nome, string ra, DateTime? dataNascimento, int id) : base(id)
         {
             this.documentos = documentos;
             this.enderecos = enderecos;
@@ -90,7 +90,7 @@ namespace ProjetoMatricula.Model
             this.ra = ra;
         }
 
-        public DateTime GetDataNascimento()
+        public DateTime? GetDataNascimento()
         {
 
             return dataNascimento;

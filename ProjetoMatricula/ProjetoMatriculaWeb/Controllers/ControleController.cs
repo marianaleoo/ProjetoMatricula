@@ -62,10 +62,10 @@ namespace ProjetoMatriculaWeb.Controllers
         }
 
         // GET: Controle/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: Controle/Create
         [HttpPost]
@@ -122,22 +122,27 @@ namespace ProjetoMatriculaWeb.Controllers
             }
         }
 
-        // POST: Controle/Excluir/5
-        [HttpPost]
-        public JsonResult Excluir(DadosDTO dados)
+        public ActionResult Excluir(int id)
         {
-            try
-            {
-                IViewHelper vh = new VhAluno();                
+            IViewHelper vh = new VhAluno();
 
-                var teste = vh.GetEntidade(dados);
-                
-                return Json(new { success = _commandExcluir.Executar(teste) });                
-            }
-            catch
-            {
-                return Json(new { success = false });
-            }
+            var teste = vh.GetId(id);
+
+            return Json(new { success = _commandExcluir.Executar(teste) });
+        }
+
+        public ActionResult Delete(int id)
+        {
+            ViewBag.Id = id;
+
+            IViewHelper vh = new VhAluno();
+
+            var teste = vh.GetId(id);
+
+            List<EntidadeDominio> entidades = _commandConsultar.Exec(teste);
+            Aluno aluno = entidades.ConvertAll(item => (Aluno)item).FirstOrDefault();
+
+            return View(aluno);
         }
 
         [HttpPost]
@@ -158,6 +163,8 @@ namespace ProjetoMatriculaWeb.Controllers
                 return JsonConvert.SerializeObject(new { success = false });
             }
         }
+
+
 
         [HttpPost]
         public JsonResult GetTipoDocumento(DadosDTO dados)

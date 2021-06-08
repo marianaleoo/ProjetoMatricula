@@ -10,7 +10,7 @@ namespace ProjetoMatricula.Servico
         public int Id { get; set; }        
         public string Aluno { get; set; }
         public string RA { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
         public string Codigo { get; set; }
         public DateTime Validade { get; set; }
         public string TipoDocumento { get; set; }        
@@ -23,9 +23,11 @@ namespace ProjetoMatricula.Servico
         public string Cep { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+        public string Descricao { get; set; }
         public string TipoEndereco { get; set; }
         public int IdTpCurso { get; set; }
         public int IdCurso { get; set; }
+        public int IdEndereco { get; set; }
         public int IdDisciplina { get; set; }
         public int IdTpEndereco { get; set; }
         public int IdTpDocumento { get; set; }

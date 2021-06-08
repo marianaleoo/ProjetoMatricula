@@ -130,7 +130,6 @@ namespace ProjetoMatricula.DAO
 
         public bool Excluir(EntidadeDominio entidade)
         {
-            Endereco endereco = (Endereco)entidade;
             #region Conexão BD
             Conexao conn = new Conexao();
             var conexao = conn.Connection();
@@ -145,16 +144,16 @@ namespace ProjetoMatricula.DAO
             StringBuilder strSQL = new StringBuilder();
             try
             {
-                if (!endereco.GetId().Equals(0))
+                if (!entidade.GetId().Equals(0))
                 {
-                    strSQL.Append("DELETE FROM tb_endereco WHERE id =@id");
+                    strSQL.Append("DELETE FROM tb_endereco WHERE aluno_id =@aluno_id");
                     objComando.CommandText = strSQL.ToString();
-                    objComando.Parameters.AddWithValue("@id", endereco.GetId());
+                    objComando.Parameters.AddWithValue("@aluno_id", entidade.GetId());
                 }
 
                 if (objComando.ExecuteNonQuery() < 1)
                 {
-                    throw new Exception("Erro ao excluir registro " + endereco.GetId());
+                    throw new Exception("Erro ao excluir registro " + entidade.GetId());
                 }
                 objConn.Close();
             }
