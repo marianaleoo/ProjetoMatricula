@@ -34,8 +34,8 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Salvar(documento.GetTpDocumento());
+                //TipoDAO tipoDao = new TipoDAO();
+                //tipoDao.Salvar(documento.GetTpDocumento());
 
                 AlunoDAO aluno = new AlunoDAO();
 
@@ -46,7 +46,7 @@ namespace ProjetoMatricula.DAO
 
                 objComando.CommandText = strSQL.ToString();
                 objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
-                objComando.Parameters.AddWithValue("@tpdoc_id", tipoDao.ConsultarId(documento.GetTpDocumento()));
+                objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTpDocumento().GetId());
                 objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
                 objComando.Parameters.AddWithValue("@validade", documento.GetValidade());
                 if (objComando.ExecuteNonQuery() < 1)

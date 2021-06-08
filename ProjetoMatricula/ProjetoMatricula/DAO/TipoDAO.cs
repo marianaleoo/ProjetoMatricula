@@ -33,9 +33,7 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                nmClass = entidade.GetType().Name.ToLower();
-                var teste = Consultar(entidade).FirstOrDefault();
-                Tipo teste2 = (Tipo)teste;
+                nmClass = entidade.GetType().Name.ToLower();                
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("INSERT INTO ");
                 strSQL.Append("tb_");
@@ -44,7 +42,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("VALUES (@descricao)");
 
                 objComando.CommandText = strSQL.ToString();                
-                objComando.Parameters.AddWithValue("@descricao", teste2.GetDescricao());
+                objComando.Parameters.AddWithValue("@descricao", tipo.GetId());
 
                 if (objComando.ExecuteNonQuery() < 1)
                 {

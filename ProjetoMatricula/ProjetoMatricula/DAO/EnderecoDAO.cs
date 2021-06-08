@@ -34,8 +34,8 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Salvar(endereco.GetTpEndereco());
+                //TipoDAO tipoDao = new TipoDAO();
+                //tipoDao.Salvar(endereco.GetTpEndereco());
 
                 AlunoDAO aluno = new AlunoDAO();
 
@@ -45,7 +45,7 @@ namespace ProjetoMatricula.DAO
                 strSQL.Append("logradouro, numero, cep) VALUES (@aluno_id, @tpend_id, @cidade, @estado, @logradouro, @numero, @cep)");
 
                 objComando.CommandText = strSQL.ToString();
-                objComando.Parameters.AddWithValue("@aluno_id", endereco.GetAluno().GetId());
+                objComando.Parameters.AddWithValue("@aluno_id", aluno.ConsultarId());
                 objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
                 objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
@@ -276,7 +276,7 @@ namespace ProjetoMatricula.DAO
                 while (reader.Read())
                 {
                     Cidade cidade = new Cidade();
-                    cidade.SetId(Convert.ToInt32(reader["cidade"]));
+                    cidade.SetDescricao(reader["cidade"].ToString());
                     TipoEndereco tipoEndereco = new TipoEndereco();
                     tipoEndereco.SetId(Convert.ToInt32(reader["tpend_id"]));
                     Endereco end = new Endereco(reader["logradouro"].ToString(), reader["numero"].ToString(), reader["cep"].ToString(), cidade, tipoEndereco, Convert.ToInt32(reader["id"]));
