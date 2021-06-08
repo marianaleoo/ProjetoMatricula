@@ -12,9 +12,7 @@ namespace ProjetoMatricula.Business
     public class ValidadorCpf : IStrategy
     {
         public String Processar(EntidadeDominio entidadeDominio)
-        {
-            bool cpf = false;
-
+        {   
             Aluno aluno = (Aluno)entidadeDominio;
             var tipo = ConsultarTpDocumento(entidadeDominio);
             var codigo = aluno.getDocumentos().FirstOrDefault().GetCodigo();     
@@ -22,20 +20,16 @@ namespace ProjetoMatricula.Business
             if (aluno.getDocumentos() != null)
             {
                 if (tipo.Equals("CPF"))
-                {
-                    cpf = true;
+                {                    
                     if (codigo == null || codigo.Length < 11)
                     {
                         return "CPF deve conter 11 digitos!";
-                    }
-
-                }
-                if (!cpf)
-                    return "CPF é obrigatório!";
+                    }                    
+                }   
             }
             else
             {
-                return "CPF é obrigatório!";
+                return "Documento é obrigatório!";
             }
 
             return null;

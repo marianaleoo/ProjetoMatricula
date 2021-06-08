@@ -59,15 +59,7 @@
     </td>
     <td>
         @item.GetDataCadastro()
-    </td>
-    <td>
-        <select>
-            @foreach (var aluno in Model)
-            {
-                <option value="@aluno.GetId()">@aluno.GetNome()</option>
-            }
-            </select>
-    </td>
+    </td>    
      <td>
             @Html.ActionLink("Editar", "Edit", new { id = item.GetId() }) |
             @Html.ActionLink("Deletar", "Delete", new { id = item.GetId() })

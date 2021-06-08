@@ -12,7 +12,7 @@ namespace ProjetoMatricula.Business
         {
 
             Aluno aluno = (Aluno)entidade;
-            var tipoEndereco = aluno.GetEnderecos().FirstOrDefault().GetTpEndereco().GetDescricao();
+            //var tipoEndereco = aluno.GetEnderecos().FirstOrDefault().GetTpEndereco().GetDescricao();
             var logradouro = aluno.GetEnderecos().FirstOrDefault().GetLogradouro();
             var numero = aluno.GetEnderecos().FirstOrDefault().GetNumero();
             var cidade = aluno.GetEnderecos().FirstOrDefault().GetCidade().GetDescricao();
@@ -21,11 +21,11 @@ namespace ProjetoMatricula.Business
 
             if (logradouro == null || cidade == null || estado == null || numero == null)
             {
-                return "Cidade, estado e numero no endereço:" + tipoEndereco + "são de preenchimento obrigat�rio!";
+                return "Cidade, estado e numero no endereço são de preenchimento obrigat�rio!";
             }
             else if (logradouro.Trim().Equals("") || cidade.Trim().Equals("") || estado.Trim().Equals("") || numero.Trim().Equals(""))
             {
-                return "Cidade, estado e numero no endere�o:" + tipoEndereco + "são de preenchimento obrigatório!";
+                return "Cidade, estado e numero no endere�o são de preenchimento obrigatório!";
             }
 
             return null;

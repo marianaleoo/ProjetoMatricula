@@ -88,16 +88,17 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(documento.GetTpDocumento());                
+                //TipoDAO tipoDao = new TipoDAO();
+                //tipoDao.Alterar(documento.GetTpDocumento());                
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_documento SET ");
-                strSQL.Append("codigo = @codigo, validade = @validade ");
-                strSQL.Append("WHERE id = " + entidade.GetId());
+                strSQL.Append("tpdoc_id = @tpdoc_id, codigo = @codigo, validade = @validade ");
+                strSQL.Append("WHERE aluno_id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@tpdoc_id", documento.GetTpDocumento().GetId());
                 objComando.Parameters.AddWithValue("@codigo", documento.GetCodigo());
                 objComando.Parameters.AddWithValue("@validade", documento.GetValidade());
 

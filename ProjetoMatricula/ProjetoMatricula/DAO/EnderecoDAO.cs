@@ -90,16 +90,17 @@ namespace ProjetoMatricula.DAO
 
             try
             {
-                TipoDAO tipoDao = new TipoDAO();
-                tipoDao.Alterar(endereco.GetTpEndereco());
+                //TipoDAO tipoDao = new TipoDAO();
+                //tipoDao.Alterar(endereco.GetTpEndereco());
 
                 StringBuilder strSQL = new StringBuilder();
 
                 strSQL.Append("UPDATE tb_endereco SET ");
-                strSQL.Append("cidade = @cidade, estado = @estado, logradouro = @logradouro, numero = @numero, cep = @cep ");
-                strSQL.Append("WHERE id = " + entidade.GetId());
+                strSQL.Append("tpend_id = @tpend_id, cidade = @cidade, estado = @estado, logradouro = @logradouro, numero = @numero, cep = @cep ");
+                strSQL.Append("WHERE aluno_id = " + entidade.GetId());
 
                 objComando.CommandText = strSQL.ToString();
+                objComando.Parameters.AddWithValue("@tpend_id", endereco.GetTpEndereco().GetId());
                 objComando.Parameters.AddWithValue("@cidade", endereco.GetCidade().GetDescricao());
                 objComando.Parameters.AddWithValue("@estado", endereco.GetCidade().GetEstado().GetDescricao());
                 objComando.Parameters.AddWithValue("@logradouro", endereco.GetLogradouro());

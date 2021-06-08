@@ -9,28 +9,27 @@
     },
 
     carregarDados: function (data) {
+        console.log(data);
         var data = $(data).get(0);
             $("#idAluno").val(data.Id),
             $("#txtAluno").val(data.Aluno),
             $("#txtRa").val(data.RA),
             $("#txtDtNascimento").val(data.DataNascimento),
             $("#txtCodigo").val(data.Codigo),
-            $("#txtValidade").val(data.Validade),
-            $("#txtTpDocumento").val(data.TipoDocumento),
-            $("#txtCurso").val(data.Curso),
-            $("#txtModelo").val(data.Modelo),
-            $("#txtTpCurso").val(data.TipoCurso),
+            $("#txtValidade").val(data.Validade),            
+            $("#txtCurso").val(data.Curso),            
             $("#txtDisciplina").val(data.Disciplina),
             $("#txtLogradouro").val(data.Logradouro),
             $("#txtNumero").val(data.Numero),
             $("#txtCep").val(data.Cep),
             $("#txtCidade").val(data.Cidade),
             $("#txtEstado").val(data.Estado),
-            $("#txtTpEndereco").val(data.TipoEndereco)
+            $("#txtTpCurso").val(data.IdTpCurso),
+            $("#txtTpDocumento").val(data.IdTpDocumento),
+            $("#txtTpEndereco").val(data.IdTpEndereco)
     },
 
-    buscarDados: function () {
-        console.log(aluno.DadosDTO);
+    buscarDados: function () {        
         $.ajax({
             cache: false,
             method: "POST",
@@ -54,6 +53,87 @@
         });
     },
 
+    buscarTipoCurso: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetTipoCurso",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var select = $("#txtTpCurso");
+                $.each(data.data, function (i, d) {
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
+    buscarTipoDocumento: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetTipoDocumento",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var select = $("#txtTpDocumento");
+                $.each(data.data, function (i, d) {
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
+    buscarTipoEndereco: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetTipoEndereco",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var select = $("#txtTpEndereco");
+                $.each(data.data, function (i, d) {
+                    $('<option>').val(d.id).text(d.descricao).appendTo(select);
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados do curso",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
     editarDados: function () {
         aluno.DadosDTO = {
             Id: $("#idAluno").val(),
@@ -62,17 +142,17 @@
             DataNascimento: $("#txtDtNascimento").val(),
             Codigo: $("#txtCodigo").val(),
             Validade: $("#txtValidade").val(),
-            TipoDocumento: $("#txtTpDocumento").val(),
+            IdTpDocumento: $("#txtTpDocumento").val(),
             Curso: $("#txtCurso").val(),
             Modelo: $("#txtModelo").val(),
-            TipoCurso: $("#txtTpCurso").val(),
+            IdTpCurso: $("#txtTpCurso").val(),
             Disciplina: $("#txtDisciplina").val(),
             Logradouro: $("#txtLogradouro").val(),
             Numero: $("#txtNumero").val(),
             Cep: $("#txtCep").val(),
             Cidade: $("#txtCidade").val(),
             Estado: $("#txtEstado").val(),
-            TipoEndereco: $("#txtTpEndereco").val()
+            IdTpEndereco: $("#txtTpEndereco").val()
         }        
         $.ajax({
             method: "POST",
@@ -92,7 +172,10 @@
 };
 
 
-$(document).ready(function () {
+$(document).ready(function () {    
+    aluno.buscarTipoDocumento();
+    aluno.buscarTipoCurso();
+    aluno.buscarTipoEndereco();
     aluno.carregarId();
 
     //$("#txtDtNascimento").mask("99/99/9999", { reverse: true });

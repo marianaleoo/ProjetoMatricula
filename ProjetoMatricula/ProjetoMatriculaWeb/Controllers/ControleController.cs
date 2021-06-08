@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ProjetoMatricula.Command;
+using ProjetoMatricula.Util;
 using ProjetoMatricula.DAO;
 using ProjetoMatricula.Model;
 using ProjetoMatricula.Servico;
@@ -37,14 +38,6 @@ namespace ProjetoMatriculaWeb.Controllers
             List<Aluno> alunos = entidades.ConvertAll(item => (Aluno)item);
             
             return View(alunos);
-        }        
-
-        // GET: Controle/Details/5
-        public ActionResult Details(int id)
-        {
-            ViewBag.Id = id;
-
-            return View();
         }
 
         // GET: Controle/Create
@@ -59,13 +52,7 @@ namespace ProjetoMatriculaWeb.Controllers
             ViewBag.Id = id;
 
             return View();
-        }
-
-        // GET: Controle/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        }        
 
         // POST: Controle/Create
         [HttpPost]
@@ -152,9 +139,18 @@ namespace ProjetoMatriculaWeb.Controllers
             {
                 IViewHelper vh = new VhAluno();                
 
-                var teste = vh.GetEntidade(dados);
+                #region Convert Id
+                int id = 0;
+                ConvertDTO dto = new ConvertDTO();
+                if (!dados.Id.Equals(0))
+                {
+                    id = dados.Id;
+                }
+                #endregion
 
-                var data = _commandConsultar.Exec(teste);
+                var entidade = vh.GetId(id);
+                
+                var data = dto.GetDTO(entidade);
 
                 return JsonConvert.SerializeObject(data);
             }
@@ -163,8 +159,6 @@ namespace ProjetoMatriculaWeb.Controllers
                 return JsonConvert.SerializeObject(new { success = false });
             }
         }
-
-
 
         [HttpPost]
         public JsonResult GetTipoDocumento(DadosDTO dados)
