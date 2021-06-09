@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\IStrategy.cs" />
-    <Compile Include="Business\ValidadorCurso.cs" />
+    <Compile Include="Business\ValidadorExistencia.cs" />
     <Compile Include="Business\ValidadorCpf.cs" />
     <Compile Include="Business\ValidadorDisciplina.cs" />
     <Compile Include="Business\ValidadorEndereco.cs" />
@@ -107,6 +107,7 @@
     <Compile Include="DTO\DadosDTO.cs" />
     <Compile Include="Util\Conexao.cs" />
     <Compile Include="Util\ConvertDTO.cs" />
+    <Compile Include="Util\CursoDisciplinas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">

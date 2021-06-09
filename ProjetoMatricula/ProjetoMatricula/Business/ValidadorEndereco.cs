@@ -11,8 +11,7 @@ namespace ProjetoMatricula.Business
         public String Processar(EntidadeDominio entidade)
         {
 
-            Aluno aluno = (Aluno)entidade;
-            //var tipoEndereco = aluno.GetEnderecos().FirstOrDefault().GetTpEndereco().GetDescricao();
+            Aluno aluno = (Aluno)entidade;            
             var logradouro = aluno.GetEnderecos().FirstOrDefault().GetLogradouro();
             var numero = aluno.GetEnderecos().FirstOrDefault().GetNumero();
             var cidade = aluno.GetEnderecos().FirstOrDefault().GetCidade().GetDescricao();

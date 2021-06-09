@@ -283,5 +283,47 @@ namespace ProjetoMatricula.DAO
             }
         }
 
+        public int ConsultarExistenciaAluno(EntidadeDominio entidadeDominio)
+        {
+            Documento documento = (Documento)entidadeDominio;
+            int curso = 0;
+
+            #region Conexão BD
+            Conexao conn = new Conexao();
+            var conexao = conn.Connection();
+            var objConn = new SqlConnection(conexao);
+            if (objConn.State == ConnectionState.Closed)
+            {
+                objConn.Open();
+            }
+            var objComando = new SqlCommand();
+            objComando.Connection = objConn;
+            #endregion
+
+            try
+            {
+
+                objComando.CommandType = CommandType.Text;
+                objComando.CommandTimeout = 0;
+                objComando.CommandText = $@"select count(id) from tb_documento 
+                                            where codigo =" + documento.GetCodigo();
+
+                curso = Convert.ToInt32(objComando.ExecuteScalar());
+
+                objConn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                if (objConn.State == ConnectionState.Open)
+                {
+                    objConn.Close();
+                }
+
+                throw new Exception("Erro ao consultar Código" + ex.Message);
+            }
+
+            return curso;
+        }
     }
 }

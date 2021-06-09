@@ -350,6 +350,35 @@ namespace ProjetoMatriculaWeb.Controllers
                 return Json(new { success = false });
             }
         }
+
+        [HttpPost]
+        public JsonResult GetCursoDisciplinas(DadosDTO dados)
+        {
+            try
+            {
+                IViewHelper vh = new VhCurso();
+
+                #region Convert Id
+                int id = 0;
+                CursoDisciplinas cd = new CursoDisciplinas();
+                if (!dados.IdCurso.Equals(0))
+                {
+                    id = dados.IdCurso;
+                }
+                #endregion
+
+                var teste = vh.GetId(id);
+
+                List<EntidadeDominio> entidades = cd.GetCursoDisciplinas(teste);
+                List<Disciplina> disciplinas = entidades.ConvertAll(item => (Disciplina)item);
+
+                return Json(new { data = disciplinas }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
         #endregion
 
         #region Disciplina

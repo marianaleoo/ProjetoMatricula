@@ -30,12 +30,12 @@ namespace ProjetoMatricula.Facade
             ValidadorCpf validCpf = new ValidadorCpf();
             ValidadorEndereco validEnd = new ValidadorEndereco();
             ValidadorRA validRA = new ValidadorRA();
-            ValidadorCurso validCurso = new ValidadorCurso();
+            ValidadorExistencia validExistencia = new ValidadorExistencia();
             ValidadorExcluirCurso validExcluirCurso = new ValidadorExcluirCurso();
             rNegocioAluno.Add(validCpf);
             rNegocioAluno.Add(validEnd);
             rNegocioAluno.Add(validRA);
-            rNegocioAluno.Add(validCurso);
+            rNegocioAluno.Add(validExistencia);
             rNegocioCurso.Add(validExcluirCurso);
             rNegocioAlunoAtualizar.Add(validEnd);
             rNegocioAlunoAtualizar.Add(validCpf);
