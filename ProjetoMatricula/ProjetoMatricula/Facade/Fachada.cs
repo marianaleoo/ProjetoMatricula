@@ -39,6 +39,7 @@ namespace ProjetoMatricula.Facade
             rNegocioCurso.Add(validExcluirCurso);
             rNegocioAlunoAtualizar.Add(validEnd);
             rNegocioAlunoAtualizar.Add(validCpf);
+            rNegocioAlunoAtualizar.Add(validRA);
             rNegocio["Aluno" + "Salvar"] = rNegocioAluno;            
             rNegocio["Curso" + "Excluir"] = rNegocioCurso;
             rNegocio["Aluno" + "Alterar"] = rNegocioAlunoAtualizar;
