@@ -58,35 +58,6 @@
             </div>
             <br />
 
-            <h3>Curso</h3>
-            <div class="form-group col-md-6">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="txtCurso" placeholder="Digite o nome do curso">
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="modelo">Modelo</label>
-                <select name="modelo" id="txtModelo" type="text" class="form-control">
-                    <option value="Presencial">Presencial</option>
-                    <option value="EAD">EAD</option>
-                </select>
-            </div>
-
-            @*<div class="form-group col-md-4">
-                <label for="tpCurso">Tipo Curso</label>
-                <br />
-                <select name="tpCurso" id="txtTpCurso" type="text" class="form-control">
-                </select>
-            </div>*@
-
-            <br />
-            <h3>Disciplina</h3>
-            <div class="form-group col-md-12">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="txtDisciplina" placeholder="Digite o nome da disciplina">
-            </div>
-            <br />
-
             <h3>Endereço</h3>
             <div class="form-group col-md-4">
                 <label for="logradouro">Logradouro</label>
@@ -148,6 +119,27 @@
                 <select name="tpEndereco" id="txtTpEndereco" type="text" class="form-control">
                 </select>
             </div>
+            <br />
+
+            <h3>Curso/Disciplina</h3>
+            <div class="form-group col-md-4">
+                <label for="nome">Curso</label>
+                <select name="nome" id="txtCurso" type="text" class="form-control"></select>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="nome">Disciplina</label>
+                <select name="nome" id="txtDisciplina" type="text" class="form-control"></select>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="modelo">Modelo</label>
+                <select name="modelo" id="txtModelo" type="text" class="form-control">
+                    <option value="Presencial">Presencial</option>
+                    <option value="EAD">EAD</option>
+                </select>
+            </div>
+            <br />
         </div>
         <hr />
         <div id="divAlerta" class="row mb-4 mt-4">

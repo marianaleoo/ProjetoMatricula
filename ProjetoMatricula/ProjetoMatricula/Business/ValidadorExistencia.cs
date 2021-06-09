@@ -16,8 +16,8 @@ namespace ProjetoMatricula.Business
     {
         public String Processar(EntidadeDominio entidadeDominio)
         {
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            int existe = documentoDAO.ConsultarExistenciaAluno(entidadeDominio);
+            AlunoDAO alunoDAO = new AlunoDAO();
+            int existe = alunoDAO.ConsultarExistenciaAluno(entidadeDominio);
 
             if (!existe.Equals(0))
             {

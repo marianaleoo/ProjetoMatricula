@@ -134,6 +134,65 @@
         });
     },
 
+    buscarCursos: function () {
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetCursos",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var select = $("#txtCurso");
+                $.each(data.data, function (i, d) {
+                    $('<option>').val(d.id).text(d.nome).appendTo(select);
+                });
+                aluno.buscarDisciplinas($('#txtCurso option:selected').val());
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados da disciplina",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
+    buscarDisciplinas: function (id) {
+        aluno.DadosDTO = {
+            IdCurso: id
+        }
+        $.ajax({
+            cache: false,
+            method: "POST",
+            url: rootPath + "Controle/GetCursoDisciplinas",
+            data: JSON.stringify(aluno.DadosDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $("#txtDisciplina").empty();
+                var select = $("#txtDisciplina");
+                $.each(data.data, function (i, d) {
+                    $('<option>').val(d.id).text(d.nome).appendTo(select);
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "Desculpe, erro ao buscar dados da disciplina",
+                    text: error.responseJSON.mensagem,
+                    type: "error",
+                    closeOnConfirm: true,
+                }, function () {
+                    close();
+                });
+            }
+        });
+    },
+
     editarDados: function () {
         aluno.DadosDTO = {
             Id: $("#idAluno").val(),
@@ -161,7 +220,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                toastr.success("Dados atualizados com sucesso!", "Aluno");
+                aluno.retornoIndex();
             },
             error: function (error) {
                 console.log(error.responseJSON);
@@ -169,19 +228,29 @@
                 $('#divAlerta').addClass('alert alert-danger');
             }
         });
+    },
+
+    retornoIndex: function () {
+        window.open(rootPath + 'Controle/Index')
     }
 };
 
 
-$(document).ready(function () {    
+$(document).ready(function () {  
+    aluno.carregarId();
     aluno.buscarTipoDocumento();
     aluno.buscarTipoCurso();
     aluno.buscarTipoEndereco();
-    aluno.carregarId();
+    aluno.buscarCursos();    
 
     //$("#txtDtNascimento").mask("99/99/9999", { reverse: true });
 
     $("#btnEditar").click(function () {
         aluno.editarDados();
+    });
+
+    $('#txtCurso').on('change', function (e) {
+        $("#txtDisciplina").empty();
+        aluno.buscarDisciplinas($('#txtCurso option:selected').val());
     });
 });
