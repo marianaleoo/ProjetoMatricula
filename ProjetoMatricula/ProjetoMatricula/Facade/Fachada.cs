@@ -29,13 +29,11 @@ namespace ProjetoMatricula.Facade
             List<IStrategy> rNegocioAlunoAtualizar = new List<IStrategy>();
             ValidadorCpf validCpf = new ValidadorCpf();
             ValidadorEndereco validEnd = new ValidadorEndereco();
-            ValidadorRA validRA = new ValidadorRA();
-            ValidadorExistencia validExistencia = new ValidadorExistencia();
+            ValidadorRA validRA = new ValidadorRA();            
             ValidadorExcluirCurso validExcluirCurso = new ValidadorExcluirCurso();
             rNegocioAluno.Add(validCpf);
             rNegocioAluno.Add(validEnd);
-            rNegocioAluno.Add(validRA);
-            rNegocioAluno.Add(validExistencia);
+            rNegocioAluno.Add(validRA);            
             rNegocioCurso.Add(validExcluirCurso);
             rNegocioAlunoAtualizar.Add(validEnd);
             rNegocioAlunoAtualizar.Add(validCpf);

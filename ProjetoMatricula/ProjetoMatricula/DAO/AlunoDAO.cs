@@ -427,10 +427,12 @@ namespace ProjetoMatricula.DAO
                 objComando.CommandType = CommandType.Text;
                 objComando.CommandTimeout = 0;
                 objComando.CommandText = $@"select count(id) from tb_documento 
-                                            where codigo =" + doc.GetCodigo() +
-                                            " and aluno_id <>" + aluno.GetId();
+                                            where codigo =" + doc.GetCodigo();
 
-                curso = Convert.ToInt32(objComando.ExecuteScalar());
+                if (Convert.ToInt32(objComando.ExecuteScalar()) > 0)
+                {
+                    curso = Convert.ToInt32(objComando.ExecuteScalar());
+                }                
 
                 objConn.Close();
 
