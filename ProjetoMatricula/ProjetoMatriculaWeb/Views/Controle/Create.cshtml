@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
@@ -7,6 +9,7 @@
     <title>Template Bootstrap</title>	  	  <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    @*<link href="css/Site.css" rel="stylesheet">*@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -52,7 +55,7 @@
             <div class="form-group col-md-4">
                 <label for="tpDocumento">Tipo Documento</label>
                 <br />
-                <select name="tpDocumento" id="ddlTpDocumento" type="text" class="form-control">                   
+                <select name="tpDocumento" id="ddlTpDocumento" type="text" class="form-control">
                 </select>
             </div>
             <br />
@@ -72,10 +75,10 @@
             </div>
 
             @*<div class="form-group col-md-4">
-                <label for="tpCurso">Tipo Curso</label>
-                <br />
-                <select name="tpCurso" id="ddlTpCurso" type="text" class="form-control"></select>
-            </div>*@
+                    <label for="tpCurso">Tipo Curso</label>
+                    <br />
+                    <select name="tpCurso" id="ddlTpCurso" type="text" class="form-control"></select>
+                </div>*@
             <br />
 
             <h3>Disciplina</h3>
@@ -143,9 +146,13 @@
             <div class="form-group col-md-4">
                 <label for="tpEndereco">Tipo Endereço</label>
                 <br />
-                <select name="tpEndereco" id="ddlTpEndereco" type="text" class="form-control">                    
+                <select name="tpEndereco" id="ddlTpEndereco" type="text" class="form-control">
                 </select>
             </div>
+        </div>
+        <hr />
+        <div id="divAlerta" class="row mb-4 mt-4">
+            <p id="mensagemErro" class="col-md-12"></p>
         </div>
         <hr />
         <div id="actions" class="row">

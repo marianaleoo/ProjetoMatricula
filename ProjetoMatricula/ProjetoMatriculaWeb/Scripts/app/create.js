@@ -162,15 +162,20 @@
         $.ajax({
             method: "POST",
             url: rootPath + "Controle/Salvar",
-            data: JSON.stringify(aluno.DadosDTO),
+            data: JSON.stringify(aluno.DadosDTO), 
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 aluno.retornoIndex();
+                console.log(data);
             },
             error: function (error) {
-                toastr.error("Erro ao salvar dados!", "Aluno");
-                location.reload();
+                //toastr.error("Erro ao salvar dados!", "Aluno");
+                //location.reload();
+                console.log(error.responseJSON);
+                $('#mensagemErro').text(error.responseJSON.mensagem);
+                $('#divAlerta').addClass('alert alert-danger');
+
             }
         });
     },
