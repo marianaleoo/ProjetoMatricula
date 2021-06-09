@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 
 namespace ProjetoMatriculaWeb.Controllers
 {
@@ -64,11 +65,12 @@ namespace ProjetoMatriculaWeb.Controllers
 
                 var teste = vh.GetEntidade(dados);
 
-                return Json(new { success = _commandCadastrar.Executar(teste) });                
+                return Json(new  { success = _commandCadastrar.Executar(teste) });                
             }
             catch(Exception ex)
             {
-                return Json(new { success = false });
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { mensagem = ex.Message });
             }
         }        
 
@@ -84,9 +86,10 @@ namespace ProjetoMatriculaWeb.Controllers
 
                 return Json(new { success = _commandAlterar.Executar(teste) });                
             }
-            catch
+            catch(Exception ex)
             {
-                return Json(new { success = false });
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { mensagem = ex.Message });
             }
         }
 
@@ -115,7 +118,9 @@ namespace ProjetoMatriculaWeb.Controllers
 
             var teste = vh.GetId(id);
 
-            return Json(new { success = _commandExcluir.Executar(teste) });
+            _commandExcluir.Executar(teste);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
@@ -227,7 +232,8 @@ namespace ProjetoMatriculaWeb.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false });
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return Json(new { mensagem = ex.Message });
             }
         }
 
@@ -315,7 +321,10 @@ namespace ProjetoMatriculaWeb.Controllers
 
             var teste = vh.GetId(id);
 
-            return Json(new { success = _commandExcluir.Executar(teste) });
+            _commandExcluir.Executar(teste);
+
+
+            return RedirectToAction("IndexCurso");
         }
 
         public ActionResult EditCurso(int id)
@@ -442,7 +451,10 @@ namespace ProjetoMatriculaWeb.Controllers
 
             var teste = vh.GetId(id);
 
-            return Json(new { success = _commandExcluir.Executar(teste) });
+            _commandExcluir.Executar(teste);
+
+
+            return RedirectToAction("IndexDisciplina");
         }
 
         public ActionResult EditDisciplina(int id)

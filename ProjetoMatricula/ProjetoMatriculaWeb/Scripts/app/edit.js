@@ -164,8 +164,9 @@
                 toastr.success("Dados atualizados com sucesso!", "Aluno");
             },
             error: function (error) {
-                toastr.error("Erro ao atualizar dados!", "Aluno");
-                location.reload();
+                console.log(error.responseJSON);
+                $('#mensagemErro').text(error.responseJSON.mensagem);
+                $('#divAlerta').addClass('alert alert-danger');
             }
         });
     }
